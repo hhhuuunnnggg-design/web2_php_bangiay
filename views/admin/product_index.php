@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Quản lý sản phẩm</title>
-    <link rel="stylesheet" href="/shoeimportsystem/views/admin/style.css">
-</head>
-<body>
-    <h1>Quản lý sản phẩm</h1>
-    <a href="/shoeimportsystem/public/index.php?controller=product&action=add">Thêm sản phẩm</a> | 
-    <a href="/shoeimportsystem/public/index.php?controller=color&action=index">Quản lý màu sắc</a> | 
-    <a href="/shoeimportsystem/public/index.php?controller=size&action=index">Quản lý kích thước</a>
+<h1>Quản lý sản phẩm</h1>
+<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+    <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm sản phẩm">
+    <input type="hidden" name="controller" value="product">
+    <input type="hidden" name="action" value="index">
+    <button type="submit">Tìm</button>
+</form>
 
-    <form method="GET" action="/shoeimportsystem/public/index.php">
-        <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm sản phẩm">
-        <input type="hidden" name="controller" value="product">
-        <input type="hidden" name="action" value="index">
-        <button type="submit">Tìm</button>
-    </form>
+<div id="message"></div>
 
-    <table border="1">
+<table border="1" id="productTable">
+    <thead>
         <tr>
             <th>Mã SP</th>
             <th>Tên SP</th>
@@ -31,9 +22,11 @@
             <th>Ảnh</th>
             <th>Hành động</th>
         </tr>
+    </thead>
+    <tbody>
         <?php if (!empty($products)): ?>
             <?php foreach ($products as $row): ?>
-            <tr>
+            <tr data-id="<?php echo $row['masanpham']; ?>">
                 <td><?php echo $row['masanpham']; ?></td>
                 <td><?php echo $row['tensanpham']; ?></td>
                 <td><?php echo $row['mota'] ?? ''; ?></td>
@@ -51,13 +44,40 @@
                 </td>
                 <td>
                     <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['masanpham']; ?>">Sửa</a>
-                    <a href="/shoeimportsystem/public/index.php?controller=product&action=delete&id=<?php echo $row['masanpham']; ?>" onclick="return confirm('Xóa sản phẩm này?')">Xóa</a>
+                    <button class="delete-btn" data-id="<?php echo $row['masanpham']; ?>">Xóa</button>
+                    <a href="/shoeimportsystem/public/index.php?controller=product&action=add">Thêm</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr><td colspan="10">Không có sản phẩm nào.</td></tr>
         <?php endif; ?>
-    </table>
-</body>
-</html>
+    </tbody>
+</table>
+
+<script>
+// Xóa sản phẩm bằng AJAX
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        if (confirm('Xóa sản phẩm này?')) {
+            fetch(`/shoeimportsystem/public/index.php?controller=product&action=delete&id=${id}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector(`tr[data-id="${id}"]`).remove();
+                    document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                } else {
+                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+            });
+        }
+    });
+});
+</script>

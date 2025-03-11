@@ -13,7 +13,7 @@ class ProductController {
         $products = $this->productModel->getAllProducts($search);
         $title = "Quản lý sản phẩm";
         $content_file = __DIR__ . '/../views/admin/product_index.php';
-        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function add() {
@@ -29,7 +29,8 @@ class ProductController {
                 if (move_uploaded_file($_FILES['anh']['tmp_name'], $uploadFile)) {
                     $anh = 'images/' . $fileName;
                 } else {
-                    die("Lỗi upload: " . $_FILES['anh']['error']);
+                    echo json_encode(['success' => false, 'message' => 'Lỗi upload ảnh']);
+                    exit;
                 }
             }
 
@@ -45,18 +46,18 @@ class ProductController {
                 'anh' => $anh
             ];
             if ($this->productModel->addProduct($data)) {
-                header("Location: /shoeimportsystem/public/index.php?controller=product&action=index");
-                exit;
+                echo json_encode(['success' => true, 'message' => 'Thêm sản phẩm thành công']);
             } else {
-                die("Lỗi thêm sản phẩm!");
+                echo json_encode(['success' => false, 'message' => 'Lỗi thêm sản phẩm']);
             }
+            exit;
         }
         $colors = $this->productModel->getColors();
         $sizes = $this->productModel->getSizes();
         $suppliers = $this->productModel->getSuppliers();
         $title = "Thêm sản phẩm";
         $content_file = __DIR__ . '/../views/admin/product_add.php';
-        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function edit() {
@@ -73,7 +74,8 @@ class ProductController {
                 if (move_uploaded_file($_FILES['anh']['tmp_name'], $uploadFile)) {
                     $anh = 'images/' . $fileName;
                 } else {
-                    die("Lỗi upload: " . $_FILES['anh']['error']);
+                    echo json_encode(['success' => false, 'message' => 'Lỗi upload ảnh']);
+                    exit;
                 }
             }
 
@@ -88,9 +90,11 @@ class ProductController {
                 'anh' => $anh
             ];
             if ($this->productModel->updateProduct($id, $data)) {
-                header("Location: /shoeimportsystem/public/index.php?controller=product&action=index");
-                exit;
+                echo json_encode(['success' => true, 'message' => 'Cập nhật sản phẩm thành công']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Lỗi cập nhật sản phẩm']);
             }
+            exit;
         }
         $product = $this->productModel->getProductById($id);
         $colors = $this->productModel->getColors();
@@ -98,14 +102,16 @@ class ProductController {
         $suppliers = $this->productModel->getSuppliers();
         $title = "Sửa sản phẩm";
         $content_file = __DIR__ . '/../views/admin/product_edit.php';
-        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function delete() {
         $id = $_GET['id'];
         if ($this->productModel->deleteProduct($id)) {
-            header("Location: /shoeimportsystem/public/index.php?controller=product&action=index");
-            exit;
+            echo json_encode(['success' => true, 'message' => 'Xóa sản phẩm thành công']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Lỗi xóa sản phẩm']);
         }
+        exit;
     }
 }

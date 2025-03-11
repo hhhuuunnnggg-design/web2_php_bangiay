@@ -17,6 +17,8 @@ class SizeController {
             $this->sizeModel->deleteSize($_GET['delete']);
         }
         $sizes = $this->sizeModel->getAllSizes();
-        require_once __DIR__ . '/../views/admin/size_index.php';
+        $title = "Quản lý kích thước";
+        $content_file = __DIR__ . '/../views/admin/size_index.php';
+        include __DIR__ . '/../views/admin/layout/layout.php'; // Sử dụng layout mới
     }
 }

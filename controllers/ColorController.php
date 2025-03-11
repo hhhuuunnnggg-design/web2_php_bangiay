@@ -17,6 +17,8 @@ class ColorController {
             $this->colorModel->deleteColor($_GET['delete']);
         }
         $colors = $this->colorModel->getAllColors();
-        require_once __DIR__ . '/../views/admin/color_index.php';
+        $title = "Quản lý màu sắc";
+        $content_file = __DIR__ . '/../views/admin/color_index.php';
+        include __DIR__ . '/../views/admin/layout/layout.php'; // Sử dụng layout mới
     }
 }

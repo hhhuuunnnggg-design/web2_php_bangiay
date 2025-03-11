@@ -11,7 +11,9 @@ class ProductController {
     public function index() {
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $products = $this->productModel->getAllProducts($search);
-        include __DIR__ . '/../views/admin/product_index.php';
+        $title = "Quản lý sản phẩm";
+        $content_file = __DIR__ . '/../views/admin/product_index.php';
+        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
     }
 
     public function add() {
@@ -32,7 +34,7 @@ class ProductController {
             }
 
             $data = [
-                'masanpham' => $_POST['masanpham'], // Thêm lại masanpham
+                'masanpham' => $_POST['masanpham'],
                 'tensanpham' => $_POST['tensanpham'],
                 'mota' => $_POST['mota'],
                 'giaban' => $_POST['giaban'],
@@ -52,7 +54,9 @@ class ProductController {
         $colors = $this->productModel->getColors();
         $sizes = $this->productModel->getSizes();
         $suppliers = $this->productModel->getSuppliers();
-        include __DIR__ . '/../views/admin/product_add.php';
+        $title = "Thêm sản phẩm";
+        $content_file = __DIR__ . '/../views/admin/product_add.php';
+        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
     }
 
     public function edit() {
@@ -92,7 +96,9 @@ class ProductController {
         $colors = $this->productModel->getColors();
         $sizes = $this->productModel->getSizes();
         $suppliers = $this->productModel->getSuppliers();
-        include __DIR__ . '/../views/admin/product_edit.php';
+        $title = "Sửa sản phẩm";
+        $content_file = __DIR__ . '/../views/admin/product_edit.php';
+        include __DIR__ . '/../views/admin/layout/layout.php'; // Cập nhật đường dẫn
     }
 
     public function delete() {

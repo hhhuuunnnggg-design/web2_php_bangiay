@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Sửa sản phẩm</h1>
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         <label>Mã sản phẩm:</label><input type="text" value="<?php echo $product['masanpham']; ?>" disabled><br>
         <label>Tên sản phẩm:</label><input type="text" name="tensanpham" value="<?php echo $product['tensanpham']; ?>" required><br>
         <label>Mô tả:</label><textarea name="mota"><?php echo $product['mota']; ?></textarea><br>
@@ -37,6 +37,14 @@
                 </option>
             <?php endforeach; ?>
         </select><br>
+        <label>Ảnh hiện tại:</label>
+        <?php if (!empty($product['anh'])): ?>
+            <img src="/shoeimportsystem/public/<?php echo $product['anh']; ?>" alt="Ảnh sản phẩm" width="100"><br>
+        <?php else: ?>
+            Chưa có ảnh<br>
+        <?php endif; ?>
+        <input type="hidden" name="current_anh" value="<?php echo $product['anh']; ?>">
+        <label>Upload ảnh mới:</label><input type="file" name="anh" accept="image/*"><br>
         <button type="submit">Cập nhật</button>
     </form>
     <a href="/shoeimportsystem/public/index.php?controller=product&action=index">Quay lại</a>

@@ -19,6 +19,9 @@ class ProductModel {
                 LEFT JOIN nhacungcap ncc ON sp.manhacungcap = ncc.manhacungcap 
                 WHERE sp.tensanpham LIKE '%$search%' AND sp.trangthai = 1";
         $result = $this->conn->query($sql);
+        if (!$result) {
+            die("Lỗi SQL: " . $this->conn->error);
+        }
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -30,20 +33,30 @@ class ProductModel {
     }
 
     public function addProduct($data) {
-        $sql = "INSERT INTO sanpham (masanpham, tensanpham, mota, giaban, soluongconlai, size_id, id_mausac, manhacungcap, trangthai) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+        // Kiểm tra masanpham đã tồn tại chưa
+        $checkSql = "SELECT masanpham FROM sanpham WHERE masanpham = ?";
+        $stmtCheck = $this->conn->prepare($checkSql);
+        $stmtCheck->bind_param("s", $data['masanpham']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+        if ($result->num_rows > 0) {
+            die("Mã sản phẩm '" . $data['masanpham'] . "' đã tồn tại!");
+        }
+
+        $sql = "INSERT INTO sanpham (masanpham, tensanpham, mota, giaban, soluongconlai, size_id, id_mausac, manhacungcap, anh, trangthai) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("sssdisss", $data['masanpham'], $data['tensanpham'], $data['mota'], $data['giaban'], 
-                         $data['soluongconlai'], $data['size_id'], $data['id_mausac'], $data['manhacungcap']);
+        $stmt->bind_param("sssdissss", $data['masanpham'], $data['tensanpham'], $data['mota'], $data['giaban'], 
+                         $data['soluongconlai'], $data['size_id'], $data['id_mausac'], $data['manhacungcap'], $data['anh']);
         return $stmt->execute();
     }
 
     public function updateProduct($id, $data) {
-        $sql = "UPDATE sanpham SET tensanpham=?, mota=?, giaban=?, soluongconlai=?, size_id=?, id_mausac=?, manhacungcap=? 
+        $sql = "UPDATE sanpham SET tensanpham=?, mota=?, giaban=?, soluongconlai=?, size_id=?, id_mausac=?, manhacungcap=?, anh=? 
                 WHERE masanpham=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssdissss", $data['tensanpham'], $data['mota'], $data['giaban'], $data['soluongconlai'], 
-                         $data['size_id'], $data['id_mausac'], $data['manhacungcap'], $id);
+        $stmt->bind_param("ssdisssss", $data['tensanpham'], $data['mota'], $data['giaban'], $data['soluongconlai'], 
+                         $data['size_id'], $data['id_mausac'], $data['manhacungcap'], $data['anh'], $id);
         return $stmt->execute();
     }
 

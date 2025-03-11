@@ -7,8 +7,7 @@
 </head>
 <body>
     <h1>Thêm sản phẩm mới</h1>
-    <form method="POST" action="">
-        <label>Mã sản phẩm:</label><input type="text" name="masanpham" required><br>
+    <form method="POST" action="" enctype="multipart/form-data">
         <label>Tên sản phẩm:</label><input type="text" name="tensanpham" required><br>
         <label>Mô tả:</label><textarea name="mota"></textarea><br>
         <label>Giá bán:</label><input type="number" name="giaban" required><br>
@@ -31,6 +30,7 @@
                 <option value="<?php echo $supplier['manhacungcap']; ?>"><?php echo $supplier['tensanpham']; ?></option>
             <?php endforeach; ?>
         </select><br>
+        <label>Ảnh sản phẩm:</label><input type="file" name="anh" accept="image/*"><br>
         <button type="submit">Thêm</button>
     </form>
     <a href="/shoeimportsystem/public/index.php?controller=product&action=index">Quay lại</a>

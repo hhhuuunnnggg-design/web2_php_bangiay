@@ -16,24 +16,23 @@ class ProductController {
 
     public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Xử lý upload ảnh
             $anh = '';
             if (isset($_FILES['anh']) && $_FILES['anh']['error'] == 0) {
-                $uploadDir = 'D:/xampp/htdocs/shoeimportsystem/public/images/'; // Đường dẫn tuyệt đối
+                $uploadDir = 'D:/xampp/htdocs/shoeimportsystem/public/images/';
                 if (!file_exists($uploadDir)) {
-                    mkdir($uploadDir, 0777, true); // Tạo thư mục nếu chưa tồn tại
+                    mkdir($uploadDir, 0777, true);
                 }
                 $fileName = uniqid() . '-' . basename($_FILES['anh']['name']);
                 $uploadFile = $uploadDir . $fileName;
                 if (move_uploaded_file($_FILES['anh']['tmp_name'], $uploadFile)) {
-                    $anh = 'images/' . $fileName; // Lưu đường dẫn tương đối
+                    $anh = 'images/' . $fileName;
                 } else {
-                    die("Lỗi upload: " . $_FILES['anh']['error']); // Debug lỗi upload
+                    die("Lỗi upload: " . $_FILES['anh']['error']);
                 }
             }
-    
+
             $data = [
-                'masanpham' => $_POST['masanpham'],
+                'masanpham' => $_POST['masanpham'], // Thêm lại masanpham
                 'tensanpham' => $_POST['tensanpham'],
                 'mota' => $_POST['mota'],
                 'giaban' => $_POST['giaban'],
@@ -46,6 +45,8 @@ class ProductController {
             if ($this->productModel->addProduct($data)) {
                 header("Location: /shoeimportsystem/public/index.php?controller=product&action=index");
                 exit;
+            } else {
+                die("Lỗi thêm sản phẩm!");
             }
         }
         $colors = $this->productModel->getColors();
@@ -53,7 +54,7 @@ class ProductController {
         $suppliers = $this->productModel->getSuppliers();
         include __DIR__ . '/../views/admin/product_add.php';
     }
-    
+
     public function edit() {
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -71,7 +72,7 @@ class ProductController {
                     die("Lỗi upload: " . $_FILES['anh']['error']);
                 }
             }
-    
+
             $data = [
                 'tensanpham' => $_POST['tensanpham'],
                 'mota' => $_POST['mota'],

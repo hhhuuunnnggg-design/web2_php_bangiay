@@ -33,16 +33,6 @@ class ProductModel {
     }
 
     public function addProduct($data) {
-        // Kiểm tra masanpham đã tồn tại chưa
-        $checkSql = "SELECT masanpham FROM sanpham WHERE masanpham = ?";
-        $stmtCheck = $this->conn->prepare($checkSql);
-        $stmtCheck->bind_param("s", $data['masanpham']);
-        $stmtCheck->execute();
-        $result = $stmtCheck->get_result();
-        if ($result->num_rows > 0) {
-            die("Mã sản phẩm '" . $data['masanpham'] . "' đã tồn tại!");
-        }
-
         $sql = "INSERT INTO sanpham (masanpham, tensanpham, mota, giaban, soluongconlai, size_id, id_mausac, manhacungcap, anh, trangthai) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
         $stmt = $this->conn->prepare($sql);

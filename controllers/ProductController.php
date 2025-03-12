@@ -33,9 +33,12 @@ class ProductController {
                     exit;
                 }
             }
-
+    
+            // Sinh mã sản phẩm ngẫu nhiên
+            $masanpham = strtoupper('SP' . substr(md5(uniqid()), 0, 8));
+    
             $data = [
-                'masanpham' => $_POST['masanpham'],
+                'masanpham' => $masanpham, // Sinh ID ngẫu nhiên
                 'tensanpham' => $_POST['tensanpham'],
                 'mota' => $_POST['mota'],
                 'giaban' => $_POST['giaban'],
@@ -59,7 +62,7 @@ class ProductController {
         $content_file = __DIR__ . '/../views/admin/product_add.php';
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
-
+    
     public function edit() {
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

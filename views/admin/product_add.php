@@ -1,6 +1,6 @@
 <h1>Thêm sản phẩm mới</h1>
 <form id="addProductForm" enctype="multipart/form-data">
-    <label>Mã sản phẩm:</label><input type="text" name="masanpham" required><br>
+    
     <label>Tên sản phẩm:</label><input type="text" name="tensanpham" required><br>
     <label>Mô tả:</label><textarea name="mota"></textarea><br>
     <label>Giá bán:</label><input type="number" name="giaban" required><br>

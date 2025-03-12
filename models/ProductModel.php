@@ -33,6 +33,18 @@ class ProductModel {
     }
 
     public function addProduct($data) {
+        // Kiểm tra trùng mã
+        $checkSql = "SELECT masanpham FROM sanpham WHERE masanpham = ?";
+        $checkStmt = $this->conn->prepare($checkSql);
+        $checkStmt->bind_param("s", $data['masanpham']);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            // Nếu trùng thì sinh mã mới
+            $data['masanpham'] = strtoupper('SP' . substr(md5(uniqid()), 0, 8));
+        }
+    
         $sql = "INSERT INTO sanpham (masanpham, tensanpham, mota, giaban, soluongconlai, size_id, id_mausac, manhacungcap, anh, trangthai) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
         $stmt = $this->conn->prepare($sql);
@@ -40,6 +52,9 @@ class ProductModel {
                          $data['soluongconlai'], $data['size_id'], $data['id_mausac'], $data['manhacungcap'], $data['anh']);
         return $stmt->execute();
     }
+    
+
+    
 
     public function updateProduct($id, $data) {
         $sql = "UPDATE sanpham SET tensanpham=?, mota=?, giaban=?, soluongconlai=?, size_id=?, id_mausac=?, manhacungcap=?, anh=? 

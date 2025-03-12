@@ -23,9 +23,12 @@
             <form method="POST" action="" style="display:inline;">
                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                 <input type="text" name="tenmau" value="<?php echo $row['tenmau']; ?>" required>
-                <button type="submit" name="edit_color">Sửa</button>
+                <button type="submit" name="edit_color" class="btn btn-warning">Sửa</button>
             </form>
-            <a href="/shoeimportsystem/public/index.php?controller=color&action=index&delete=<?php echo $row['id']; ?>" onclick="return confirm('Xóa màu này?')">Xóa</a>
+            <a href="/shoeimportsystem/public/index.php?controller=color&action=index&delete=<?php echo $row['id']; ?>" onclick="return confirm('Xóa màu này?')">
+            <button type="button" class="btn btn-danger">Xóa
+            </button>
+            </a>
         </td>
     </tr>
     <?php endforeach; ?>

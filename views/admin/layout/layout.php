@@ -73,7 +73,10 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
             <div class="nav">
-              <div class="sb-sidenav-menu-heading">Features</div>
+              <div class="sb-sidenav-menu-heading" style="
+    margin-left: 53px;
+    font-size: 16px;
+"> MENU</div>
               <!-- sibar -->
               <?php include __DIR__ . '/sidebar.php'; ?>
               <!--end sibar -->
@@ -126,19 +129,18 @@
       crossorigin="anonymous"
     ></script>
     <script src="/shoeimportsystem/views/admin/layout/js/scripts.js"></script>
-    <!-- <link rel="stylesheet" href="/shoeimportsystem/views/admin/layout/css/styles.css">
-
-    <script src="/shoeimportsystem/views/admin/layout/js/scripts.js"></script> -->
+   
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
       crossorigin="anonymous"
     ></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="/shoeimportsystem/views/admin/layout/assets/demo/chart-area-demo.js"></script>
+    <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <script src="/shoeimportsystem/views/admin/layout/assets/demo/chart-area-demo.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
       crossorigin="anonymous"
     ></script>
-    <script src="js/datatables-simple-demo.js"></script>
+    <script src="/shoeimportsystem/views/admin/layout/js/datatables-simple-demo.js"></script>
   </body>
 </html>

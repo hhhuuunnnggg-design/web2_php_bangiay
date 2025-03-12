@@ -74,9 +74,9 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="sb-sidenav-menu-heading" style="
-    margin-left: 53px;
-    font-size: 16px;
-"> MENU</div>
+                    margin-left: 53px;
+                    font-size: 16px;
+                "> MENU</div>
               <!-- sibar -->
               <?php include __DIR__ . '/sidebar.php'; ?>
               <!--end sibar -->
@@ -95,8 +95,8 @@
         </nav>
       </div>
       <div id="layoutSidenav_content">
+        <!-- dữ liệu trong đay -->
         <main>
-          
           <div class="content">
           <?php 
             if (isset($content_file)) {
@@ -107,6 +107,7 @@
               ?>
           </div>
         </main>
+         <!-- dữ liệu trong đay -->
         <footer class="py-4 bg-light mt-auto">
           <div class="container-fluid px-4">
             <div
@@ -135,7 +136,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="/shoeimportsystem/views/admin/layout/assets/demo/chart-area-demo.js"></script>
-    <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
+    
     <script src="/shoeimportsystem/views/admin/layout/assets/demo/chart-area-demo.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"

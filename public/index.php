@@ -2,6 +2,9 @@
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'product';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
+// Debug: Ghi log yêu cầu để kiểm tra
+error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
+
 switch ($controller) {
     case 'product':
         require_once __DIR__ . '/../controllers/ProductController.php';

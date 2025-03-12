@@ -2,7 +2,8 @@
 <form id="addSupplierForm">
     <input type="text" name="tennhacungcap" placeholder="Tên nhà cung cấp" required>
     <input type="text" name="diachi" placeholder="Địa chỉ" required>
-    <button type="submit" name="add_supplier">Thêm</button>
+    <input type="hidden" name="add_supplier" value="1"> <!-- Thêm trường ẩn -->
+    <button type="submit">Thêm</button> <!-- Không cần name="add_supplier" ở đây nữa -->
 </form>
 <div id="message"></div>
 
@@ -26,9 +27,10 @@
                     <input type="hidden" name="manhacungcap" value="<?php echo $row['manhacungcap']; ?>">
                     <input type="text" name="tennhacungcap" value="<?php echo $row['tennhacungcap']; ?>" required>
                     <input type="text" name="diachi" value="<?php echo $row['diachi']; ?>" required>
-                    <button type="submit" name="edit_supplier" class="btn btn-warning">Sửa</button>
+                    <input type="hidden" name="edit_supplier" value="1"> <!-- Thêm trường ẩn -->
+                    <button type="submit" class="btn btn-warning">Sửa</button>
                 </form>
-                <button class="btn btn-danger data-id="<?php echo $row['manhacungcap']; ?>">Xóa</button>
+                <button class="delete-btn btn btn-danger" data-id="<?php echo $row['manhacungcap']; ?>">Xóa</button>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -60,7 +62,6 @@ function loadSuppliers(page) {
 }
 
 // Thêm nhà cung cấp
-
 document.getElementById('addSupplierForm').addEventListener('submit', function(e) {
     e.preventDefault();
     let formData = new FormData(this);
@@ -69,31 +70,43 @@ document.getElementById('addSupplierForm').addEventListener('submit', function(e
         method: 'POST',
         body: formData
     })
-    .then(response => response.json()) // Dùng json() để xử lý phản hồi JSON
-    .then(data => {
-        console.log('Response data (add):', data);
-        if (data.success) {
-            document.getElementById('message').innerHTML = '<p style="color:green;">Thêm nhà cung cấp thành công!</p>';
-            this.reset();
-            let tbody = document.getElementById('supplierTable').querySelector('tbody');
-            let newRow = `<tr data-id="${data.id}">
-                <td>${data.id}</td>
-                <td>${formData.get('tennhacungcap')}</td>
-                <td>${formData.get('diachi')}</td>
-                <td>
-                    <form class="editSupplierForm" style="display:inline;">
-                        <input type="hidden" name="manhacungcap" value="${data.id}">
-                        <input type="text" name="tennhacungcap" value="${formData.get('tennhacungcap')}" required>
-                        <input type="text" name="diachi" value="${formData.get('diachi')}" required>
-                        <button type="submit" name="edit_supplier">Sửa</button>
-                    </form>
-                    <button class="delete-btn" data-id="${data.id}">Xóa</button>
-                </td>
-            </tr>`;
-            tbody.insertAdjacentHTML('beforeend', newRow);
-            attachEditDeleteEvents();
-        } else {
-            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.status);
+        }
+        return response.text(); // Dùng text() để debug nguyên văn phản hồi
+    })
+    .then(text => {
+        console.log('Raw response (add):', text); // Debug phản hồi nguyên văn
+        try {
+            let data = JSON.parse(text); // Parse thành JSON
+            if (data.success) {
+                document.getElementById('message').innerHTML = '<p style="color:green;">Thêm nhà cung cấp thành công!</p>';
+                this.reset();
+                let tbody = document.getElementById('supplierTable').querySelector('tbody');
+                let newRow = `<tr data-id="${data.id}">
+                    <td>${data.id}</td>
+                    <td>${formData.get('tennhacungcap')}</td>
+                    <td>${formData.get('diachi')}</td>
+                    <td>
+                        <form class="editSupplierForm" style="display:inline;">
+                            <input type="hidden" name="manhacungcap" value="${data.id}">
+                            <input type="text" name="tennhacungcap" value="${formData.get('tennhacungcap')}" required>
+                            <input type="text" name="diachi" value="${formData.get('diachi')}" required>
+                            <input type="hidden" name="edit_supplier" value="1">
+                            <button type="submit" class="btn btn-warning">Sửa</button>
+                        </form>
+                        <button class="delete-btn btn btn-danger" data-id="${data.id}">Xóa</button>
+                    </td>
+                </tr>`;
+                tbody.insertAdjacentHTML('beforeend', newRow);
+                attachEditDeleteEvents();
+            } else {
+                document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+            }
+        } catch (error) {
+            console.error('Parse error (add):', error, 'Response:', text);
+            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi phân tích dữ liệu từ server!</p>';
         }
     })
     .catch(error => {
@@ -101,7 +114,6 @@ document.getElementById('addSupplierForm').addEventListener('submit', function(e
         document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
     });
 });
-
 
 // Sửa và xóa nhà cung cấp
 function attachEditDeleteEvents() {
@@ -122,14 +134,19 @@ function attachEditDeleteEvents() {
             })
             .then(text => {
                 console.log('Raw response (edit):', text); // Debug phản hồi nguyên văn
-                let data = JSON.parse(text);
-                if (data.success) {
-                    document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';
-                    let row = form.closest('tr');
-                    row.querySelector('td:nth-child(2)').textContent = formData.get('tennhacungcap');
-                    row.querySelector('td:nth-child(3)').textContent = formData.get('diachi');
-                } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+                try {
+                    let data = JSON.parse(text);
+                    if (data.success) {
+                        document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';
+                        let row = form.closest('tr');
+                        row.querySelector('td:nth-child(2)').textContent = formData.get('tennhacungcap');
+                        row.querySelector('td:nth-child(3)').textContent = formData.get('diachi');
+                    } else {
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+                    }
+                } catch (error) {
+                    console.error('Parse error (edit):', error, 'Response:', text);
+                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi phân tích dữ liệu từ server!</p>';
                 }
             })
             .catch(error => {
@@ -154,12 +171,17 @@ function attachEditDeleteEvents() {
                 })
                 .then(text => {
                     console.log('Raw response (delete):', text); // Debug phản hồi nguyên văn
-                    let data = JSON.parse(text);
-                    if (data.success) {
-                        document.querySelector(`tr[data-id="${id}"]`).remove();
-                        document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
-                    } else {
-                        document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+                    try {
+                        let data = JSON.parse(text);
+                        if (data.success) {
+                            document.querySelector(`tr[data-id="${id}"]`).remove();
+                            document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                        } else {
+                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không rõ nguyên nhân') + '</p>';
+                        }
+                    } catch (error) {
+                        console.error('Parse error (delete):', error, 'Response:', text);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi phân tích dữ liệu từ server!</p>';
                     }
                 })
                 .catch(error => {

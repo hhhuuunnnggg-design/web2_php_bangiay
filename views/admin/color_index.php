@@ -6,12 +6,17 @@
 
 <table border="1">
     <tr>
-        <th>ID</th>
+        <th>STT</th>
+        <th>ID màu</th>
         <th>Tên màu</th>
         <th>Hành động</th>
     </tr>
-    <?php foreach ($colors as $row): ?>
+    <?php 
+    $stt = 1; // Khởi tạo số thứ tự bắt đầu từ 1
+    foreach ($colors as $row): 
+    ?>
     <tr>
+        <td><?php echo $stt++; ?></td> <!-- Tăng giá trị số thứ tự -->
         <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['tenmau']; ?></td>
         <td>

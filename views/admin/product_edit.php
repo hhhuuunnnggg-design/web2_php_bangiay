@@ -26,7 +26,7 @@
     <select name="manhacungcap" required>
         <?php foreach ($suppliers as $supplier): ?>
             <option value="<?php echo $supplier['manhacungcap']; ?>" <?php if ($supplier['manhacungcap'] == $product['manhacungcap']) echo 'selected'; ?>>
-                <?php echo $supplier['tensanpham']; ?>
+                <?php echo $supplier['tennhacungcap']; ?>
             </option>
         <?php endforeach; ?>
     </select><br>

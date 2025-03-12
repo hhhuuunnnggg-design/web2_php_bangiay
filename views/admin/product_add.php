@@ -20,7 +20,7 @@
     <label>Nhà cung cấp:</label>
     <select name="manhacungcap" required>
         <?php foreach ($suppliers as $supplier): ?>
-            <option value="<?php echo $supplier['manhacungcap']; ?>"><?php echo $supplier['tensanpham']; ?></option>
+            <option value="<?php echo $supplier['manhacungcap']; ?>"><?php echo $supplier['tennhacungcap']; ?></option>
         <?php endforeach; ?>
     </select><br>
     <label>Ảnh sản phẩm:</label><input type="file" name="anh" accept="image/*"><br>

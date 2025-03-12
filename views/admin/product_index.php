@@ -11,6 +11,7 @@
 <table border="1" id="productTable">
     <thead>
         <tr>
+            <th>STT</th>
             <th>Mã SP</th>
             <th>Tên SP</th>
             <th>Mô tả</th>
@@ -24,34 +25,45 @@
         </tr>
     </thead>
     <tbody>
-        <?php if (!empty($products)): ?>
-            <?php foreach ($products as $row): ?>
-            <tr data-id="<?php echo $row['masanpham']; ?>">
-                <td><?php echo $row['masanpham']; ?></td>
-                <td><?php echo $row['tensanpham']; ?></td>
-                <td><?php echo $row['mota'] ?? ''; ?></td>
-                <td><?php echo number_format($row['giaban'], 2); ?></td>
-                <td><?php echo $row['soluongconlai']; ?></td>
-                <td><?php echo $row['tenmau'] ?? ''; ?></td>
-                <td><?php echo $row['tensize'] ?? ''; ?></td>
-                <td><?php echo $row['nhacungcap'] ?? ''; ?></td>
-                <td>
-                    <?php if (!empty($row['anh'])): ?>
-                        <img src="/shoeimportsystem/public/<?php echo $row['anh']; ?>" alt="Ảnh sản phẩm" width="50">
-                    <?php else: ?>
-                        Chưa có ảnh
-                    <?php endif; ?>
-                </td>
-                <td>
-                <a href="/shoeimportsystem/public/index.php?controller=product&action=add" style="text-decoration: none;"><button type="button" class="btn btn-primary">Thêm</button></a>
-                <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['masanpham']; ?>"><button type="button" class="btn btn-warning">Sửa</button></a>
-                <a class="delete-btn" data-id="<?php echo $row['masanpham']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a>
-                    
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr><td colspan="10">Không có sản phẩm nào.</td></tr>
+        <?php 
+        if (!empty($products)): 
+            $stt = 1; // Khởi tạo số thứ tự từ 1
+            foreach ($products as $row): 
+        ?>
+        <tr data-id="<?php echo $row['masanpham']; ?>">
+            <td><?php echo $stt++; ?></td> <!-- Tăng số thứ tự -->
+            <td><?php echo $row['masanpham']; ?></td>
+            <td><?php echo $row['tensanpham']; ?></td>
+            <td><?php echo $row['mota'] ?? ''; ?></td>
+            <td><?php echo number_format($row['giaban'], 2); ?></td>
+            <td><?php echo $row['soluongconlai']; ?></td>
+            <td><?php echo $row['tenmau'] ?? ''; ?></td>
+            <td><?php echo $row['tensize'] ?? ''; ?></td>
+            <td><?php echo $row['nhacungcap'] ?? ''; ?></td>
+            <td>
+                <?php if (!empty($row['anh'])): ?>
+                    <img src="/shoeimportsystem/public/<?php echo $row['anh']; ?>" alt="Ảnh sản phẩm" width="50">
+                <?php else: ?>
+                    Chưa có ảnh
+                <?php endif; ?>
+            </td>
+            <td>
+                <a href="/shoeimportsystem/public/index.php?controller=product&action=add" style="text-decoration: none;">
+                    <button type="button" class="btn btn-primary">Thêm</button>
+                </a>
+                <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['masanpham']; ?>">
+                    <button type="button" class="btn btn-warning">Sửa</button>
+                </a>
+                <a class="delete-btn" data-id="<?php echo $row['masanpham']; ?>">
+                    <button type="button" class="btn btn-danger">Xóa</button>
+                </a>
+            </td>
+        </tr>
+        <?php 
+            endforeach;
+        else: 
+        ?>
+            <tr><td colspan="11">Không có sản phẩm nào.</td></tr>
         <?php endif; ?>
     </tbody>
 </table>

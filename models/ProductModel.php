@@ -12,7 +12,7 @@ class ProductModel {
 
     public function getAllProducts($search = '') {
         $search = $this->conn->real_escape_string($search);
-        $sql = "SELECT sp.*, ms.tenmau, sz.tensize, ncc.tensanpham AS nhacungcap 
+        $sql = "SELECT sp.*, ms.tenmau, sz.tensize, ncc.tennhacungcap AS nhacungcap 
                 FROM sanpham sp 
                 LEFT JOIN mausac ms ON sp.id_mausac = ms.id 
                 LEFT JOIN size sz ON sp.size_id = sz.id 

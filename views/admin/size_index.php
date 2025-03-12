@@ -6,12 +6,17 @@
 
 <table border="1">
     <tr>
-        <th>ID</th>
+        <th>STT</th>
+        <th>ID Size</th>
         <th>Tên kích thước</th>
         <th>Hành động</th>
     </tr>
-    <?php foreach ($sizes as $row): ?>
+    <?php 
+    $stt = 1; // Khởi tạo số thứ tự bắt đầu từ 1
+    foreach ($sizes as $row): 
+    ?>
     <tr>
+        <td><?php echo $stt++; ?></td> <!-- Tăng số thứ tự -->
         <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['tensize']; ?></td>
         <td>

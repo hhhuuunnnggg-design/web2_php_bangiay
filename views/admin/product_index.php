@@ -43,9 +43,10 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['masanpham']; ?>">Sửa</a>
-                    <button class="delete-btn" data-id="<?php echo $row['masanpham']; ?>">Xóa</button>
-                    <a href="/shoeimportsystem/public/index.php?controller=product&action=add">Thêm</a>
+                <a href="/shoeimportsystem/public/index.php?controller=product&action=add" style="text-decoration: none;"><button type="button" class="btn btn-primary">Thêm</button></a>
+                <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['masanpham']; ?>"><button type="button" class="btn btn-warning">Sửa</button></a>
+                <a class="delete-btn" data-id="<?php echo $row['masanpham']; ?>"><button type="button" class="btn btn-danger">Xóa</button></a>
+                    
                 </td>
             </tr>
             <?php endforeach; ?>

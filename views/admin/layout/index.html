@@ -38,12 +38,6 @@
         class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
       >
         <span style="color: white">Welcome, Hỏi Dân IT</span>
-        <!-- <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div> -->
       </form>
       <!-- Navbar-->
       <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -81,8 +75,15 @@
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
-                Dashboard
+                Dashboard 123
               </a>
+
+              <div
+                class="collapse"
+                id="collapsePages"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#sidenavAccordion"
+              ></div>
             </div>
           </div>
           <div class="sb-sidenav-footer">
@@ -90,6 +91,32 @@
             Hỏi Dân IT
           </div>
         </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; Hỏi Dân IT 2024</div>
+              <div>
+                <a href="https://hoidanit.vn/" target="_blank">Website</a>
+                &middot;
+                <a href="https://www.youtube.com/@hoidanit" target="_blank"
+                  >Youtube channel</a
+                >
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
     <script
@@ -110,3 +137,19 @@
     <script src="js/datatables-simple-demo.js"></script>
   </body>
 </html>
+
+<!-- <div class="container">
+       
+  <?php include __DIR__ . '/sidebar.php'; ?>
+
+ 
+  <div class="content">
+      <?php 
+      if (isset($content_file)) {
+          include $content_file;
+      } else {
+          echo "<h1>Chào mừng đến với Admin</h1>";
+      }
+      ?>
+  </div>
+</div> -->

@@ -19,8 +19,11 @@
     </thead>
     <tbody>
         <?php 
+        require_once __DIR__ . '../../../core/Auth.php'; // Đường dẫn tới Auth.php
+        
+        $auth = new Auth();
         if (!empty($categories)): 
-            $stt = 1;
+            $stt = ($page - 1) * $limit + 1;
             foreach ($categories as $row): 
         ?>
         <tr data-id="<?php echo $row['MaDM']; ?>">
@@ -28,15 +31,21 @@
             <td><?php echo $row['MaDM']; ?></td>
             <td><?php echo $row['TenDM']; ?></td>
             <td>
-                <a href="/shoeimportsystem/public/index.php?controller=category&action=add" style="text-decoration: none;">
-                    <button type="button" class="btn btn-primary">Thêm</button>
-                </a>
-                <a href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">
-                    <button type="button" class="btn btn-warning">Sửa</button>
-                </a>
-                <a class="delete-btn" data-id="<?php echo $row['MaDM']; ?>">
-                    <button type="button" class="btn btn-danger">Xóa</button>
-                </a>
+                <?php if ($auth->checkPermission(1, 'add')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=category&action=add">
+                        <button type="button" class="btn btn-primary">Thêm</button>
+                    </a>
+                <?php endif; ?>
+                <?php if ($auth->checkPermission(1, 'edit')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">
+                        <button type="button" class="btn btn-warning">Sửa</button>
+                    </a>
+                <?php endif; ?>
+                <?php if ($auth->checkPermission(1, 'delete')): ?>
+                    <a class="delete-btn" data-id="<?php echo $row['MaDM']; ?>">
+                        <button type="button" class="btn btn-danger">Xóa</button>
+                    </a>
+                <?php endif; ?>
             </td>
         </tr>
         <?php 
@@ -47,6 +56,27 @@
         <?php endif; ?>
     </tbody>
 </table>
+
+<!-- Phân trang -->
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=category&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
+    <?php endif; ?>
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=category&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'style="font-weight:bold;"'; ?>>
+            <?php echo $i; ?>
+        </a>
+    <?php endfor; ?>
+    <?php if ($page < $totalPages): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=category&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page + 1; ?>">Trang sau</a>
+    <?php endif; ?>
+</div>
+
+<style>
+    .pagination { margin-top: 20px; }
+    .pagination a { margin: 0 5px; text-decoration: none; }
+    .pagination a:hover { text-decoration: underline; }
+</style>
 
 <script>
 document.querySelectorAll('.delete-btn').forEach(button => {

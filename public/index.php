@@ -13,6 +13,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/ColorController.php';
         $controller = new ColorController();
         break;
+    case 'size':
+        require_once __DIR__ . '/../controllers/SizeController.php';
+        $controller = new SizeController();
+        break;
     default:
         die("Controller không tồn tại");
 }

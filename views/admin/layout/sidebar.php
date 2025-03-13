@@ -11,6 +11,12 @@
         </div>
         Quản lý màu sắc
     </a>
+    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=size&action=index">
+        <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-maximize"></i>
+        </div>
+        Quản lý kích thước
+    </a>
 </div>
 
 <style>

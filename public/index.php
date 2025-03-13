@@ -17,6 +17,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/SizeController.php';
         $controller = new SizeController();
         break;
+    case 'supplier':
+        require_once __DIR__ . '/../controllers/SupplierController.php';
+        $controller = new SupplierController();
+        break;
     default:
         die("Controller không tồn tại");
 }

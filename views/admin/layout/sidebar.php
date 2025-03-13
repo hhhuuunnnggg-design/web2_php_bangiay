@@ -17,6 +17,12 @@
         </div>
         Quản lý kích thước
     </a>
+    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=supplier&action=index">
+        <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-building"></i>
+        </div>
+        Quản lý nhà cung cấp
+    </a>
 </div>
 
 <style>

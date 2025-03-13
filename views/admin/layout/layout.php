@@ -7,9 +7,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-    <meta name="author" content="Hỏi Dân IT" />
-    <title>Dashboard - Hỏi Dân IT</title>
+    <meta name="description" content="Nguyễn Đình Hùng - Dự án laptopshop" />
+    <meta name="author" content="Nguyễn Đình Hùng" />
+    <title>Dashboard - Nguyễn Đình Hùng</title>
     <link
       href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
       rel="stylesheet"
@@ -90,7 +90,7 @@
           </div>
           <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Hỏi Dân IT
+            Nguyễn Đình Hùng
           </div>
         </nav>
       </div>

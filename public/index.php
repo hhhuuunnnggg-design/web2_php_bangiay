@@ -2,13 +2,16 @@
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'product';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
-// Debug: Ghi log yêu cầu để kiểm tra
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
 switch ($controller) {
     case 'product':
         require_once __DIR__ . '/../controllers/ProductController.php';
         $controller = new ProductController();
+        break;
+    case 'category': // Thêm case cho category
+        require_once __DIR__ . '/../controllers/CategoryController.php';
+        $controller = new CategoryController();
         break;
     case 'color':
         require_once __DIR__ . '/../controllers/ColorController.php';

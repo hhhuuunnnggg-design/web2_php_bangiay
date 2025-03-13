@@ -5,25 +5,9 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
 switch ($controller) {
-    case 'product':
-        require_once __DIR__ . '/../controllers/ProductController.php';
-        $controller = new ProductController();
-        break;
     case 'category': // Thêm case cho category
         require_once __DIR__ . '/../controllers/CategoryController.php';
         $controller = new CategoryController();
-        break;
-    case 'color':
-        require_once __DIR__ . '/../controllers/ColorController.php';
-        $controller = new ColorController();
-        break;
-    case 'size':
-        require_once __DIR__ . '/../controllers/SizeController.php';
-        $controller = new SizeController();
-        break;
-    case 'supplier':
-        require_once __DIR__ . '/../controllers/SupplierController.php';
-        $controller = new SupplierController();
         break;
     default:
         die("Controller không tồn tại");

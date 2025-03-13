@@ -28,7 +28,7 @@
             <td><?php echo $row['MaDM']; ?></td>
             <td><?php echo $row['TenDM']; ?></td>
             <td>
-                <a href="/shoeimportsystem/public/index.php?controller=category&action=add">
+                <a href="/shoeimportsystem/public/index.php?controller=category&action=add" style="text-decoration: none;">
                     <button type="button" class="btn btn-primary">Thêm</button>
                 </a>
                 <a href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">

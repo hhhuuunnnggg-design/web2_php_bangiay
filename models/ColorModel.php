@@ -10,30 +10,58 @@ class ColorModel {
         $this->conn = $this->db->getConnection();
     }
 
-    public function getAllColors() {
-        $sql = "SELECT * FROM mausac WHERE trangthai = 1";
-        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+    // Lấy tất cả màu với phân trang
+    public function getAllColors($search = '', $limit = 5, $offset = 0) {
+        $search = $this->conn->real_escape_string($search);
+        $sql = "SELECT * FROM mau WHERE MaMau LIKE '%$search%' LIMIT ? OFFSET ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function addColor($tenmau) {
-        $id = 'M' . substr(uniqid(), -9);
-        $sql = "INSERT INTO mausac (id, tenmau, trangthai) VALUES (?, ?, 1)";
+    // Đếm tổng số màu để tính phân trang
+    public function getTotalColors($search = '') {
+        $search = $this->conn->real_escape_string($search);
+        $sql = "SELECT COUNT(*) as total FROM mau WHERE MaMau LIKE '%$search%'";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc()['total'];
+    }
+
+    // Lấy màu theo MaMau
+    public function getColorById($id) {
+        $id = $this->conn->real_escape_string($id);
+        $sql = "SELECT * FROM mau WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $id, $tenmau);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    // Thêm màu
+    public function addColor($data) {
+        $sql = "INSERT INTO mau (MaMau) VALUES (?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $data['MaMau']);
         return $stmt->execute();
     }
 
-    public function updateColor($id, $tenmau) {
-        $sql = "UPDATE mausac SET tenmau=? WHERE id=?";
+    // Cập nhật màu
+    public function updateColor($id, $data) {
+        $sql = "UPDATE mau SET MaMau = ? WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $tenmau, $id);
+        $stmt->bind_param("ss", $data['MaMau'], $id);
         return $stmt->execute();
     }
 
+    // Xóa màu
     public function deleteColor($id) {
         $id = $this->conn->real_escape_string($id);
-        $sql = "UPDATE mausac SET trangthai = 0 WHERE id = '$id'";
-        return $this->conn->query($sql);
+        $sql = "DELETE FROM mau WHERE MaMau = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $id);
+        return $stmt->execute();
     }
 
     public function __destruct() {

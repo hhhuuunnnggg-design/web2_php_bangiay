@@ -9,6 +9,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/CategoryController.php';
         $controller = new CategoryController();
         break;
+    case 'color':
+        require_once __DIR__ . '/../controllers/ColorController.php';
+        $controller = new ColorController();
+        break;
     default:
         die("Controller không tồn tại");
 }

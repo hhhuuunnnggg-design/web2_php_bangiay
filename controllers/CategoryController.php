@@ -8,7 +8,6 @@ class CategoryController {
         $this->categoryModel = new CategoryModel();
     }
 
-    // Hiển thị danh sách danh mục
     public function index() {
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $categories = $this->categoryModel->getAllCategories($search);
@@ -17,7 +16,6 @@ class CategoryController {
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    // Thêm danh mục
     public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -31,11 +29,10 @@ class CategoryController {
             exit;
         }
         $title = "Thêm danh mục";
-        $content_file = __DIR__ . '/../views/admin/category_add.php';
+        $content_file = __DIR__ . '/../views/admin/category/category_add.php'; // Cập nhật đường dẫn
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    // Sửa danh mục
     public function edit() {
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,11 +48,10 @@ class CategoryController {
         }
         $category = $this->categoryModel->getCategoryById($id);
         $title = "Sửa danh mục";
-        $content_file = __DIR__ . '/../views/admin/category_edit.php';
+        $content_file = __DIR__ . '/../views/admin/category/category_edit.php'; // Cập nhật đường dẫn
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    // Xóa danh mục
     public function delete() {
         $id = $_GET['id'];
         if ($this->categoryModel->deleteCategory($id)) {

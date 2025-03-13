@@ -1,11 +1,11 @@
 <?php
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'product';
-$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
+$action = isset($_GET['action']) ? $_GET['action'] : 'login';
 
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
 switch ($controller) {
-    case 'category': // Thêm case cho category
+    case 'category':
         require_once __DIR__ . '/../controllers/CategoryController.php';
         $controller = new CategoryController();
         break;
@@ -20,6 +20,18 @@ switch ($controller) {
     case 'supplier':
         require_once __DIR__ . '/../controllers/SupplierController.php';
         $controller = new SupplierController();
+        break;
+    case 'employee':
+        require_once __DIR__ . '/../controllers/EmployeeController.php';
+        $controller = new EmployeeController();
+        break;
+    case 'role':
+        require_once __DIR__ . '/../controllers/RoleController.php';
+        $controller = new RoleController();
+        break;
+    case 'auth':
+        require_once __DIR__ . '/../controllers/AuthController.php';
+        $controller = new AuthController();
         break;
     default:
         die("Controller không tồn tại");
@@ -37,6 +49,12 @@ switch ($action) {
         break;
     case 'delete':
         $controller->delete();
+        break;
+    case 'login':
+        $controller->login();
+        break;
+    case 'logout':
+        $controller->logout();
         break;
     default:
         die("Action không tồn tại");

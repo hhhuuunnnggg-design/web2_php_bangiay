@@ -1,28 +1,72 @@
+<?php 
+require_once __DIR__ . '/../../../core/Auth.php'; // Đường dẫn tương đối từ sidebar.php đến Auth.php
+$auth = new Auth();
+$user = $auth->getCurrentUser();
+?>
+
 <div class="nav">
-    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=category&action=index" >
-        <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-list"></i>
-        </div>
-        Quản lý danh mục
-    </a>
-    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=color&action=index">
-        <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-palette"></i>
-        </div>
-        Quản lý màu sắc
-    </a>
-    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=size&action=index">
-        <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-maximize"></i>
-        </div>
-        Quản lý kích thước
-    </a>
-    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=supplier&action=index">
-        <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-building"></i>
-        </div>
-        Quản lý nhà cung cấp
-    </a>
+    <?php if ($auth->checkPermission(1, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=category&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-list"></i>
+            </div>
+            Quản lý danh mục
+        </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(2, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=color&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-palette"></i>
+            </div>
+            Quản lý màu sắc
+        </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(3, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=size&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-maximize"></i>
+            </div>
+            Quản lý kích thước
+        </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(4, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=supplier&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-building"></i>
+            </div>
+            Quản lý nhà cung cấp
+        </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(5, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=employee&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            Quản lý nhân viên
+        </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(6, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=role&action=index">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-key"></i>
+            </div>
+            Quản lý quyền
+        </a>
+    <?php endif; ?>
+
+    <?php if ($user): // Chỉ hiển thị Đăng xuất nếu đã đăng nhập ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">
+            <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-sign-out-alt"></i>
+            </div>
+            Đăng xuất
+        </a>
+    <?php endif; ?>
 </div>
 
 <style>

@@ -58,19 +58,101 @@
     </tbody>
 </table>
 
-<div class="pagination">
-    <?php if ($page > 1): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
-    <?php endif; ?>
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'style="font-weight:bold;"'; ?>>
-            <?php echo $i; ?>
-        </a>
-    <?php endfor; ?>
-    <?php if ($page < $totalPages): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $page + 1; ?>">Trang sau</a>
-    <?php endif; ?>
+<div class="pagination-container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm justify-content-end">
+            <?php if ($page > 1): ?>
+                <li class="page-item">
+                    <a class="page-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
+                </li>
+            <?php endif; ?>
+
+            <?php if ($page > 3): ?>
+                <li class="page-item">
+                    <a class="page-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=1">1</a>
+                </li>
+                <?php if ($page > 4): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
+                <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                    <a class="page-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages - 2): ?>
+                <?php if ($page < $totalPages - 3): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                <?php endif; ?>
+                <li class="page-item">
+                    <a class="page-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $totalPages; ?>">
+                        <?php echo $totalPages; ?>
+                    </a>
+                </li>
+            <?php endif; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <li class="page-item">
+                    <a class="page-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index&search_name=<?php echo urlencode($search_name); ?>&search_color=<?php echo urlencode($search_color); ?>&search_size=<?php echo urlencode($search_size); ?>&page=<?php echo $page + 1; ?>">Trang sau</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
 </div>
+<style>
+    .pagination-container {
+        margin-top: 20px;
+    }
+
+    /* Kích thước nhỏ hơn */
+    .pagination .page-link {
+        padding: 4px 8px;
+        font-size: 14px;
+        color: #007bff;
+        border-radius: 3px;
+        border: 1px solid #dee2e6;
+        transition: background-color 0.2s ease;
+    }
+
+    /* Hiệu ứng khi di chuột */
+    .pagination .page-link:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Giảm khoảng cách giữa các nút */
+    .pagination .page-item {
+        margin: 0 2px;
+    }
+
+    /* Căn về phía bên phải */
+    .pagination {
+        justify-content: flex-end;
+    }
+
+    /* Định dạng cho trang hiện tại */
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        color: #ffffff;
+        border-color: #007bff;
+    }
+
+    /* Vô hiệu hóa nút */
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+</style>
+
 
 <div id="importModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid #ccc;">
     <h2>Nhập kho</h2>
@@ -85,7 +167,7 @@
         <label>Đơn giá (VNĐ):</label>
         <input type="number" name="DonGia" min="0" required><br>
         <label>Ghi chú:</label>
-        <textarea name="Note"></textarea><br>
+        <textarea name="Note" style="margin-left: 53px;width: 206px;"></textarea><br>
         <button type="submit">Xác nhận nhập kho</button>
         <button type="button" onclick="closeModal()">Hủy</button>
     </form>

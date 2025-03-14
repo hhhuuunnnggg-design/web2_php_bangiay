@@ -32,17 +32,17 @@
             <td><?php echo $row['TenChucNang']; ?></td>
             <td><?php echo $row['hanhdong']; ?></td>
             <td>
-                <?php if ($auth->checkPermission(6, 'add')): ?>
+                <?php if ($auth->checkPermission(7, 'add')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
                         <button type="button" class="btn btn-primary">Thêm</button>
                     </a>
                 <?php endif; ?>
-                <?php if ($auth->checkPermission(6, 'edit')): ?>
+                <?php if ($auth->checkPermission(7, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
                         <button type="button" class="btn btn-warning">Sửa</button>
                     </a>
                 <?php endif; ?>
-                <?php if ($auth->checkPermission(6, 'delete')): ?>
+                <?php if ($auth->checkPermission(7, 'delete')): ?>
                     <a class="delete-btn" data-manhomquyen="<?php echo $row['manhomquyen']; ?>" data-chucnang="<?php echo $row['chucnang']; ?>" data-hanhdong="<?php echo urlencode($row['hanhdong']); ?>">
                         <button type="button" class="btn btn-danger">Xóa</button>
                     </a>

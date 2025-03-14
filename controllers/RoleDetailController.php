@@ -16,7 +16,7 @@ class RoleDetailController {
     }
 
     public function index() {
-        if (!$this->auth->checkPermission(6, 'view')) { // Quyền quản lý quyền
+        if (!$this->auth->checkPermission(7, 'view')) { // Quyền quản lý quyền
             die("Bạn không có quyền xem chi tiết quyền.");
         }
         $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -58,7 +58,7 @@ class RoleDetailController {
     }
 
     public function edit() {
-        if (!$this->auth->checkPermission(6, 'edit')) {
+        if (!$this->auth->checkPermission(7, 'edit')) {
             die("Bạn không có quyền sửa chi tiết quyền.");
         }
         $manhomquyen = $_GET['manhomquyen'];
@@ -87,7 +87,7 @@ class RoleDetailController {
     }
 
     public function delete() {
-        if (!$this->auth->checkPermission(6, 'delete')) {
+        if (!$this->auth->checkPermission(7, 'delete')) {
             die("Bạn không có quyền xóa chi tiết quyền.");
         }
         $manhomquyen = $_GET['manhomquyen'];

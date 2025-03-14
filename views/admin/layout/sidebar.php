@@ -45,6 +45,10 @@ $user = $auth->getCurrentUser();
             <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
             Quản lý quyền
         </a>
+        
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(7, 'view')): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=role_detail&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
             Quản lý chi tiết quyền

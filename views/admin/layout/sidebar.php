@@ -55,6 +55,11 @@ $user = $auth->getCurrentUser();
         </a>
     <?php endif; ?>
 
+    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=function&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-cogs"></i></div>
+            Quản lý danh mục chức năng
+        </a>
+
     <?php if ($user): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-sign-out-alt"></i></div>

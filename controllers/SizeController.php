@@ -1,14 +1,24 @@
 <?php
 require_once __DIR__ . '/../models/SizeModel.php';
+require_once __DIR__ . '/../core/Auth.php';
 
 class SizeController {
     private $sizeModel;
+    private $auth;
 
     public function __construct() {
         $this->sizeModel = new SizeModel();
+        $this->auth = new Auth();
+        if (!$this->auth->getCurrentUser()) {
+            header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
+            exit;
+        }
     }
 
     public function index() {
+        if (!$this->auth->checkPermission(3, 'view')) {
+            die("Bạn không có quyền xem danh sách quản lý kích thước.");
+        }
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5; // Số bản ghi mỗi trang
@@ -24,6 +34,9 @@ class SizeController {
     }
 
     public function add() {
+        if (!$this->auth->checkPermission(3, 'add')) {
+            die("Bạn không có quyền thêm kích thước.");
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'MaSize' => $_POST['MaSize']
@@ -41,6 +54,9 @@ class SizeController {
     }
 
     public function edit() {
+        if (!$this->auth->checkPermission(3, 'edit')) {
+            die("Bạn không có quyền sửa kích thước.");
+        }
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -60,6 +76,9 @@ class SizeController {
     }
 
     public function delete() {
+        if (!$this->auth->checkPermission(3, 'delete')) {
+            die("Bạn không có quyền xóa kích thước.");
+        }
         $id = $_GET['id'];
         if ($this->sizeModel->deleteSize($id)) {
             echo json_encode(['success' => true, 'message' => 'Xóa kích thước thành công']);

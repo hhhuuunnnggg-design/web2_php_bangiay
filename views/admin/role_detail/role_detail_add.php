@@ -43,7 +43,7 @@ document.getElementById('addRoleDetailForm').addEventListener('submit', function
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+        document.getElementById('message').innerHTML = '<p style="color:red;">Quyền đã tồn tại</p>';
     });
 });
 </script>

@@ -25,7 +25,7 @@ class CategoryController {
         $offset = ($page - 1) * $limit;
 
         $categories = $this->categoryModel->getAllCategories($search, $limit, $offset);
-        $totalCategories = $this->categoryModel->getTotalCategories($search);
+        $totalCategories = $this->categoryModel->getTotalCategories($search); // Giả định có hàm này trong CategoryModel
         $totalPages = ceil($totalCategories / $limit);
 
         $title = "Quản lý danh mục";

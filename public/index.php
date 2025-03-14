@@ -29,6 +29,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/RoleController.php';
         $controller = new RoleController();
         break;
+    case 'role_detail':
+        require_once __DIR__ . '/../controllers/RoleDetailController.php';
+        $controller = new RoleDetailController();
+        break;
     case 'auth':
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();

@@ -116,7 +116,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                document.getElementById('message').innerHTML = '<p style="color:red;">không thể xóa vì số lượng sản phẩm vẫn còn !</p>';
             });
         }
     });

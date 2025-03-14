@@ -47,10 +47,10 @@ class ProductController {
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
                 }
-                $fileName = uniqid() . '-' . basename($_FILES['AnhNen']['name']); // Tên file dài vẫn được lưu đầy đủ
+                $fileName = uniqid() . '-' . basename($_FILES['AnhNen']['name']);
                 $uploadFile = $uploadDir . $fileName;
                 if (move_uploaded_file($_FILES['AnhNen']['tmp_name'], $uploadFile)) {
-                    $anh_nen = 'images/anh_nen/' . $fileName; // Đường dẫn lưu vào DB
+                    $anh_nen = 'images/anh_nen/' . $fileName;
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Lỗi upload ảnh']);
                     exit;
@@ -65,7 +65,19 @@ class ProductController {
                 'DonGia' => $_POST['DonGia'],
                 'AnhNen' => $anh_nen
             ];
-            if ($this->productModel->addProduct($data)) {
+            $sizes = isset($_POST['MaSize']) && is_array($_POST['MaSize']) ? $_POST['MaSize'] : [];
+            $colors = isset($_POST['MaMau']) && is_array($_POST['MaMau']) ? $_POST['MaMau'] : [];
+    
+            // Debug: Kiểm tra dữ liệu nhận được
+            error_log("Sizes: " . json_encode($sizes));
+            error_log("Colors: " . json_encode($colors));
+    
+            if (empty($sizes) || empty($colors)) {
+                echo json_encode(['success' => false, 'message' => 'Vui lòng chọn ít nhất 1 size và 1 màu']);
+                exit;
+            }
+    
+            if ($this->productModel->addProduct($data, $sizes, $colors)) {
                 echo json_encode(['success' => true, 'message' => 'Thêm sản phẩm thành công']);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Lỗi thêm sản phẩm']);
@@ -74,6 +86,8 @@ class ProductController {
         }
         $categories = $this->productModel->getCategories();
         $suppliers = $this->productModel->getSuppliers();
+        $sizes = $this->productModel->getSizes();
+        $colors = $this->productModel->getColors();
         $title = "Thêm sản phẩm";
         $content_file = __DIR__ . '/../views/admin/product/product_add.php';
         include __DIR__ . '/../views/admin/layout/layout.php';
@@ -132,7 +146,7 @@ class ProductController {
         if ($this->productModel->deleteProduct($id)) {
             echo json_encode(['success' => true, 'message' => 'Xóa sản phẩm thành công']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Lỗi xóa sản phẩm']);
+            echo json_encode(['success' => false, 'message' => 'Không thể xóa sản phẩm vì số lượng không phải 0']);
         }
         exit;
     }

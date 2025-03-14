@@ -72,7 +72,7 @@ class ProductModel {
             $stmt->bind_param("d", $price_min);
         } elseif ($price_max !== null) {
             $stmt->bind_param("d", $price_max);
-        } // Không cần bind_param khi không có tham số
+        }
         
         $stmt->execute();
         $result = $stmt->get_result();
@@ -89,12 +89,37 @@ class ProductModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // Thêm sản phẩm (SoLuong mặc định = 0)
-    public function addProduct($data) {
+    // Thêm sản phẩm và chi tiết sản phẩm
+    public function addProduct($data, $sizes = [], $colors = []) {
+        // Thêm sản phẩm vào bảng sanpham
         $sql = "INSERT INTO sanpham (TenSP, MaDM, MaNCC, SoLuong, MoTa, DonGia, AnhNen) VALUES (?, ?, ?, 0, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("siisds", $data['TenSP'], $data['MaDM'], $data['MaNCC'], $data['MoTa'], $data['DonGia'], $data['AnhNen']);
-        return $stmt->execute();
+        $stmt->execute();
+        $maSP = $this->conn->insert_id; // Lấy MaSP vừa thêm
+    
+        // Debug: Kiểm tra MaSP
+        error_log("MaSP vừa thêm: " . $maSP);
+    
+        // Thêm chi tiết sản phẩm vào bảng chitietsanpham
+        if (!empty($sizes) && !empty($colors)) {
+            $sqlDetail = "INSERT INTO chitietsanpham (MaSP, MaSize, MaMau, SoLuong) VALUES (?, ?, ?, 0)";
+            $stmtDetail = $this->conn->prepare($sqlDetail);
+            $count = 0;
+            foreach ($sizes as $size) {
+                foreach ($colors as $color) {
+                    $stmtDetail->bind_param("iis", $maSP, $size, $color);
+                    if ($stmtDetail->execute()) {
+                        $count++;
+                    } else {
+                        error_log("Lỗi thêm chi tiết: " . $stmtDetail->error);
+                    }
+                }
+            }
+            error_log("Số bản ghi thêm vào chitietsanpham: " . $count);
+        }
+    
+        return true;
     }
 
     // Cập nhật sản phẩm (không cho sửa SoLuong)
@@ -106,12 +131,33 @@ class ProductModel {
     }
 
     // Xóa sản phẩm
+    // Xóa sản phẩm (kiểm tra SoLuong = 0 trước)
     public function deleteProduct($id) {
         $id = $this->conn->real_escape_string($id);
-        $sql = "DELETE FROM sanpham WHERE MaSP = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+
+        // Kiểm tra SoLuong của sản phẩm
+        $sqlCheck = "SELECT SoLuong FROM sanpham WHERE MaSP = ?";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $id);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result()->fetch_assoc();
+
+        if ($result && $result['SoLuong'] == 0) {
+            // Xóa các bản ghi liên quan trong chitietsanpham
+            $sqlDetail = "DELETE FROM chitietsanpham WHERE MaSP = ?";
+            $stmtDetail = $this->conn->prepare($sqlDetail);
+            $stmtDetail->bind_param("i", $id);
+            $stmtDetail->execute();
+
+            // Sau đó xóa sản phẩm trong sanpham
+            $sql = "DELETE FROM sanpham WHERE MaSP = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        } else {
+            // Nếu SoLuong != 0, không xóa và trả về false
+            return false;
+        }
     }
 
     // Lấy danh sách danh mục
@@ -123,6 +169,18 @@ class ProductModel {
     // Lấy danh sách nhà cung cấp
     public function getSuppliers() {
         $sql = "SELECT * FROM nhacc";
+        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Lấy danh sách size
+    public function getSizes() {
+        $sql = "SELECT * FROM size";
+        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Lấy danh sách màu
+    public function getColors() {
+        $sql = "SELECT * FROM mau";
         return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
 

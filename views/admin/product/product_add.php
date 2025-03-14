@@ -2,27 +2,56 @@
 <form id="addProductForm" enctype="multipart/form-data">
     <label>Tên sản phẩm:</label>
     <input type="text" name="TenSP" required><br>
+
     <label>Danh mục:</label>
     <select name="MaDM">
-       
+        <option value="">Không chọn</option>
         <?php foreach ($categories as $category): ?>
             <option value="<?php echo $category['MaDM']; ?>"><?php echo $category['TenDM']; ?></option>
         <?php endforeach; ?>
     </select><br>
+
     <label>Nhà cung cấp:</label>
     <select name="MaNCC" required>
         <?php foreach ($suppliers as $supplier): ?>
             <option value="<?php echo $supplier['MaNCC']; ?>"><?php echo $supplier['TenNCC']; ?></option>
         <?php endforeach; ?>
     </select><br>
+
+    <!-- Size dưới dạng checkbox -->
+    <label>Size:</label>
+    <div>
+        <?php foreach ($sizes as $size): ?>
+            <label>
+                <input type="checkbox" name="MaSize[]" value="<?php echo $size['MaSize']; ?>"> 
+                <?php echo $size['MaSize']; ?>
+            </label>
+        <?php endforeach; ?>
+    </div><br>
+
+    <!-- Màu dưới dạng checkbox -->
+    <label>Màu:</label>
+    <div>
+        <?php foreach ($colors as $color): ?>
+            <label>
+                <input type="checkbox" name="MaMau[]" value="<?php echo $color['MaMau']; ?>"> 
+                <?php echo $color['MaMau']; ?>
+            </label>
+        <?php endforeach; ?>
+    </div><br>
+
     <label>Mô tả:</label>
     <textarea name="MoTa"></textarea><br>
+
     <label>Đơn giá (VNĐ):</label>
     <input type="number" name="DonGia" min="0" required><br>
+
     <label>Ảnh nền:</label>
     <input type="file" name="AnhNen" accept="image/*"><br>
+
     <button type="submit">Thêm</button>
 </form>
+
 <div id="message"></div>
 
 <script>

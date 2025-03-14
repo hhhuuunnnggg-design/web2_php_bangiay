@@ -76,7 +76,13 @@ $user = $auth->getCurrentUser();
             <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
             Quản lý sản phẩm
         </a>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=product_detail&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
+            Quản lý chi tiết sản phẩm
+        </a>
     <?php endif; ?>
+
+    
 
     
 

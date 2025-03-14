@@ -16,7 +16,7 @@ class ProductDetailController {
     }
 
     public function index() {
-        if (!$this->auth->checkPermission(1, 'view')) {
+        if (!$this->auth->checkPermission(10, 'view')) {
             die("Bạn không có quyền xem chi tiết sản phẩm.");
         }
         $search_name = isset($_GET['search_name']) ? $_GET['search_name'] : '';

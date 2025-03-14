@@ -49,6 +49,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/ProductDetailController.php';
         $controller = new ProductDetailController();
         break;
+    case 'import':
+        require_once __DIR__ . '/../controllers/ImportController.php';
+        $controller = new ImportController();
+        break;
     case 'auth':
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();

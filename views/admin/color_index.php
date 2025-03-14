@@ -18,6 +18,7 @@
     </thead>
     <tbody>
         <?php 
+        require_once __DIR__ . '../../../core/Auth.php'; // Đường dẫn tới Auth.php
         if (!empty($colors)): 
             $stt = ($page - 1) * $limit + 1;
             foreach ($colors as $row): 
@@ -26,15 +27,25 @@
             <td><?php echo $stt++; ?></td>
             <td><?php echo $row['MaMau']; ?></td>
             <td>
-                <a href="/shoeimportsystem/public/index.php?controller=color&action=add" style="text-decoration: none;">
-                    <button type="button" class="btn btn-primary">Thêm</button>
-                </a>
-                <a href="/shoeimportsystem/public/index.php?controller=color&action=edit&id=<?php echo urlencode($row['MaMau']); ?>">
-                    <button type="button" class="btn btn-warning">Sửa</button>
-                </a>
-                <a class="delete-btn" data-id="<?php echo urlencode($row['MaMau']); ?>">
-                    <button type="button" class="btn btn-danger">Xóa</button>
-                </a>
+                <?php if ($auth->checkPermission(2, 'add')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=color&action=add" style="text-decoration: none;">
+                        <button type="button" class="btn btn-primary">Thêm</button>
+                    </a>
+                <?php endif; ?>
+
+                <?php if ($auth->checkPermission(1, 'add')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=color&action=edit&id=<?php echo urlencode($row['MaMau']); ?>">
+                        <button type="button" class="btn btn-warning">Sửa</button>
+                    </a>
+                <?php endif; ?>
+
+                <?php if ($auth->checkPermission(1, 'add')): ?>
+                    <a class="delete-btn" data-id="<?php echo urlencode($row['MaMau']); ?>">
+                        <button type="button" class="btn btn-danger">Xóa</button>
+                    </a>
+                <?php endif; ?>
+                
+                
             </td>
         </tr>
         <?php 

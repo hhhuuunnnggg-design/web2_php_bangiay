@@ -1,14 +1,23 @@
 <?php
 require_once __DIR__ . '/../models/ColorModel.php';
-
+require_once __DIR__ . '/../core/Auth.php';
 class ColorController {
     private $colorModel;
+    private $auth;
 
     public function __construct() {
         $this->colorModel = new ColorModel();
+        $this->auth = new Auth();
+        if (!$this->auth->getCurrentUser()) {
+            header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
+            exit;
+        }
     }
 
     public function index() {
+        if (!$this->auth->checkPermission(2, 'view')) {
+            die("Bạn không có quyền xem quản lý màu sắc.");
+        }
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5; // Số bản ghi mỗi trang
@@ -24,6 +33,9 @@ class ColorController {
     }
 
     public function add() {
+        if (!$this->auth->checkPermission(2, 'add')) {
+            die("Bạn không có quyền thêm màu sắc.");
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'MaMau' => $_POST['MaMau']
@@ -41,6 +53,9 @@ class ColorController {
     }
 
     public function edit() {
+        if (!$this->auth->checkPermission(2, 'edit')) {
+            die("Bạn không có quyền sửa màu sắc.");
+        }
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -60,6 +75,9 @@ class ColorController {
     }
 
     public function delete() {
+        if (!$this->auth->checkPermission(2, 'delete')) {
+            die("Bạn không có quyền xóa màu sắc");
+        }
         $id = $_GET['id'];
         if ($this->colorModel->deleteColor($id)) {
             echo json_encode(['success' => true, 'message' => 'Xóa màu sắc thành công']);

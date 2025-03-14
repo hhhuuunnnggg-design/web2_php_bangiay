@@ -1,14 +1,24 @@
 <?php
 require_once __DIR__ . '/../models/SupplierModel.php';
+require_once __DIR__ . '/../core/Auth.php';
 
 class SupplierController {
     private $supplierModel;
+    private $auth;
 
     public function __construct() {
         $this->supplierModel = new SupplierModel();
+        $this->auth = new Auth();
+        if (!$this->auth->getCurrentUser()) {
+            header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
+            exit;
+        }
     }
 
     public function index() {
+        if (!$this->auth->checkPermission(4, 'view')) {
+            die("Bạn không có quyền xem danh sách nhà cung cấp.");
+        }
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5; // Số bản ghi mỗi trang
@@ -24,6 +34,9 @@ class SupplierController {
     }
 
     public function add() {
+        if (!$this->auth->checkPermission(4, 'add')) {
+            die("Bạn không có quyền xem thêm nhà cung cấp.");
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'TenNCC' => $_POST['TenNCC']
@@ -41,6 +54,9 @@ class SupplierController {
     }
 
     public function edit() {
+        if (!$this->auth->checkPermission(4, 'edit')) {
+            die("Bạn không có quyền xem sửa nhà cung cấp.");
+        }
         $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -60,6 +76,9 @@ class SupplierController {
     }
 
     public function delete() {
+        if (!$this->auth->checkPermission(4, 'delete')) {
+            die("Bạn không có quyền xem xóa nhà cung cấp.");
+        }
         $id = $_GET['id'];
         if ($this->supplierModel->deleteSupplier($id)) {
             echo json_encode(['success' => true, 'message' => 'Xóa nhà cung cấp thành công']);

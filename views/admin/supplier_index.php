@@ -19,6 +19,9 @@
     </thead>
     <tbody>
         <?php 
+        require_once __DIR__ . '../../../core/Auth.php'; // Đường dẫn tới Auth.php
+        
+        $auth = new Auth();
         if (!empty($suppliers)): 
             $stt = ($page - 1) * $limit + 1;
             foreach ($suppliers as $row): 
@@ -28,15 +31,26 @@
             <td><?php echo $row['MaNCC']; ?></td>
             <td><?php echo $row['TenNCC']; ?></td>
             <td>
-                <a href="/shoeimportsystem/public/index.php?controller=supplier&action=add">
-                    <button type="button" class="btn btn-primary">Thêm</button>
-                </a>
-                <a href="/shoeimportsystem/public/index.php?controller=supplier&action=edit&id=<?php echo $row['MaNCC']; ?>">
-                    <button type="button" class="btn btn-warning">Sửa</button>
-                </a>
-                <a class="delete-btn" data-id="<?php echo $row['MaNCC']; ?>">
-                    <button type="button" class="btn btn-danger">Xóa</button>
-                </a>
+                <?php if ($auth->checkPermission(4, 'add')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=supplier&action=add">
+                        <button type="button" class="btn btn-primary">Thêm</button>
+                    </a>
+                <?php endif; ?>
+
+                <?php if ($auth->checkPermission(4, 'edit')): ?>
+                    <a href="/shoeimportsystem/public/index.php?controller=supplier&action=edit&id=<?php echo $row['MaNCC']; ?>">
+                        <button type="button" class="btn btn-warning">Sửa</button>
+                    </a>
+                <?php endif; ?>
+
+                <?php if ($auth->checkPermission(4, 'delete')): ?>
+                    <a class="delete-btn" data-id="<?php echo $row['MaNCC']; ?>">
+                        <button type="button" class="btn btn-danger">Xóa</button>
+                    </a>
+                <?php endif; ?>
+                
+               
+                
             </td>
         </tr>
         <?php 

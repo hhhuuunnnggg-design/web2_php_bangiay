@@ -37,6 +37,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/FunctionController.php';
         $controller = new FunctionController();
         break;
+    case 'promotion':
+        require_once __DIR__ . '/../controllers/PromotionController.php';
+        $controller = new PromotionController();
+        break;
     case 'auth':
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();

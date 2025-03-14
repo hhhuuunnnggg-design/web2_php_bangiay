@@ -48,6 +48,8 @@ $user = $auth->getCurrentUser();
         
     <?php endif; ?>
 
+
+
     <?php if ($auth->checkPermission(7, 'view')): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=role_detail&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
@@ -55,10 +57,21 @@ $user = $auth->getCurrentUser();
         </a>
     <?php endif; ?>
 
-    <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=function&action=index">
+    <?php if ($auth->checkPermission(8, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=function&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-cogs"></i></div>
             Quản lý danh mục chức năng
         </a>
+    <?php endif; ?>
+
+    <?php if ($auth->checkPermission(9, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=promotion&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-gift"></i></div>
+            Quản lý khuyến mãi
+        </a>
+    <?php endif; ?>
+
+    
 
     <?php if ($user): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">

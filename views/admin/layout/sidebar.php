@@ -71,6 +71,15 @@ $user = $auth->getCurrentUser();
         </a>
     <?php endif; ?>
 
+    <?php if ($auth->checkPermission(10, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=product&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
+            Quản lý sản phẩm
+        </a>
+    <?php endif; ?>
+
+    
+
     
 
     <?php if ($user): ?>

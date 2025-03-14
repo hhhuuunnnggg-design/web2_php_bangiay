@@ -1,11 +1,19 @@
 <h1>Quản lý chi tiết quyền</h1>
-<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
-    <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo vai trò hoặc chức năng">
-    <input type="hidden" name="controller" value="role_detail">
-    <input type="hidden" name="action" value="index">
-    <button type="submit">Tìm</button>
-</form>
+<div style="display: flex;justify-content: space-between;">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo vai trò hoặc chức năng">
+        <input type="hidden" name="controller" value="role_detail">
+        <input type="hidden" name="action" value="index">
+        <button type="submit">Tìm</button>
+    </form>
 
+    <?php if ($auth->checkPermission(7, 'add')): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
+            <button type="button" class="btn btn-primary"  style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+        </a>
+    <?php endif; ?>
+
+</div>
 <div id="message"></div>
 
 <table border="1" id="roleDetailTable">
@@ -32,11 +40,7 @@
             <td><?php echo $row['TenChucNang']; ?></td>
             <td><?php echo $row['hanhdong']; ?></td>
             <td>
-                <?php if ($auth->checkPermission(7, 'add')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
-                        <button type="button" class="btn btn-primary">Thêm</button>
-                    </a>
-                <?php endif; ?>
+                
                 <?php if ($auth->checkPermission(7, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
                         <button type="button" class="btn btn-warning">Sửa</button>

@@ -1,13 +1,21 @@
 <h1>Quản lý sản phẩm</h1>
-<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
-    <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo tên">
-    <input type="number" name="price_min" value="<?php echo htmlspecialchars($price_min ?? ''); ?>" placeholder="Giá min" min="0">
-    <input type="number" name="price_max" value="<?php echo htmlspecialchars($price_max ?? ''); ?>" placeholder="Giá max" min="0">
-    <label><input type="checkbox" name="low_stock" value="1" <?php if ($low_stock) echo 'checked'; ?>> Sắp hết (≤ 20)</label>
-    <input type="hidden" name="controller" value="product">
-    <input type="hidden" name="action" value="index">
-    <button type="submit">Tìm</button>
-</form>
+<div style="display: flex;justify-content: space-between;">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo tên">
+        <input type="number" name="price_min" value="<?php echo htmlspecialchars($price_min ?? ''); ?>" placeholder="Giá min" min="0">
+        <input type="number" name="price_max" value="<?php echo htmlspecialchars($price_max ?? ''); ?>" placeholder="Giá max" min="0">
+        <label><input type="checkbox" name="low_stock" value="1" <?php if ($low_stock) echo 'checked'; ?>> Sắp hết (≤ 20)</label>
+        <input type="hidden" name="controller" value="product">
+        <input type="hidden" name="action" value="index">
+        <button type="submit">Tìm</button>
+    </form>
+
+    <?php if ($auth->checkPermission(10, 'add')): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=product&action=add">
+            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+        </a>
+    <?php endif; ?>
+</div>
 
 <div id="message"></div>
 
@@ -51,11 +59,7 @@
                 <?php endif; ?>
             </td>
             <td>
-                <?php if ($auth->checkPermission(10, 'add')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=product&action=add">
-                        <button type="button" class="btn btn-primary">Thêm</button>
-                    </a>
-                <?php endif; ?>
+                
                 <?php if ($auth->checkPermission(10, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['MaSP']; ?>">
                         <button type="button" class="btn btn-warning">Sửa</button>

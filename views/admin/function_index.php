@@ -1,10 +1,18 @@
 <h1>Quản lý danh mục chức năng</h1>
-<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
-    <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm chức năng">
-    <input type="hidden" name="controller" value="function">
-    <input type="hidden" name="action" value="index">
-    <button type="submit">Tìm</button>
-</form>
+<div style="display: flex;justify-content: space-between;">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm chức năng">
+        <input type="hidden" name="controller" value="function">
+        <input type="hidden" name="action" value="index">
+        <button type="submit">Tìm</button>
+    </form>
+
+    <?php if ($auth->checkPermission(8, 'add')): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=function&action=add">
+            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+        </a>
+    <?php endif; ?>
+</div>
 
 <div id="message"></div>
 
@@ -30,11 +38,7 @@
             <td><?php echo $row['chucnang']; ?></td>
             <td><?php echo $row['tenchucnang']; ?></td>
             <td>
-                <?php if ($auth->checkPermission(8, 'add')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=function&action=add">
-                        <button type="button" class="btn btn-primary">Thêm</button>
-                    </a>
-                <?php endif; ?>
+                
                 <?php if ($auth->checkPermission(8, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=function&action=edit&id=<?php echo $row['chucnang']; ?>">
                         <button type="button" class="btn btn-warning">Sửa</button>

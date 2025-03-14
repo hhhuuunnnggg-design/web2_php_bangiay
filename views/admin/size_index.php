@@ -1,10 +1,18 @@
 <h1>Quản lý kích thước</h1>
-<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
-    <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm kích thước">
-    <input type="hidden" name="controller" value="size">
-    <input type="hidden" name="action" value="index">
-    <button type="submit">Tìm</button>
-</form>
+<div style="display: flex;justify-content: space-between;">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm kích thước">
+        <input type="hidden" name="controller" value="size">
+        <input type="hidden" name="action" value="index">
+        <button type="submit">Tìm</button>
+    </form>
+
+    <?php if ($auth->checkPermission(3, 'add')): ?>
+        <a href="/shoeimportsystem/public/index.php?controller=size&action=add">
+            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+        </a>
+    <?php endif; ?>
+</div>
 
 <div id="message"></div>
 
@@ -29,11 +37,7 @@
             <td><?php echo $stt++; ?></td>
             <td><?php echo $row['MaSize']; ?></td>
             <td>
-                <?php if ($auth->checkPermission(3, 'add')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=size&action=add">
-                        <button type="button" class="btn btn-primary">Thêm</button>
-                    </a>
-                <?php endif; ?>
+                
 
                 <?php if ($auth->checkPermission(3, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=<?php echo $row['MaSize']; ?>">

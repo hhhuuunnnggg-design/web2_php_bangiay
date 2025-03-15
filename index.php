@@ -1,6 +1,6 @@
 <?php
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
-$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'home'; // Mặc định là home
+$action = isset($_GET['action']) ? $_GET['action'] : 'index'; // Mặc định là index
 
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
@@ -85,10 +85,10 @@ switch ($action) {
         $controller->logout();
         break;
     case 'import':
-        $controller->import(); 
+        $controller->import();
         break;
     case 'export':
-        $controller->export(); 
+        $controller->export();
         break;
     default:
         die("Action không tồn tại");

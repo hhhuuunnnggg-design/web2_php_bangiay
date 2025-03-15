@@ -488,3 +488,12 @@
   line-height: 35px;
 }
 /*** Footer End ***/
+
+/*** hùng test ***/
+.category-section {
+  display: block;
+}
+.category-section.hidden {
+  display: none;
+}
+/*** end hùng test ***/

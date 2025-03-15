@@ -82,5 +82,20 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get('category');
+    
+    if (selectedCategory) {
+        document.querySelectorAll('.category-section').forEach(section => {
+            if (section.id !== `category-${selectedCategory}`) {
+                section.classList.add('hidden');
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>

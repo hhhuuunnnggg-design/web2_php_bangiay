@@ -43,7 +43,8 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand"><h1 class="text-primary display-6">Nhóm 18</h1></a>
+                    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand"><h1 class="text-primary display-6"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
+                    </h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -87,6 +88,10 @@
                         
                         <h1 class="mb-5 display-3 text-primary">Web bán giày siêu chất lượng cao</h1>
                         
+                       <div>
+                       
+                       </div>
+                        
                     </div>
                     <div class="col-md-12 col-lg-5">
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
@@ -115,4 +120,35 @@
         </div>
         <!-- Hero End -->
     </header>
+    
     <main>
+    <div class="container mt-5">
+    <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
+    <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
+        <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
+            <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
+            <div class="row">
+                <?php foreach ($categoryData['products'] as $product): ?>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <?php if (!empty($product['AnhNen'])): ?>
+                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
+                            <?php else: ?>
+                                <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+                            <?php endif; ?>
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
+                                <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <?php if (!isset($_GET['category'])): // Chỉ hiển thị "Xem thêm" khi chưa chọn danh mục ?>
+                <div class="text-center mt-3">
+                    <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>

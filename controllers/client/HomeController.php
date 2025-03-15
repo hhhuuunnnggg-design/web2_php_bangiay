@@ -46,4 +46,27 @@ class HomeController {
         $title = "Trang chủ";
         include __DIR__ . '/../../views/client/home.php';
     }
+    public function detail() {
+        $productId = isset($_GET['id']) ? $_GET['id'] : null;
+        if (!$productId) {
+            // Redirect hoặc hiển thị lỗi nếu không có ID sản phẩm
+            header("Location: /shoeimportsystem/index.php?controller=home&action=index");
+            exit;
+        }
+    
+        // Lấy thông tin sản phẩm
+        $product = $this->productModel->getProductById($productId); // Hàm này cần được thêm vào ProductModel
+        if (!$product) {
+            // Xử lý trường hợp không tìm thấy sản phẩm
+            header("Location: /shoeimportsystem/index.php?controller=error&action=404");
+            exit;
+        }
+    
+        // Lấy chi tiết kích thước và màu sắc
+        $productDetails = $this->productModel->getProductDetails($productId); // Hàm này cần được thêm vào ProductModel
+    
+        // Gọi view
+        $title = "Chi tiết sản phẩm - " . $product['TenSP'];
+        include __DIR__ . '/../../views/client/product_detail.php';
+    }
 }

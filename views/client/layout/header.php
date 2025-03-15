@@ -120,7 +120,7 @@
         </div>
         <!-- Hero End -->
     </header>
-    
+
     <main>
     <div class="container mt-5">
     <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
@@ -130,18 +130,22 @@
             <div class="row">
                 <?php foreach ($categoryData['products'] as $product): ?>
                     <div class="col-md-3 mb-4">
-                        <div class="card h-100">
-                            <?php if (!empty($product['AnhNen'])): ?>
-                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
-                            <?php else: ?>
-                                <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
-                            <?php endif; ?>
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
-                                <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
-                            </div>
-                        </div>
+                <div class="card h-100">
+                    <?php if (!empty($product['AnhNen'])): ?>
+                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                            <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
+                        </a>
+                    <?php else: ?>
+                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                            <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+                        </a>
+                    <?php endif; ?>
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
+                        <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
                     </div>
+                </div>
+            </div>
                 <?php endforeach; ?>
             </div>
             <?php if (!isset($_GET['category'])): // Chỉ hiển thị "Xem thêm" khi chưa chọn danh mục ?>
@@ -151,4 +155,6 @@
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
+
+    
 </div>

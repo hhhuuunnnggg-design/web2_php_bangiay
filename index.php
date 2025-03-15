@@ -58,7 +58,7 @@ switch ($controller) {
         $controller = new AuthController();
         break;
     case 'home':
-        require_once __DIR__ . '/controllers/HomeController.php';
+        require_once __DIR__ . '/controllers/client/HomeController.php';
         $controller = new HomeController();
         break;
     default:

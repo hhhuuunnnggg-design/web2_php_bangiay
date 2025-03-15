@@ -80,6 +80,12 @@ switch ($action) {
     case 'logout':
         $controller->logout();
         break;
+    case 'import':
+        $controller->import(); 
+        break;
+    case 'export':
+        $controller->export(); 
+        break;
     default:
         die("Action không tồn tại");
 }

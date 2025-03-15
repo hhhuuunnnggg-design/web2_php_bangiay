@@ -1,5 +1,5 @@
 <h1>Quản lý danh mục</h1>
-<div style="display: flex;justify-content: space-between;">
+<div style="display: flex; justify-content: space-between;">
     <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
         <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm danh mục">
         <input type="hidden" name="controller" value="category">
@@ -7,13 +7,18 @@
         <button type="submit">Tìm</button>
     </form>
     
-    <?php if ($auth->checkPermission(1, 'add')): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=category&action=add">
-            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">
-                Thêm
-            </button>
-        </a>
-    <?php endif; ?>
+    <div>
+        <?php if ($auth->checkPermission(1, 'add')): ?>
+            <a href="/shoeimportsystem/public/index.php?controller=category&action=add">
+                <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+            </a>
+            <button type="button" class="btn btn-success" style="margin-top: 40px; width: 100px; height: 40px;" onclick="document.getElementById('importModal').style.display='block'">Import</button>
+            <a href="/shoeimportsystem/public/index.php?controller=category&action=export">
+                <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
+            </a>
+        <?php endif; ?>
+        
+    </div>
 </div>
 
 <div id="message"></div>
@@ -29,8 +34,7 @@
     </thead>
     <tbody>
         <?php 
-        require_once __DIR__ . '../../../core/Auth.php'; // Đường dẫn tới Auth.php
-        
+        require_once __DIR__ . '/../../core/Auth.php'; // Sửa đường dẫn
         $auth = new Auth();
         if (!empty($categories)): 
             $stt = ($page - 1) * $limit + 1;
@@ -41,7 +45,6 @@
             <td><?php echo $row['MaDM']; ?></td>
             <td><?php echo $row['TenDM']; ?></td>
             <td>
-                
                 <?php if ($auth->checkPermission(1, 'edit')): ?>
                     <a href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">
                         <button type="button" class="btn btn-warning">Sửa</button>
@@ -114,59 +117,20 @@
     </nav>
 </div>
 
+<!-- Modal để import -->
+<div id="importModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid #ccc;">
+    <h2>Import danh mục</h2>
+    <form id="importForm" enctype="multipart/form-data">
+        <label>Chọn file CSV:</label>
+        <input type="file" name="importFile" accept=".csv" required><br>
+        <button type="submit">Import</button>
+        <button type="button" onclick="closeModal()">Hủy</button>
+    </form>
+</div>
 
 <style>
-    .pagination { margin-top: 20px; }
-    .pagination a { margin: 0 5px; text-decoration: none; }
-    .pagination a:hover { text-decoration: underline; }
+    .pagination-container { margin-top: 20px; }
 </style>
-
-<style>
-    .pagination-container {
-        margin-top: 20px;
-    }
-
-    /* Kích thước nhỏ hơn */
-    .pagination .page-link {
-        padding: 4px 8px;
-        font-size: 14px;
-        color: #007bff;
-        border-radius: 3px;
-        border: 1px solid #dee2e6;
-        transition: background-color 0.2s ease;
-    }
-
-    /* Hiệu ứng khi di chuột */
-    .pagination .page-link:hover {
-        background-color: #f1f1f1;
-    }
-
-    /* Giảm khoảng cách giữa các nút */
-    .pagination .page-item {
-        margin: 0 2px;
-    }
-
-    /* Căn về phía bên phải */
-    .pagination {
-        justify-content: flex-end;
-    }
-
-    /* Định dạng cho trang hiện tại */
-    .pagination .page-item.active .page-link {
-        background-color: #007bff;
-        color: #ffffff;
-        border-color: #007bff;
-    }
-
-    /* Vô hiệu hóa nút */
-    .pagination .page-item.disabled .page-link {
-        color: #6c757d;
-        pointer-events: none;
-        background-color: #f8f9fa;
-        border-color: #dee2e6;
-    }
-</style>
-
 
 <script>
 document.querySelectorAll('.delete-btn').forEach(button => {
@@ -192,4 +156,32 @@ document.querySelectorAll('.delete-btn').forEach(button => {
         }
     });
 });
+
+document.getElementById('importForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+
+    fetch('/shoeimportsystem/public/index.php?controller=category&action=import', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('message').innerHTML = '<p style="color:green;">Import thành công!</p>';
+            closeModal();
+            location.reload();
+        } else {
+            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+    });
+});
+
+function closeModal() {
+    document.getElementById('importModal').style.display = 'none';
+}
 </script>

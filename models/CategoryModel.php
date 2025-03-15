@@ -54,6 +54,29 @@ class CategoryModel {
         return $this->conn->query($sql);
     }
 
+    public function importCategory($data) {
+        // Kiểm tra xem MaDM đã tồn tại chưa, nếu có thì update, nếu không thì insert
+        $sqlCheck = "SELECT MaDM FROM danhmuc WHERE MaDM = ?";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $data['MaDM']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+
+        if ($result->num_rows > 0) {
+            // Update nếu MaDM đã tồn tại
+            $sql = "UPDATE danhmuc SET TenDM = ? WHERE MaDM = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $data['TenDM'], $data['MaDM']);
+            $stmt->execute();
+        } else {
+            // Insert nếu MaDM chưa tồn tại
+            $sql = "INSERT INTO danhmuc (MaDM, TenDM) VALUES (?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("is", $data['MaDM'], $data['TenDM']);
+            $stmt->execute();
+        }
+    }
+
     public function __destruct() {
         $this->db->closeConnection();
     }

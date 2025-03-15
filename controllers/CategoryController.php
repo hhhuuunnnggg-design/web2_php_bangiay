@@ -25,7 +25,7 @@ class CategoryController {
         $offset = ($page - 1) * $limit;
 
         $categories = $this->categoryModel->getAllCategories($search, $limit, $offset);
-        $totalCategories = $this->categoryModel->getTotalCategories($search); // Giả định có hàm này trong CategoryModel
+        $totalCategories = $this->categoryModel->getTotalCategories($search);
         $totalPages = ceil($totalCategories / $limit);
 
         $title = "Quản lý danh mục";
@@ -85,6 +85,57 @@ class CategoryController {
         } else {
             echo json_encode(['success' => false, 'message' => 'Lỗi xóa danh mục']);
         }
+        exit;
+    }
+
+    public function import() {
+        if (!$this->auth->checkPermission(1, 'add')) {
+            die("Bạn không có quyền import danh mục.");
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['importFile'])) {
+            $file = $_FILES['importFile'];
+            if ($file['type'] !== 'text/csv') {
+                echo json_encode(['success' => false, 'message' => 'File phải là định dạng CSV']);
+                exit;
+            }
+
+            $handle = fopen($file['tmp_name'], 'r');
+            if ($handle !== false) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                    if (count($data) >= 2) { // Giả sử CSV có ít nhất 2 cột: MaDM, TenDM
+                        $categoryData = [
+                            'MaDM' => $data[0], // MaDM từ cột 1
+                            'TenDM' => $data[1] // TenDM từ cột 2
+                        ];
+                        $this->categoryModel->importCategory($categoryData);
+                    }
+                }
+                fclose($handle);
+                echo json_encode(['success' => true, 'message' => 'Import danh mục thành công']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Không thể đọc file CSV']);
+            }
+            exit;
+        }
+    }
+
+    public function export() {
+        if (!$this->auth->checkPermission(1, 'view')) {
+            die("Bạn không có quyền export danh mục.");
+        }
+        $categories = $this->categoryModel->getAllCategories('', PHP_INT_MAX, 0); // Lấy tất cả danh mục
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename="danhmuc.csv"');
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['MaDM', 'TenDM']); // Tiêu đề CSV
+
+        foreach ($categories as $category) {
+            fputcsv($output, [$category['MaDM'], $category['TenDM']]);
+        }
+
+        fclose($output);
         exit;
     }
 }

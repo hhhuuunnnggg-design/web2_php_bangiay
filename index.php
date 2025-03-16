@@ -9,6 +9,10 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/HomeController.php';
         $controller = new HomeController();
         break;
+    case 'contact': // Thêm case cho contact
+        require_once __DIR__ . '/controllers/client/ContactController.php';
+        $controller = new ContactController();
+        break;    
     default:
         die("Controller không tồn tại");
 }

@@ -1,28 +1,34 @@
 <?php
 require_once __DIR__ . '/../core/db_connect.php';
 
-class ColorModel {
+class ColorModel
+{
     private $db;
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
         $this->conn = $this->db->getConnection();
     }
 
     // Lấy tất cả màu với phân trang
-    public function getAllColors($search = '', $limit = 5, $offset = 0) {
+    public function getAllColors($search = '', $limit = 5, $offset = 0)
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT * FROM mau WHERE MaMau LIKE '%$search%' LIMIT ? OFFSET ?";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
         $result = $stmt->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // Đếm tổng số màu để tính phân trang
-    public function getTotalColors($search = '') {
+    public function getTotalColors($search = '')
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total FROM mau WHERE MaMau LIKE '%$search%'";
         $result = $this->conn->query($sql);
@@ -30,7 +36,8 @@ class ColorModel {
     }
 
     // Lấy màu theo MaMau
-    public function getColorById($id) {
+    public function getColorById($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "SELECT * FROM mau WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
@@ -40,7 +47,8 @@ class ColorModel {
     }
 
     // Thêm màu
-    public function addColor($data) {
+    public function addColor($data)
+    {
         $sql = "INSERT INTO mau (MaMau) VALUES (?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $data['MaMau']);
@@ -48,7 +56,8 @@ class ColorModel {
     }
 
     // Cập nhật màu
-    public function updateColor($id, $data) {
+    public function updateColor($id, $data)
+    {
         $sql = "UPDATE mau SET MaMau = ? WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ss", $data['MaMau'], $id);
@@ -56,7 +65,8 @@ class ColorModel {
     }
 
     // Xóa màu
-    public function deleteColor($id) {
+    public function deleteColor($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "DELETE FROM mau WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
@@ -64,7 +74,8 @@ class ColorModel {
         return $stmt->execute();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->db->closeConnection();
     }
 }

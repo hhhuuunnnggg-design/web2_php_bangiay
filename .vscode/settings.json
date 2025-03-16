@@ -67,7 +67,7 @@
 
   // ✅ Sửa lỗi tự động khi lưu file
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
 
   // ✅ Gợi ý nhanh cho code (HTML, CSS, PHP)

@@ -12,7 +12,11 @@ switch ($controller) {
     case 'contact': // Thêm case cho contact
         require_once __DIR__ . '/controllers/client/ContactController.php';
         $controller = new ContactController();
-        break;    
+        break; 
+    case 'shopdetail':
+        require_once __DIR__ . '/controllers/client/ShopdetailController.php';
+        $controller = new ShopdetailController();
+        break;       
     default:
         die("Controller không tồn tại");
 }

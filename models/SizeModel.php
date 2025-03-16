@@ -1,17 +1,20 @@
 <?php
 require_once __DIR__ . '/../core/db_connect.php';
 
-class SizeModel {
+class SizeModel
+{
     private $db;
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
         $this->conn = $this->db->getConnection();
     }
 
     // Lấy tất cả kích thước với phân trang
-    public function getAllSizes($search = '', $limit = 5, $offset = 0) {
+    public function getAllSizes($search = '', $limit = 5, $offset = 0)
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT * FROM size WHERE MaSize LIKE '%$search%' LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
@@ -22,7 +25,8 @@ class SizeModel {
     }
 
     // Đếm tổng số kích thước để tính phân trang
-    public function getTotalSizes($search = '') {
+    public function getTotalSizes($search = '')
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total FROM size WHERE MaSize LIKE '%$search%'";
         $result = $this->conn->query($sql);
@@ -30,7 +34,8 @@ class SizeModel {
     }
 
     // Lấy kích thước theo MaSize
-    public function getSizeById($id) {
+    public function getSizeById($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "SELECT * FROM size WHERE MaSize = ?";
         $stmt = $this->conn->prepare($sql);
@@ -40,7 +45,8 @@ class SizeModel {
     }
 
     // Thêm kích thước
-    public function addSize($data) {
+    public function addSize($data)
+    {
         $sql = "INSERT INTO size (MaSize) VALUES (?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $data['MaSize']);
@@ -48,7 +54,8 @@ class SizeModel {
     }
 
     // Cập nhật kích thước
-    public function updateSize($id, $data) {
+    public function updateSize($id, $data)
+    {
         $sql = "UPDATE size SET MaSize = ? WHERE MaSize = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $data['MaSize'], $id);
@@ -56,7 +63,8 @@ class SizeModel {
     }
 
     // Xóa kích thước
-    public function deleteSize($id) {
+    public function deleteSize($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "DELETE FROM size WHERE MaSize = ?";
         $stmt = $this->conn->prepare($sql);
@@ -64,7 +72,8 @@ class SizeModel {
         return $stmt->execute();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->db->closeConnection();
     }
 }

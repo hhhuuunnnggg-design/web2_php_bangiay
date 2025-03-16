@@ -47,6 +47,7 @@ class HomeController {
         include __DIR__ . '/../../views/client/home.php';
     }
     public function detail() {
+        // Lấy ID sản phẩm từ URL, tham số id sẽ được truyền từ đây vào
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
         if (!$productId) {
             // Redirect hoặc hiển thị lỗi nếu không có ID sản phẩm

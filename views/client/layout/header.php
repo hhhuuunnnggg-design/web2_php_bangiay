@@ -11,10 +11,10 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -27,9 +27,10 @@
     <!-- Template Stylesheet -->
     <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        
+
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
             <div class="container topbar bg-primary d-none d-lg-block">
@@ -38,13 +39,15 @@
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Đại học Sài Gòn</a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">nguyendinhhungtc2020@gmail.com</a></small>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand"><h1 class="text-primary display-6"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
-                    </h1></a>
+                    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
+                        <h1 class="text-primary display-6"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
+                        </h1>
+                    </a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -80,18 +83,18 @@
         </div>
         <!-- Navbar End -->
 
-        <!-- Hero Start -->
+        <!-- Hero-Start -->
         <div class="container-fluid py-5 mb-5 hero-header">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-md-12 col-lg-7">
-                        
+
                         <h1 class="mb-5 display-3 text-primary">Web bán giày siêu chất lượng cao</h1>
-                        
-                       <div>
-                       
-                       </div>
-                        
+
+                        <div>
+
+                        </div>
+
                     </div>
                     <div class="col-md-12 col-lg-5">
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
@@ -122,39 +125,40 @@
     </header>
 
     <main>
-    <div class="container mt-5">
-    <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
-    <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
-        <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
-            <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
-            <div class="row">
-                <?php foreach ($categoryData['products'] as $product): ?>
-                    <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <?php if (!empty($product['AnhNen'])): ?>
-                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                            <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
-                        </a>
-                    <?php else: ?>
-                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                            <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
-                        </a>
-                    <?php endif; ?>
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
-                        <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
+            <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
+                <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
+                    <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
+                    <div class="row">
+                        <?php foreach ($categoryData['products'] as $product): ?>
+                            <div class="col-md-3 mb-4">
+                                <div class="card h-100">
+                                    <?php if (!empty($product['AnhNen'])): ?>
+                                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                            <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                            <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+                                        </a>
+                                    <?php endif; ?>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
+                                        <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
+                    <?php if (!isset($_GET['category'])): // Chỉ hiển thị "Xem thêm" khi chưa chọn danh mục 
+                    ?>
+                        <div class="text-center mt-3">
+                            <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
-            </div>
-                <?php endforeach; ?>
-            </div>
-            <?php if (!isset($_GET['category'])): // Chỉ hiển thị "Xem thêm" khi chưa chọn danh mục ?>
-                <div class="text-center mt-3">
-                    <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
-                </div>
-            <?php endif; ?>
-        </div>
-    <?php endforeach; ?>
+            <?php endforeach; ?>
 
-    
-</div>
+
+        </div>

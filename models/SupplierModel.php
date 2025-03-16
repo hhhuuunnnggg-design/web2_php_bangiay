@@ -1,17 +1,20 @@
 <?php
 require_once __DIR__ . '/../core/db_connect.php';
 
-class SupplierModel {
+class SupplierModel
+{
     private $db;
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
         $this->conn = $this->db->getConnection();
     }
 
     // Lấy tất cả nhà cung cấp với phân trang
-    public function getAllSuppliers($search = '', $limit = 5, $offset = 0) {
+    public function getAllSuppliers($search = '', $limit = 5, $offset = 0)
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT * FROM nhacc WHERE TenNCC LIKE '%$search%' LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
@@ -22,7 +25,8 @@ class SupplierModel {
     }
 
     // Đếm tổng số nhà cung cấp để tính phân trang
-    public function getTotalSuppliers($search = '') {
+    public function getTotalSuppliers($search = '')
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total FROM nhacc WHERE TenNCC LIKE '%$search%'";
         $result = $this->conn->query($sql);
@@ -30,7 +34,8 @@ class SupplierModel {
     }
 
     // Lấy nhà cung cấp theo MaNCC
-    public function getSupplierById($id) {
+    public function getSupplierById($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "SELECT * FROM nhacc WHERE MaNCC = ?";
         $stmt = $this->conn->prepare($sql);
@@ -40,7 +45,8 @@ class SupplierModel {
     }
 
     // Thêm nhà cung cấp
-    public function addSupplier($data) {
+    public function addSupplier($data)
+    {
         $sql = "INSERT INTO nhacc (TenNCC) VALUES (?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $data['TenNCC']);
@@ -48,7 +54,8 @@ class SupplierModel {
     }
 
     // Cập nhật nhà cung cấp
-    public function updateSupplier($id, $data) {
+    public function updateSupplier($id, $data)
+    {
         $sql = "UPDATE nhacc SET TenNCC = ? WHERE MaNCC = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("si", $data['TenNCC'], $id);
@@ -56,7 +63,8 @@ class SupplierModel {
     }
 
     // Xóa nhà cung cấp
-    public function deleteSupplier($id) {
+    public function deleteSupplier($id)
+    {
         $id = $this->conn->real_escape_string($id);
         $sql = "DELETE FROM nhacc WHERE MaNCC = ?";
         $stmt = $this->conn->prepare($sql);
@@ -64,7 +72,8 @@ class SupplierModel {
         return $stmt->execute();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->db->closeConnection();
     }
 }

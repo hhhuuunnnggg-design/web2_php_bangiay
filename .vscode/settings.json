@@ -1,3 +1,111 @@
 {
-  "liveServer.settings.port": 5501
+  // ⚡️ Live Server: Chạy ở cổng 5501
+  "liveServer.settings.port": 5501,
+
+  // ⚡️ Format tự động khi lưu
+  "editor.formatOnSave": true,
+
+  // ✅ Dùng Prettier để format HTML, CSS, JS
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ✅ Format PHP bằng Intelephense
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.formatOnSave": true
+  },
+
+  // ✅ Đường dẫn tới PHP trong XAMPP
+  "php.validate.enable": true,
+  "php.suggest.basic": true,
+  "php.executablePath": "D:/xampp/php/php.exe",
+
+  // ✅ Cấu hình cho Intelephense (plugin PHP mạnh nhất)
+  "intelephense.format.enable": true,
+  "intelephense.completion.insertUseDeclaration": true,
+  "intelephense.diagnostics.enable": true,
+  "intelephense.environment.shortOpenTag": true, // Hỗ trợ thẻ <?php
+  "intelephense.trace.server": "messages",
+
+  // ✅ Bật Emmet trong PHP
+  "emmet.includeLanguages": {
+    "php": "html",
+    "javascript": "javascriptreact"
+  },
+
+  // ✅ Hỗ trợ gợi ý class từ CSS
+  "css.validate": true,
+  "scss.validate": true,
+  "less.validate": true,
+  "html.suggest.className": true,
+  "html.suggest.idName": true,
+
+  // ✅ Cho phép mở liên kết từ class CSS trong HTML
+  "files.associations": {
+    "*.php": "php",
+    "*.html": "html",
+    "*.css": "css",
+    "*.js": "javascript"
+  },
+
+  // ✅ Hiển thị đường dẫn file ở trên cùng
+  "breadcrumbs.enabled": true,
+
+  // ✅ Kích thước tab = 4 khoảng trắng
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // ✅ Sửa lỗi tự động khi lưu file
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+
+  // ✅ Gợi ý nhanh cho code (HTML, CSS, PHP)
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+
+  // ✅ Hiển thị gợi ý tham số khi gọi hàm
+  "editor.parameterHints.enabled": true,
+
+  // ✅ Tự động xuống dòng khi code quá dài
+  "editor.wordWrap": "on",
+
+  // ✅ Hiển thị bản đồ nhỏ của file code (minimap)
+  "editor.minimap.enabled": true,
+
+  // ✅ Không yêu cầu xác nhận khi kéo thả file
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+
+  // ✅ Bật highlight cho thẻ mở/đóng
+  "editor.matchBrackets": "always",
+
+  // ✅ Bật gợi ý cho các file liên quan trong dự án
+  "path-intellisense.autoTriggerNextSuggestion": true,
+
+  // ✅ Hỗ trợ gợi ý đường dẫn trong các file PHP, HTML, JS
+  "path-intellisense.showHiddenFiles": true,
+
+  // ✅ Cho phép xem code được định nghĩa khi nhấn Ctrl + Click vào class CSS
+  "css.peeking.enabled": true,
+
+  // ✅ Tăng tốc xử lý của VSCode
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.tsserver.experimental.enableProjectWideIntelliSense": true,
+
+  // ✅ Giảm lag khi mở file lớn
+  "files.maxMemoryForLargeFilesMb": 8192
 }

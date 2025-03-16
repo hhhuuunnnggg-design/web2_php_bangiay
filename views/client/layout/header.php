@@ -55,7 +55,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Home</a>
                             <a href="/shoeimportsystem/index.php?controller=product&action=index" class="nav-item nav-link">Shop</a>
-                            <a href="/shoeimportsystem/index.php?controller=product&action=detail" class="nav-item nav-link">Shop Detail</a>
+                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">

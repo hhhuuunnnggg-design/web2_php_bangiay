@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($title); ?></title>
+    <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
+</head>
 <?php
 include __DIR__ . '/layout/header.php';
 
@@ -16,21 +24,39 @@ include __DIR__ . '/layout/header.php';
             <p><strong>Danh mục:</strong> <?php echo htmlspecialchars($product['TenDM']); ?></p>
             <p><strong>Nhà cung cấp:</strong> <?php echo htmlspecialchars($product['TenNCC']); ?></p>
 
-            <!-- Kích thước -->
+            <?php
+            $sizes = array_filter($productDetails, function($detail) {
+                return isset($detail['MaSize']);
+            });
+            $colors = array_filter($productDetails, function($detail) {
+                return isset($detail['MaMau']);
+            });
+            ?>
+             <!-- Kích thước -->
             <div class="mb-3">
                 <label><strong>Kích thước:</strong></label><br>
-                <?php foreach ($productDetails as $detail): ?>
-                    <input type="radio" name="size" value="<?php echo $detail['MaSize']; ?>" id="size-<?php echo $detail['MaSize']; ?>">
-                    <label for="size-<?php echo $detail['MaSize']; ?>"><?php echo $detail['MaSize']; ?></label>
+                <?php
+                $sizes = array_filter($productDetails, function($detail) {
+                    return isset($detail['MaSize']); // Kiểm tra nếu có MaSize
+                });
+                foreach ($sizes as $size):
+                ?>
+                    <input type="radio" name="size" value="<?php echo $size['MaSize']; ?>" id="size-<?php echo $size['MaSize']; ?>">
+                    <label for="size-<?php echo $size['MaSize']; ?>"><?php echo $size['MaSize']; ?></label>
                 <?php endforeach; ?>
             </div>
 
             <!-- Màu sắc -->
             <div class="mb-3">
                 <label><strong>Màu sắc:</strong></label><br>
-                <?php foreach ($productDetails as $detail): ?>
-                    <input type="radio" name="color" value="<?php echo $detail['MaMau']; ?>" id="color-<?php echo $detail['MaMau']; ?>">
-                    <label for="color-<?php echo $detail['MaMau']; ?>"><?php echo $detail['MaMau']; ?></label>
+                <?php
+                $colors = array_filter($productDetails, function($detail) {
+                    return isset($detail['MaMau']); // Kiểm tra nếu có MaMau
+                });
+                foreach ($colors as $color):
+                ?>
+                    <input type="radio" name="color" value="<?php echo $color['MaMau']; ?>" id="color-<?php echo $color['MaMau']; ?>">
+                    <label for="color-<?php echo $color['MaMau']; ?>"><?php echo $color['MaMau']; ?></label>
                 <?php endforeach; ?>
             </div>
 
@@ -52,7 +78,24 @@ include __DIR__ . '/layout/header.php';
         </div>
     </div>
 </div>
+<div class="product-details">
+        <div class="description-reviews">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="description">MÔ TẢ</button>
+                <button class="tab-button" data-tab="reviews">ĐÁNH GIÁ</button>
+            </div>
 
+            <div class="tab-content" id="description">
+                <p><?php echo htmlspecialchars($product['MoTa']); ?></p>
+            </div>
+
+            <div class="tab-content hidden" id="reviews">
+                <textarea placeholder="Viết đánh giá..."></textarea>
+                <button class="review-button">Đánh giá</button>
+                <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
+            </div>
+        </div>
+    </div>
 <script>
 function increaseQuantity() {
     let quantity = document.getElementById('quantity');
@@ -89,6 +132,29 @@ function buyNow(productId) {
     // Logic chuyển hướng đến trang thanh toán
     window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
 }
+// Thêm JavaScript để xử lý các tab như trong ví dụ trước
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tab = button.dataset.tab;
+
+        // Ẩn tất cả nội dung tab
+        tabContents.forEach(content => {
+            content.classList.add('hidden');
+        });
+
+        // Hiển thị nội dung tab được chọn
+        document.getElementById(tab).classList.remove('hidden');
+
+        // Đánh dấu nút tab được chọn là active
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+    });
+});
 </script>
 
 <?php

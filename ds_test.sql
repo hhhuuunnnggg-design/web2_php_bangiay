@@ -363,3 +363,7 @@ ALTER TABLE `sanphamkhuyenmai`
   ADD CONSTRAINT `sanphamkhuyenmai_ibfk_1` FOREIGN KEY (`MaKM`) REFERENCES `khuyenmai` (`MaKM`),
   ADD CONSTRAINT `sanphamkhuyenmai_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`);
 COMMIT;
+--
+ALTER TABLE `khuyenmai`
+  ADD COLUMN `NgayBatDau` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ADD COLUMN `NgayKetThuc` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;

@@ -49,6 +49,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/ProductDetailController.php';
         $controller = new ProductDetailController();
         break;
+    case 'product_promotion': // Thêm case mới
+        require_once __DIR__ . '/../controllers/ProductPromotionController.php';
+        $controller = new ProductPromotionController();
+        break;
     case 'import':
         require_once __DIR__ . '/../controllers/ImportController.php';
         $controller = new ImportController();
@@ -56,10 +60,6 @@ switch ($controller) {
     case 'auth':
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();
-        break;
-    case 'product_promotion':
-        require_once __DIR__ . '/../controllers/ProductPromotionController.php';
-        $controller = new ProductPromotionController();
         break;
     default:
         die("Controller không tồn tại");

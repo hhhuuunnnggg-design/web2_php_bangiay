@@ -34,21 +34,26 @@
         let oldMaSP = formData.get('oldMaSP');
         let oldMaKM = formData.get('oldMaKM');
 
-        fetch(`/shoeimportsystem/index.php?controller=product_promotion&action=edit&maSP=${oldMaSP}&maKM=${oldMaKM}`, {
+        fetch(`/shoeimportsystem/public/index.php?controller=product_promotion&action=edit&maSP=${oldMaSP}&maKM=${oldMaKM}`, { // Sửa đường dẫn
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';
                 } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không có thông tin lỗi') + '</p>';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
             });
     });
 </script>

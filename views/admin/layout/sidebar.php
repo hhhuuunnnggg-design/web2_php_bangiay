@@ -45,7 +45,6 @@ $user = $auth->getCurrentUser();
             <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
             Quản lý quyền
         </a>
-
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(7, 'view')): ?>
@@ -63,11 +62,14 @@ $user = $auth->getCurrentUser();
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(9, 'view')): ?>
-        <a class="nav-link" href="/shoeimportsystem/index.php?controller=promotion&action=index">
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=promotion&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-gift"></i></div>
             Quản lý khuyến mãi
         </a>
-
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=product_promotion&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-tag"></i></div>
+            Quản lý sản phẩm khuyến mãi
+        </a>
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(10, 'view')): ?>
@@ -81,17 +83,12 @@ $user = $auth->getCurrentUser();
         </a>
     <?php endif; ?>
 
-    <?php if ($auth->checkPermission(888, 'view')): ?>
+    <?php if ($auth->checkPermission(11, 'view')): ?> <!-- Sửa chucnang từ 888 thành 11 -->
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=import&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-warehouse"></i></div>
-            Quản lý nhập kho (chưa phân quyền)
+            Quản lý nhập kho
         </a>
     <?php endif; ?>
-
-
-
-
-
 
     <?php if ($user): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">

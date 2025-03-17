@@ -21,22 +21,27 @@
         e.preventDefault();
         let formData = new FormData(this);
 
-        fetch('/shoeimportsystem/index.php?controller=product_promotion&action=add', {
+        fetch('/shoeimportsystem/public/index.php?controller=product_promotion&action=add', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     document.getElementById('message').innerHTML = '<p style="color:green;">Thêm sản phẩm khuyến mãi thành công!</p>';
                     this.reset();
                 } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không có thông tin lỗi') + '</p>';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
             });
     });
 </script>

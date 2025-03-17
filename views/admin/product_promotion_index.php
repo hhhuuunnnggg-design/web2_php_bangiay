@@ -1,5 +1,5 @@
 <h1>Quản lý sản phẩm khuyến mãi</h1>
-<form method="GET" action="/shoeimportsystem/index.php" id="searchForm">
+<form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
     <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo tên sản phẩm hoặc khuyến mãi">
     <input type="hidden" name="controller" value="product_promotion">
     <input type="hidden" name="action" value="index">
@@ -35,12 +35,12 @@
                     <td><?php echo $row['TenKM']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(9, 'add')): ?>
-                            <a href="/shoeimportsystem/index.php?controller=product_promotion&action=add">
+                            <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=add">
                                 <button type="button" class="btn btn-primary">Thêm</button>
                             </a>
                         <?php endif; ?>
                         <?php if ($auth->checkPermission(9, 'edit')): ?>
-                            <a href="/shoeimportsystem/index.php?controller=product_promotion&action=edit&maSP=<?php echo $row['MaSP']; ?>&maKM=<?php echo $row['MaKM']; ?>">
+                            <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=edit&maSP=<?php echo $row['MaSP']; ?>&maKM=<?php echo $row['MaKM']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>
@@ -64,15 +64,15 @@
 
 <div class="pagination">
     <?php if ($page > 1): ?>
-        <a href="/shoeimportsystem/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
+        <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
     <?php endif; ?>
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <a href="/shoeimportsystem/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'style="font-weight:bold;"'; ?>>
+        <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'style="font-weight:bold;"'; ?>>
             <?php echo $i; ?>
         </a>
     <?php endfor; ?>
     <?php if ($page < $totalPages): ?>
-        <a href="/shoeimportsystem/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page + 1; ?>">Trang sau</a>
+        <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page + 1; ?>">Trang sau</a>
     <?php endif; ?>
 </div>
 
@@ -97,7 +97,7 @@
             const maSP = this.getAttribute('data-masp');
             const maKM = this.getAttribute('data-makm');
             if (confirm('Xóa sản phẩm khuyến mãi này?')) {
-                fetch(`/shoeimportsystem/index.php?controller=product_promotion&action=delete&maSP=${maSP}&maKM=${maKM}`, {
+                fetch(`/shoeimportsystem/public/index.php?controller=product_promotion&action=delete&maSP=${maSP}&maKM=${maKM}`, {
                         method: 'POST'
                     })
                     .then(response => response.json())

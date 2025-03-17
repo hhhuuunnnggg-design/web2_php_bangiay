@@ -14,7 +14,7 @@
 <?php include("header.php"); ?> 
     <div class="container">
         <div class="breadcrumb">
-            <a href="#">Trang chủ</a> » Giới thiệu
+            <a href="/shoeimportsystem/index.php?controller=home&action=index">Trang chủ</a> » Giới thiệu
         </div>
         <div class="gioi-thieu">
             <h1>GIỚI THIỆU</h1>

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($title); ?></title>
     <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
+<style>
+    .hidden {
+    display: none;
+}
+</style>
 </head>
 <?php
 include __DIR__ . '/layout/header.php';
@@ -137,29 +142,29 @@ include __DIR__ . '/layout/header.php';
         // Logic chuyển hướng đến trang thanh toán
         window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
     }
-    // Thêm JavaScript để xử lý các tab như trong ví dụ trước
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+   // Thêm JavaScript để xử lý các tab như trong ví dụ trước
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const tab = button.dataset.tab;
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tab = button.dataset.tab;
 
-            // Ẩn tất cả nội dung tab
-            tabContents.forEach(content => {
-                content.classList.add('hidden');
-            });
-
-            // Hiển thị nội dung tab được chọn
-            document.getElementById(tab).classList.remove('hidden');
-
-            // Đánh dấu nút tab được chọn là active
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
+        // Ẩn tất cả nội dung tab
+        tabContents.forEach(content => {
+            content.classList.add('hidden');
         });
+
+        // Hiển thị nội dung tab được chọn
+        document.getElementById(tab).classList.remove('hidden');
+
+        // Đánh dấu nút tab được chọn là active
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
     });
+});
 </script>
 
 <?php

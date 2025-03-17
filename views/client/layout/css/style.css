@@ -1,3 +1,6 @@
+.hidden {
+    display: none;
+}
 /*** Contact(Phát) ***/
 body {
   font-family: Arial, sans-serif;

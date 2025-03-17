@@ -13,6 +13,9 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 <div class="container mt-5">
+<div class="breadcrumb">
+            <a href="/shoeimportsystem/index.php?controller=home&action=index">Trang chủ</a> » Chi tiết sản phẩm
+        </div>
     <div class="row">
         <!-- Ảnh sản phẩm -->
         <div class="col-md-6">

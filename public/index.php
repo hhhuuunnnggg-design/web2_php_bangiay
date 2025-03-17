@@ -57,6 +57,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();
         break;
+    case 'product_promotion':
+        require_once __DIR__ . '/../controllers/ProductPromotionController.php';
+        $controller = new ProductPromotionController();
+        break;
     default:
         die("Controller không tồn tại");
 }
@@ -81,10 +85,10 @@ switch ($action) {
         $controller->logout();
         break;
     case 'import':
-        $controller->import(); 
+        $controller->import();
         break;
     case 'export':
-        $controller->export(); 
+        $controller->export();
         break;
     default:
         die("Action không tồn tại");

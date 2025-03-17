@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . '/../../../core/Auth.php';
 $auth = new Auth();
 $user = $auth->getCurrentUser();
@@ -45,10 +45,8 @@ $user = $auth->getCurrentUser();
             <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
             Quản lý quyền
         </a>
-        
+
     <?php endif; ?>
-
-
 
     <?php if ($auth->checkPermission(7, 'view')): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=role_detail&action=index">
@@ -65,10 +63,11 @@ $user = $auth->getCurrentUser();
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(9, 'view')): ?>
-        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=promotion&action=index">
+        <a class="nav-link" href="/shoeimportsystem/index.php?controller=promotion&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-gift"></i></div>
             Quản lý khuyến mãi
         </a>
+
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(10, 'view')): ?>
@@ -85,15 +84,14 @@ $user = $auth->getCurrentUser();
     <?php if ($auth->checkPermission(888, 'view')): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=import&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-warehouse"></i></div>
-            Quản lý nhập kho
+            Quản lý nhập kho (chưa phân quyền)
         </a>
     <?php endif; ?>
 
-    
 
-    
 
-    
+
+
 
     <?php if ($user): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">
@@ -104,7 +102,18 @@ $user = $auth->getCurrentUser();
 </div>
 
 <style>
-    .nav-link { text-decoration: none; color: inherit; transition: color 0.3s ease; }
-    .nav-link:hover { text-decoration: none; color: #007bff; }
-    .sb-nav-link-icon { margin-right: 8px; }
+    .nav-link {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .sb-nav-link-icon {
+        margin-right: 8px;
+    }
 </style>

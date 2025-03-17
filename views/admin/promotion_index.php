@@ -5,14 +5,14 @@
         <input type="hidden" name="controller" value="promotion">
         <input type="hidden" name="action" value="index">
         <button type="submit">Tìm</button>
-    </form>
-
-    <?php if ($auth->checkPermission(9, 'add')): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=promotion&action=add">
+ </form>
+           <?php if ($auth->checkPermission(9, 'add')): ?>
+        <a style href="/shoeimportsystem/public/index.php?controller=promotion&action=add">
             <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
         </a>
     <?php endif; ?>
 
+   
 </div>
 <div id="message"></div>
 

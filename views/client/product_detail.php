@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,44 +21,43 @@ include __DIR__ . '/layout/header.php';
         <!-- Thông tin sản phẩm -->
         <div class="col-md-6">
             <h1><?php echo htmlspecialchars($product['TenSP']); ?></h1>
-            <p class="text-danger fs-3"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
+            <p class="fs-3">
+                <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                    <span class="text-danger font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                    <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                <?php else: ?>
+                    <span class="text-danger"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                <?php endif; ?>
+            </p>
             <p><strong>Danh mục:</strong> <?php echo htmlspecialchars($product['TenDM']); ?></p>
             <p><strong>Nhà cung cấp:</strong> <?php echo htmlspecialchars($product['TenNCC']); ?></p>
 
-            <?php
-            $sizes = array_filter($productDetails, function($detail) {
-                return isset($detail['MaSize']);
-            });
-            $colors = array_filter($productDetails, function($detail) {
-                return isset($detail['MaMau']);
-            });
-            ?>
-             <!-- Kích thước -->
+            <!-- Kích thước -->
             <div class="mb-3">
                 <label><strong>Kích thước:</strong></label><br>
                 <?php
-                $sizes = array_filter($productDetails, function($detail) {
-                    return isset($detail['MaSize']); // Kiểm tra nếu có MaSize
-                });
+                $sizes = array_unique(array_column($productDetails, 'MaSize')); // Lấy danh sách kích thước duy nhất
                 foreach ($sizes as $size):
+                    if ($size): // Chỉ hiển thị nếu có MaSize
                 ?>
-                    <input type="radio" name="size" value="<?php echo $size['MaSize']; ?>" id="size-<?php echo $size['MaSize']; ?>">
-                    <label for="size-<?php echo $size['MaSize']; ?>"><?php echo $size['MaSize']; ?></label>
-                <?php endforeach; ?>
+                        <input type="radio" name="size" value="<?php echo $size; ?>" id="size-<?php echo $size; ?>">
+                        <label for="size-<?php echo $size; ?>"><?php echo $size; ?></label>
+                <?php endif;
+                endforeach; ?>
             </div>
 
             <!-- Màu sắc -->
             <div class="mb-3">
                 <label><strong>Màu sắc:</strong></label><br>
                 <?php
-                $colors = array_filter($productDetails, function($detail) {
-                    return isset($detail['MaMau']); // Kiểm tra nếu có MaMau
-                });
+                $colors = array_unique(array_column($productDetails, 'MaMau')); // Lấy danh sách màu duy nhất
                 foreach ($colors as $color):
+                    if ($color): // Chỉ hiển thị nếu có MaMau
                 ?>
-                    <input type="radio" name="color" value="<?php echo $color['MaMau']; ?>" id="color-<?php echo $color['MaMau']; ?>">
-                    <label for="color-<?php echo $color['MaMau']; ?>"><?php echo $color['MaMau']; ?></label>
-                <?php endforeach; ?>
+                        <input type="radio" name="color" value="<?php echo $color; ?>" id="color-<?php echo $color; ?>">
+                        <label for="color-<?php echo $color; ?>"><?php echo $color; ?></label>
+                <?php endif;
+                endforeach; ?>
             </div>
 
             <!-- Số lượng -->
@@ -78,83 +78,85 @@ include __DIR__ . '/layout/header.php';
         </div>
     </div>
 </div>
+
+
 <div class="product-details">
-        <div class="description-reviews">
-            <div class="tabs">
-                <button class="tab-button active" data-tab="description">MÔ TẢ</button>
-                <button class="tab-button" data-tab="reviews">ĐÁNH GIÁ</button>
-            </div>
+    <div class="description-reviews">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="description">MÔ TẢ</button>
+            <button class="tab-button" data-tab="reviews">ĐÁNH GIÁ</button>
+        </div>
 
-            <div class="tab-content" id="description">
-                <p><?php echo htmlspecialchars($product['MoTa']); ?></p>
-            </div>
+        <div class="tab-content" id="description">
+            <p><?php echo htmlspecialchars($product['MoTa']); ?></p>
+        </div>
 
-            <div class="tab-content hidden" id="reviews">
-                <textarea placeholder="Viết đánh giá..."></textarea>
-                <button class="review-button">Đánh giá</button>
-                <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
-            </div>
+        <div class="tab-content hidden" id="reviews">
+            <textarea placeholder="Viết đánh giá..."></textarea>
+            <button class="review-button">Đánh giá</button>
+            <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
         </div>
     </div>
+</div>
 <script>
-function increaseQuantity() {
-    let quantity = document.getElementById('quantity');
-    quantity.value = parseInt(quantity.value) + 1;
-}
-
-function decreaseQuantity() {
-    let quantity = document.getElementById('quantity');
-    if (parseInt(quantity.value) > 1) {
-        quantity.value = parseInt(quantity.value) - 1;
+    function increaseQuantity() {
+        let quantity = document.getElementById('quantity');
+        quantity.value = parseInt(quantity.value) + 1;
     }
-}
 
-function addToCart(productId) {
-    let size = document.querySelector('input[name="size"]:checked')?.value;
-    let color = document.querySelector('input[name="color"]:checked')?.value;
-    let quantity = document.getElementById('quantity').value;
-    if (!size || !color) {
-        alert('Vui lòng chọn kích thước và màu sắc!');
-        return;
+    function decreaseQuantity() {
+        let quantity = document.getElementById('quantity');
+        if (parseInt(quantity.value) > 1) {
+            quantity.value = parseInt(quantity.value) - 1;
+        }
     }
-    // Logic thêm vào giỏ hàng (có thể gửi AJAX request đến server)
-    alert(`Đã thêm sản phẩm ${productId} vào giỏ hàng với size: ${size}, màu: ${color}, số lượng: ${quantity}`);
-}
 
-function buyNow(productId) {
-    let size = document.querySelector('input[name="size"]:checked')?.value;
-    let color = document.querySelector('input[name="color"]:checked')?.value;
-    let quantity = document.getElementById('quantity').value;
-    if (!size || !color) {
-        alert('Vui lòng chọn kích thước và màu sắc!');
-        return;
+    function addToCart(productId) {
+        let size = document.querySelector('input[name="size"]:checked')?.value;
+        let color = document.querySelector('input[name="color"]:checked')?.value;
+        let quantity = document.getElementById('quantity').value;
+        if (!size || !color) {
+            alert('Vui lòng chọn kích thước và màu sắc!');
+            return;
+        }
+        // Logic thêm vào giỏ hàng (có thể gửi AJAX request đến server)
+        alert(`Đã thêm sản phẩm ${productId} vào giỏ hàng với size: ${size}, màu: ${color}, số lượng: ${quantity}`);
     }
-    // Logic chuyển hướng đến trang thanh toán
-    window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
-}
-// Thêm JavaScript để xử lý các tab như trong ví dụ trước
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
 
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const tab = button.dataset.tab;
+    function buyNow(productId) {
+        let size = document.querySelector('input[name="size"]:checked')?.value;
+        let color = document.querySelector('input[name="color"]:checked')?.value;
+        let quantity = document.getElementById('quantity').value;
+        if (!size || !color) {
+            alert('Vui lòng chọn kích thước và màu sắc!');
+            return;
+        }
+        // Logic chuyển hướng đến trang thanh toán
+        window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
+    }
+    // Thêm JavaScript để xử lý các tab như trong ví dụ trước
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-        // Ẩn tất cả nội dung tab
-        tabContents.forEach(content => {
-            content.classList.add('hidden');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.dataset.tab;
+
+            // Ẩn tất cả nội dung tab
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Hiển thị nội dung tab được chọn
+            document.getElementById(tab).classList.remove('hidden');
+
+            // Đánh dấu nút tab được chọn là active
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
         });
-
-        // Hiển thị nội dung tab được chọn
-        document.getElementById(tab).classList.remove('hidden');
-
-        // Đánh dấu nút tab được chọn là active
-        tabButtons.forEach(btn => {
-            btn.classList.remove('active');
-        });
-        button.classList.add('active');
     });
-});
 </script>
 
 <?php

@@ -145,20 +145,27 @@
                                     <?php endif; ?>
                                     <div class="card-body text-center">
                                         <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
-                                        <p class="card-text"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></p>
+                                        <p class="card-text">
+                                            <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                                                <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+
+                                                <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                                <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+
+                                            <?php else: ?>
+                                                <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                            <?php endif; ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <?php if (!isset($_GET['category'])): // Chỉ hiển thị "Xem thêm" khi chưa chọn danh mục 
-                    ?>
+                    <?php if (!isset($_GET['category'])): ?>
                         <div class="text-center mt-3">
                             <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
                         </div>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
-
-
         </div>

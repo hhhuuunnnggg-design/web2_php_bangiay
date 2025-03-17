@@ -1,5 +1,4 @@
-<h1>Thêm nhân viên mới</h1>
-
+<head>
 <style>
 body {
     background-color: white; 
@@ -97,7 +96,8 @@ button {
     background-color: #0056b3; /* Màu nền xanh dương đậm hơn khi hover */
 }
 </style>
-
+</head>
+<h1>Thêm nhân viên mới</h1>
 <ul class="breadcrumb">
     <li>
         <a class="menu-link" href="/shoeimportsystem/public/index.php?controller=employee&action=index">

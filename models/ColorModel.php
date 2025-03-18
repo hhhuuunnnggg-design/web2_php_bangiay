@@ -74,6 +74,30 @@ class ColorModel
         return $stmt->execute();
     }
 
+    public function importColor($data)
+    {
+        // Kiểm tra xem MaMau đã tồn tại chưa, nếu có thì update, nếu không thì insert
+        $sqlCheck = "SELECT MaMau FROM mau WHERE MaMau = ?";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("s", $data['MaMau']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+
+        if ($result->num_rows > 0) {
+            // Update nếu MaMau đã tồn tại
+            $sql = "UPDATE mau SET MaMau = ? ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $data['MaMau']);
+            $stmt->execute();
+        } else {
+            // Insert nếu MaMau chưa tồn tại
+            $sql = "INSERT INTO mau (MaMau) VALUES ( ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $data['MaMau']);
+            $stmt->execute();
+        }
+    }
+
     public function __destruct()
     {
         $this->db->closeConnection();

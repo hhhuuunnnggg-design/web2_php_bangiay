@@ -1,101 +1,105 @@
 <head>
-<style>
-body {
-    background-color: white; 
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    width: 90%;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: 200px 1fr;
-}
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+        }
 
-.menu {
-    background-color: #343a40;
-    color: #ffffff;
-    padding: 20px;
-}
+        .menu {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+        }
 
-.menu ul {
-    list-style: none;
-    padding: 0;
-}
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
 
-.menu li {
-    padding: 10px 0;
-}
+        .menu li {
+            padding: 10px 0;
+        }
 
-.menu a {
-    color: #ffffff;
-    text-decoration: none;
-}
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+        }
 
-.content {
-    padding: 20px;
-}
+        .content {
+            padding: 20px;
+        }
 
-h1 {
-    color: black;
-    margin-bottom: 20px;
-}
+        h1 {
+            color: black;
+            margin-bottom: 20px;
+        }
 
-.admin-info {
-    text-align: right;
-    margin-bottom: 20px;
-    grid-column: 2;
-}
+        .admin-info {
+            text-align: right;
+            margin-bottom: 20px;
+            grid-column: 2;
+        }
 
-/* CSS cho trang "Thêm nhân viên mới" */
-form {
-    width: 500px;
-    margin: 20px auto;
-}
+        /* CSS cho trang "Thêm nhân viên mới" */
+        form {
+            width: 500px;
+            margin: 20px auto;
+        }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-input[type="text"],
-input[type="email"],
-input[type="number"],
-textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
-button {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-.menu-link {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    text-align: left;
-    background-color: #007bff; /* Màu nền xanh dương */
-    color: #ffffff; /* Màu chữ trắng */
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-    transition: background-color 0.3s ease;
-}
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
 
-.menu-link:hover {
-    background-color: #0056b3; /* Màu nền xanh dương đậm hơn khi hover */
-}
-</style>
+        .menu-link {
+            display: block;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: left;
+            background-color: #007bff;
+            /* Màu nền xanh dương */
+            color: #ffffff;
+            /* Màu chữ trắng */
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-link:hover {
+            background-color: #0056b3;
+            /* Màu nền xanh dương đậm hơn khi hover */
+        }
+    </style>
 
 </head>
 <h1>Sửa chi tiết quyền</h1>
@@ -139,34 +143,36 @@ button {
         <option value="add" <?php if ($roleDetail['hanhdong'] == 'add') echo 'selected'; ?>>Thêm</option>
         <option value="edit" <?php if ($roleDetail['hanhdong'] == 'edit') echo 'selected'; ?>>Sửa</option>
         <option value="delete" <?php if ($roleDetail['hanhdong'] == 'delete') echo 'selected'; ?>>Xóa</option>
+        <option value="import" <?php if ($roleDetail['import'] == 'import') echo 'selected'; ?>>import</option>
+        <option value="export" <?php if ($roleDetail['export'] == 'export') echo 'selected'; ?>>export</option>
     </select><br>
     <button type="submit">Cập nhật</button>
 </form>
 <div id="message"></div>
 
 <script>
-document.getElementById('editRoleDetailForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    let formData = new FormData(this);
-    let old_manhomquyen = formData.get('old_manhomquyen');
-    let old_chucnang = formData.get('old_chucnang');
-    let old_hanhdong = formData.get('old_hanhdong');
+    document.getElementById('editRoleDetailForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        let old_manhomquyen = formData.get('old_manhomquyen');
+        let old_chucnang = formData.get('old_chucnang');
+        let old_hanhdong = formData.get('old_hanhdong');
 
-    fetch(`/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=${old_manhomquyen}&chucnang=${old_chucnang}&hanhdong=${encodeURIComponent(old_hanhdong)}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';
-        } else {
-            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+        fetch(`/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=${old_manhomquyen}&chucnang=${old_chucnang}&hanhdong=${encodeURIComponent(old_hanhdong)}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';
+                } else {
+                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+            });
     });
-});
 </script>

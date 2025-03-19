@@ -82,13 +82,18 @@ class ColorController
     public function delete()
     {
         if (!$this->auth->checkPermission(2, 'delete')) {
-            die("Bạn không có quyền xóa màu sắc");
+            echo json_encode(['success' => false, 'message' => 'Bạn không có quyền xóa màu sắc']);
+            exit;
         }
-        $id = $_GET['id'];
-        if ($this->colorModel->deleteColor($id)) {
-            echo json_encode(['success' => true, 'message' => 'Xóa màu sắc thành công']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Lỗi xóa màu sắc']);
+        $id = urldecode($_GET['id']);
+        try {
+            if ($this->colorModel->deleteColor($id)) {
+                echo json_encode(['success' => true, 'message' => 'Xóa màu sắc thành công']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Không thể xóa màu sắc, có thể đang được sử dụng']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
         }
         exit;
     }

@@ -206,18 +206,23 @@
                 fetch(`/shoeimportsystem/public/index.php?controller=color&action=delete&id=${id}`, {
                         method: 'POST'
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.success) {
                             document.querySelector(`tr[data-id="${id}"]`).remove();
                             document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
                         } else {
-                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không xác định') + '</p>';
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
-                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                        console.error('Lỗi khi xóa:', error);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
                     });
             }
         });

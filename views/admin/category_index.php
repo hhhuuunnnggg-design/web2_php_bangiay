@@ -158,7 +158,7 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra, san pham da co mat hang nay</p>';
                     });
             }
         });
@@ -184,7 +184,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!.</p>';
             });
     });
 

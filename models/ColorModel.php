@@ -70,10 +70,13 @@ class ColorModel
         $id = $this->conn->real_escape_string($id);
         $sql = "DELETE FROM mau WHERE MaMau = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        return $stmt->execute();
+        $stmt->bind_param("s", $id); // MaMau là varchar
+        $result = $stmt->execute();
+        if (!$result && $this->conn->errno == 1451) { // Mã lỗi 1451: Ràng buộc khóa ngoại
+            throw new Exception("Màu sắc này đang được sử dụng trong đơn hàng hoặc sản phẩm.");
+        }
+        return $result;
     }
-
     public function importColor($data)
     {
         // Kiểm tra xem MaMau đã tồn tại chưa, nếu có thì update, nếu không thì insert

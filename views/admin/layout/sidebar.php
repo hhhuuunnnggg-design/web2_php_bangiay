@@ -10,6 +10,7 @@ $user = $auth->getCurrentUser();
             <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
             Quản lý danh mục
         </a>
+
     <?php endif; ?>
 
     <?php if ($auth->checkPermission(2, 'view')): ?>
@@ -87,6 +88,12 @@ $user = $auth->getCurrentUser();
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=import&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-warehouse"></i></div>
             Quản lý nhập kho
+        </a>
+    <?php endif; ?>
+    <?php if ($auth->checkPermission(12, 'view')): ?> <!-- Quyền mới cho thống kê -->
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=stats&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
+            Quản lý thống kê
         </a>
     <?php endif; ?>
 

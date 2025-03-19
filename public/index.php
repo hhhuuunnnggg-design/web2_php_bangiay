@@ -61,6 +61,10 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();
         break;
+    case 'stats': // Thêm case cho thống kê
+        require_once __DIR__ . '/../controllers/StatsController.php';
+        $controller = new StatsController();
+        break;
     default:
         die("Controller không tồn tại");
 }

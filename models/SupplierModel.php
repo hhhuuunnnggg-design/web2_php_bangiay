@@ -12,7 +12,6 @@ class SupplierModel
         $this->conn = $this->db->getConnection();
     }
 
-    // Lấy tất cả nhà cung cấp với phân trang
     public function getAllSuppliers($search = '', $limit = 5, $offset = 0)
     {
         $search = $this->conn->real_escape_string($search);
@@ -24,7 +23,6 @@ class SupplierModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Đếm tổng số nhà cung cấp để tính phân trang
     public function getTotalSuppliers($search = '')
     {
         $search = $this->conn->real_escape_string($search);
@@ -33,7 +31,6 @@ class SupplierModel
         return $result->fetch_assoc()['total'];
     }
 
-    // Lấy nhà cung cấp theo MaNCC
     public function getSupplierById($id)
     {
         $id = $this->conn->real_escape_string($id);
@@ -44,7 +41,6 @@ class SupplierModel
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // Thêm nhà cung cấp
     public function addSupplier($data)
     {
         $sql = "INSERT INTO nhacc (TenNCC) VALUES (?)";
@@ -53,7 +49,6 @@ class SupplierModel
         return $stmt->execute();
     }
 
-    // Cập nhật nhà cung cấp
     public function updateSupplier($id, $data)
     {
         $sql = "UPDATE nhacc SET TenNCC = ? WHERE MaNCC = ?";
@@ -62,7 +57,6 @@ class SupplierModel
         return $stmt->execute();
     }
 
-    // Xóa nhà cung cấp
     public function deleteSupplier($id)
     {
         $id = $this->conn->real_escape_string($id);
@@ -70,6 +64,29 @@ class SupplierModel
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+    public function importSupplier($data)
+    {
+        $sqlCheck = "SELECT MaNCC FROM nhacc WHERE MaNCC = ?";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $data['MaNCC']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+
+        if ($result->num_rows > 0) {
+            // Update nếu MaNCC đã tồn tại
+            $sql = "UPDATE nhacc SET TenNCC = ? WHERE MaNCC = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $data['TenNCC'], $data['MaNCC']);
+            return $stmt->execute();
+        } else {
+            // Insert nếu MaNCC chưa tồn tại
+            $sql = "INSERT INTO nhacc (MaNCC, TenNCC) VALUES (?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("is", $data['MaNCC'], $data['TenNCC']);
+            return $stmt->execute();
+        }
     }
 
     public function __destruct()

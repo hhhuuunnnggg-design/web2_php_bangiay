@@ -1,16 +1,19 @@
 <?php
 require_once __DIR__ . '/../core/db_connect.php';
 
-class RoleModel {
+class RoleModel
+{
     private $db;
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
         $this->conn = $this->db->getConnection();
     }
 
-    public function getAllRoles($search = '', $limit = 5, $offset = 0) {
+    public function getAllRoles($search = '', $limit = 5, $offset = 0)
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT * FROM quyen WHERE Ten LIKE '%$search%' LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
@@ -19,14 +22,16 @@ class RoleModel {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTotalRoles($search = '') {
+    public function getTotalRoles($search = '')
+    {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total FROM quyen WHERE Ten LIKE '%$search%'";
         $result = $this->conn->query($sql);
         return $result->fetch_assoc()['total'];
     }
 
-    public function getRoleById($id) {
+    public function getRoleById($id)
+    {
         $sql = "SELECT * FROM quyen WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -34,24 +39,50 @@ class RoleModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function addRole($data) {
+    public function addRole($data)
+    {
         $sql = "INSERT INTO quyen (Ten, MoTa) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ss", $data['Ten'], $data['MoTa']);
         return $stmt->execute();
     }
 
-    public function updateRole($id, $data) {
+    public function updateRole($id, $data)
+    {
         $sql = "UPDATE quyen SET Ten = ?, MoTa = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssi", $data['Ten'], $data['MoTa'], $id);
         return $stmt->execute();
     }
 
-    public function deleteRole($id) {
+    public function deleteRole($id)
+    {
         $sql = "DELETE FROM quyen WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+    public function importRole($data)
+    {
+        $sqlCheck = "SELECT id FROM quyen WHERE id = ?";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $data['id']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+
+        if ($result->num_rows > 0) {
+            // Update nếu id đã tồn tại
+            $sql = "UPDATE quyen SET Ten = ?, MoTa = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssi", $data['Ten'], $data['MoTa'], $data['id']);
+            return $stmt->execute();
+        } else {
+            // Insert nếu id chưa tồn tại
+            $sql = "INSERT INTO quyen (id, Ten, MoTa) VALUES (?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("iss", $data['id'], $data['Ten'], $data['MoTa']);
+            return $stmt->execute();
+        }
     }
 }

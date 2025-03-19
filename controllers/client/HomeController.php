@@ -1,15 +1,26 @@
 <?php
 require_once __DIR__ . '/../../models/CategoryModel.php';
 require_once __DIR__ . '/../../models/client/ProductModel.php';
+require_once __DIR__ . '/../../controllers/client/CommentController.php';
 
 class HomeController {
+    protected $db;
     private $categoryModel;
     private $productModel;
 
-    public function __construct() {
+    public function __construct($db) {
+        $this->db = $db;
         $this->categoryModel = new CategoryModel();
         $this->productModel = new ProductModel();
     }
+
+    
+    
+    protected function model($model) {
+        require_once __DIR__ . '/../../models/client/CommentModel.php';
+        return new CommentModel($this->db);
+    }
+    
 
     public function index() {
         // Lấy tất cả danh mục
@@ -65,6 +76,18 @@ class HomeController {
     
         // Lấy chi tiết kích thước và màu sắc
         $productDetails = $this->productModel->getProductDetails($productId); // Hàm này cần được thêm vào ProductModel
+
+        $commentController = new CommentController($this->db);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
+            if ($commentController->addComment($productId)) {
+                // Thêm thành công
+                header("Location: /shoeimportsystem/index.php?controller=product&action=detail&id=$productId");
+                exit;
+            } else {
+                // Thêm thất bại
+                echo "Lỗi khi thêm bình luận.";
+            }
+        }
     
         // Gọi view
         $title = "Chi tiết sản phẩm - " . $product['TenSP'];

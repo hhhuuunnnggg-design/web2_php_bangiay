@@ -11,6 +11,7 @@
     display: none;
 }
 </style>
+
 </head>
 <?php
 include __DIR__ . '/layout/header.php';
@@ -98,11 +99,29 @@ include __DIR__ . '/layout/header.php';
         <div class="tab-content" id="description">
             <p><?php echo htmlspecialchars($product['MoTa']); ?></p>
         </div>
-
-        <div class="tab-content hidden" id="reviews">
-            <textarea placeholder="Viết đánh giá..."></textarea>
-            <button class="review-button">Đánh giá</button>
-            <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
+        <div class="tab-content hidden" id="reviews">        
+            <form id="review-form" method="post">
+        <textarea name="comment" placeholder="Viết đánh giá..."></textarea><br>
+        <button type="button" id="submit-review" class="review-button">Đánh giá</button>
+            </form>
+            <?php
+            // Truy vấn đánh giá từ bảng binhluan
+            $reviews = $this->model('CommentModel')->getReviewsByProductId($product['MaSP']);
+            if (!empty($reviews)):
+                foreach ($reviews as $review):
+                    ?>
+                    <div class="review">
+                        <p><strong>Khách hàng:</strong> <?php echo htmlspecialchars($review['MaKH']); ?></p>
+                        <p><strong>Thời gian:</strong> <?php echo htmlspecialchars($review['ThoiGian']); ?></p>
+                        <p><?php echo htmlspecialchars($review['NoiDung']); ?></p>
+                    </div>
+                <?php
+                endforeach;
+            else:
+                ?>
+                <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
+            <?php endif; ?>
+        </div>
         </div>
     </div>
 </div>
@@ -165,8 +184,43 @@ tabButtons.forEach(button => {
         button.classList.add('active');
     });
 });
+
+    document.getElementById('submit-review').addEventListener('click', function() {
+        const form = document.getElementById('review-form');
+        const comment = form.comment.value;
+        const productId = <?php echo $product['MaSP']; ?>; // Lấy productId từ PHP
+
+        fetch('/shoeimportsystem/index.php?controller=comment&action=addComment&productId=' + productId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'comment=' + encodeURIComponent(comment),
+        })
+        .then(response => response.json()) // Giả sử server trả về JSON
+        .then(data => {
+            if (data.success) {
+                alert('Đánh giá của bạn đã được thêm thành công!');
+                // Thêm đánh giá mới vào danh sách đánh giá mà không cần tải lại trang
+                // Ví dụ:
+                const reviewDiv = document.createElement('div');
+                reviewDiv.classList.add('review');
+                reviewDiv.innerHTML = `<p><strong>Khách hàng:</strong> ${data.MaKH}</p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
+                document.querySelector('#reviews').appendChild(reviewDiv);
+                form.comment.value = ''; // Xóa nội dung đánh giá sau khi gửi thành công
+            } else {
+                alert('Có lỗi xảy ra khi thêm đánh giá. Vui lòng thử lại.');
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi:', error);
+            alert('Có lỗi xảy ra khi thêm đánh giá. Vui lòng thử lại.');
+        });
+    });
+
 </script>
 
 <?php
 include __DIR__ . '/layout/footer.php';
 ?>
+</html>

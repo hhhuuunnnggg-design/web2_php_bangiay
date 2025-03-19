@@ -7,11 +7,21 @@
         <button type="submit">Tìm</button>
     </form>
 
-    <?php if ($auth->checkPermission(5, 'add')): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=employee&action=add">
-            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
-        </a>
-    <?php endif; ?>
+    <div>
+        <?php if ($auth->checkPermission(5, 'add')): ?>
+            <a href="/shoeimportsystem/public/index.php?controller=employee&action=add">
+                <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+            </a>
+        <?php endif; ?>
+        <?php if ($auth->checkPermission(5, 'export')): ?>
+            <a href="/shoeimportsystem/public/index.php?controller=employee&action=export">
+                <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
+            </a>
+        <?php endif; ?>
+        <?php if ($auth->checkPermission(5, 'import')): ?>
+            <button type="button" class="btn btn-success" style="margin-top: 40px; width: 100px; height: 40px;" onclick="document.getElementById('importModal').style.display='block'">Import</button>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div id="message"></div>
@@ -30,39 +40,39 @@
         </tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
+        require_once __DIR__ . '../../../core/Auth.php';
         $auth = new Auth();
-        if (!empty($employees)): 
+        if (!empty($employees)):
             $stt = ($page - 1) * $limit + 1;
-            foreach ($employees as $row): 
+            foreach ($employees as $row):
         ?>
-        <tr data-id="<?php echo $row['MaNV']; ?>">
-            <td><?php echo $stt++; ?></td>
-            <td><?php echo $row['MaNV']; ?></td>
-            <td><?php echo $row['TenNV']; ?></td>
-            <td><?php echo $row['Email']; ?></td>
-            <td><?php echo $row['SDT']; ?></td>
-            <td><?php echo $row['DiaChi']; ?></td>
-            <td><?php echo $row['TenQuyen']; ?></td>
-            <td>
-                
-                <?php if ($auth->checkPermission(5, 'edit')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=employee&action=edit&id=<?php echo $row['MaNV']; ?>">
-                        <button type="button" class="btn btn-warning">Sửa</button>
-                    </a>
-                <?php endif; ?>
-                <?php if ($auth->checkPermission(5, 'delete')): ?>
-                    <a class="delete-btn" data-id="<?php echo $row['MaNV']; ?>">
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                    </a>
-                <?php endif; ?>
-            </td>
-        </tr>
-        <?php 
-            endforeach;
-        else: 
-        ?>
-            <tr><td colspan="8">Không có nhân viên nào.</td></tr>
+                <tr data-id="<?php echo $row['MaNV']; ?>">
+                    <td><?php echo $stt++; ?></td>
+                    <td><?php echo $row['MaNV']; ?></td>
+                    <td><?php echo $row['TenNV']; ?></td>
+                    <td><?php echo $row['Email']; ?></td>
+                    <td><?php echo $row['SDT']; ?></td>
+                    <td><?php echo $row['DiaChi']; ?></td>
+                    <td><?php echo $row['TenQuyen']; ?></td>
+                    <td>
+                        <?php if ($auth->checkPermission(5, 'edit')): ?>
+                            <a href="/shoeimportsystem/public/index.php?controller=employee&action=edit&id=<?php echo $row['MaNV']; ?>">
+                                <button type="button" class="btn btn-warning">Sửa</button>
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($auth->checkPermission(5, 'delete')): ?>
+                            <a class="delete-btn" data-id="<?php echo $row['MaNV']; ?>">
+                                <button type="button" class="btn btn-danger">Xóa</button>
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach;
+        else: ?>
+            <tr>
+                <td colspan="8">Không có nhân viên nào.</td>
+            </tr>
         <?php endif; ?>
     </tbody>
 </table>
@@ -117,12 +127,36 @@
     </nav>
 </div>
 
+<!-- Modal để import -->
+<div id="importModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid #ccc;">
+    <h2>Import Nhân viên</h2>
+    <form id="importForm" enctype="multipart/form-data">
+        <label>Chọn file CSV:</label>
+        <input type="file" name="importFile" accept=".csv" required><br>
+        <button type="submit">Import</button>
+        <button type="button" onclick="closeModal()">Hủy</button>
+    </form>
+</div>
+
+<style>
+    .pagination {
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        text-decoration: none;
+    }
+
+    .pagination a:hover {
+        text-decoration: underline;
+    }
+</style>
 <style>
     .pagination-container {
         margin-top: 20px;
     }
 
-    /* Kích thước nhỏ hơn */
     .pagination .page-link {
         padding: 4px 8px;
         font-size: 14px;
@@ -132,29 +166,24 @@
         transition: background-color 0.2s ease;
     }
 
-    /* Hiệu ứng khi di chuột */
     .pagination .page-link:hover {
         background-color: #f1f1f1;
     }
 
-    /* Giảm khoảng cách giữa các nút */
     .pagination .page-item {
         margin: 0 2px;
     }
 
-    /* Căn về phía bên phải */
     .pagination {
         justify-content: flex-end;
     }
 
-    /* Định dạng cho trang hiện tại */
     .pagination .page-item.active .page-link {
         background-color: #007bff;
         color: #ffffff;
         border-color: #007bff;
     }
 
-    /* Vô hiệu hóa nút */
     .pagination .page-item.disabled .page-link {
         color: #6c757d;
         pointer-events: none;
@@ -163,35 +192,117 @@
     }
 </style>
 
-
-<style>
-    .pagination { margin-top: 20px; }
-    .pagination a { margin: 0 5px; text-decoration: none; }
-    .pagination a:hover { text-decoration: underline; }
-</style>
-
 <script>
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        if (confirm('Xóa nhân viên này?')) {
-            fetch(`/shoeimportsystem/public/index.php?controller=employee&action=delete&id=${id}`, {
-                method: 'POST'
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            if (confirm('Xóa nhân viên này?')) {
+                fetch(`/shoeimportsystem/public/index.php?controller=employee&action=delete&id=${id}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.querySelector(`tr[data-id="${id}"]`).remove();
+                            document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                        } else {
+                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa:', error);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
+                    });
+            }
+        });
+    });
+
+    document.getElementById('importForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const fileInput = this.querySelector('input[name="importFile"]');
+        if (!fileInput.files[0].name.endsWith('.csv')) {
+            document.getElementById('message').innerHTML = '<p style="color:red;">Vui lòng chọn file CSV!</p>';
+            return;
+        }
+
+        let formData = new FormData(this);
+        fetch('/shoeimportsystem/public/index.php?controller=employee&action=import', {
+                method: 'POST',
+                body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            })
             .then(data => {
+                const messageDiv = document.getElementById('message');
                 if (data.success) {
-                    document.querySelector(`tr[data-id="${id}"]`).remove();
-                    document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                    messageDiv.innerHTML = '<p style="color:green;">Import thành công!</p>';
+                    closeModal();
+
+                    // Cập nhật bảng mà không reload
+                    const tbody = document.querySelector('#employeeTable tbody');
+                    let stt = parseInt(tbody.querySelector('tr:last-child td:first-child')?.textContent || '0') + 1;
+
+                    data.importedEmployees.forEach(employee => {
+                        if (!document.querySelector(`tr[data-id="${employee.MaNV}"]`)) { // Tránh trùng lặp
+                            const row = document.createElement('tr');
+                            row.setAttribute('data-id', employee.MaNV);
+                            row.innerHTML = `
+                            <td>${stt++}</td>
+                            <td>${employee.MaNV}</td>
+                            <td>${employee.TenNV}</td>
+                            <td>${employee.Email}</td>
+                            <td>${employee.SDT}</td>
+                            <td>${employee.DiaChi}</td>
+                            <td>${employee.TenQuyen}</td>
+                            <td>
+                                ${<?php echo $auth->checkPermission(5, 'edit') ? 'true' : 'false'; ?> ? 
+                                    '<a href="/shoeimportsystem/public/index.php?controller=employee&action=edit&id=' + employee.MaNV + '"><button type="button" class="btn btn-warning">Sửa</button></a>' : ''}
+                                ${<?php echo $auth->checkPermission(5, 'delete') ? 'true' : 'false'; ?> ? 
+                                    '<a class="delete-btn" data-id="' + employee.MaNV + '"><button type="button" class="btn btn-danger">Xóa</button></a>' : ''}
+                            </td>
+                        `;
+                            tbody.appendChild(row);
+
+                            // Gắn sự kiện xóa cho nút mới
+                            const deleteBtn = row.querySelector('.delete-btn');
+                            if (deleteBtn) {
+                                deleteBtn.addEventListener('click', function() {
+                                    const id = this.getAttribute('data-id');
+                                    if (confirm('Xóa nhân viên này?')) {
+                                        fetch(`/shoeimportsystem/public/index.php?controller=employee&action=delete&id=${id}`, {
+                                                method: 'POST'
+                                            })
+                                            .then(res => res.json())
+                                            .then(result => {
+                                                if (result.success) {
+                                                    row.remove();
+                                                    messageDiv.innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                                                } else {
+                                                    messageDiv.innerHTML = '<p style="color:red;">Lỗi: ' + result.message + '</p>';
+                                                }
+                                            })
+                                            .catch(err => {
+                                                console.error('Lỗi khi xóa:', err);
+                                                messageDiv.innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + err.message + '</p>';
+                                            });
+                                    }
+                                });
+                            }
+                        }
+                    });
                 } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                    messageDiv.innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không xác định') + '</p>';
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                console.error('Lỗi khi import:', error);
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
             });
-        }
     });
-});
+
+    function closeModal() {
+        document.getElementById('importModal').style.display = 'none';
+    }
 </script>

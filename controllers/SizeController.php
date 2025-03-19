@@ -2,11 +2,13 @@
 require_once __DIR__ . '/../models/SizeModel.php';
 require_once __DIR__ . '/../core/Auth.php';
 
-class SizeController {
+class SizeController
+{
     private $sizeModel;
     private $auth;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->sizeModel = new SizeModel();
         $this->auth = new Auth();
         if (!$this->auth->getCurrentUser()) {
@@ -15,7 +17,8 @@ class SizeController {
         }
     }
 
-    public function index() {
+    public function index()
+    {
         if (!$this->auth->checkPermission(3, 'view')) {
             die("Bạn không có quyền xem danh sách quản lý kích thước.");
         }
@@ -33,7 +36,8 @@ class SizeController {
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    public function add() {
+    public function add()
+    {
         if (!$this->auth->checkPermission(3, 'add')) {
             die("Bạn không có quyền thêm kích thước.");
         }
@@ -53,7 +57,8 @@ class SizeController {
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    public function edit() {
+    public function edit()
+    {
         if (!$this->auth->checkPermission(3, 'edit')) {
             die("Bạn không có quyền sửa kích thước.");
         }
@@ -75,7 +80,8 @@ class SizeController {
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
-    public function delete() {
+    public function delete()
+    {
         if (!$this->auth->checkPermission(3, 'delete')) {
             die("Bạn không có quyền xóa kích thước.");
         }
@@ -85,6 +91,58 @@ class SizeController {
         } else {
             echo json_encode(['success' => false, 'message' => 'Lỗi xóa kích thước']);
         }
+        exit;
+    }
+
+    public function import()
+    {
+        if (!$this->auth->checkPermission(3, 'import')) {
+            die("Bạn không có quyền import danh mục.");
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['importFile'])) {
+            $file = $_FILES['importFile'];
+            if ($file['type'] !== 'text/csv') {
+                echo json_encode(['success' => false, 'message' => 'File phải là định dạng CSV']);
+                exit;
+            }
+
+            $handle = fopen($file['tmp_name'], 'r');
+            if ($handle !== false) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                    if (count($data) >= 1) { // Giả sử CSV có ít nhất 2 cột: MaDM, TenDM
+                        $sizeData = [
+                            'MaSize' => $data[0], // MaDM từ cột 1
+
+                        ];
+                        $this->sizeModel->importSize($sizeData);
+                    }
+                }
+                fclose($handle);
+                echo json_encode(['success' => true, 'message' => 'Import danh mục thành công']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Không thể đọc file CSV']);
+            }
+            exit;
+        }
+    }
+
+    public function export()
+    {
+        if (!$this->auth->checkPermission(3, 'export')) {
+            die("Bạn không có quyền export danh mục.");
+        }
+        $sizes = $this->sizeModel->getAllSizes('', PHP_INT_MAX, 0); // Lấy tất cả danh mục
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename="Size.csv"');
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['MaSize']); // Tiêu đề CSV
+        foreach ($sizes as $size) {
+            fputcsv($output, [$size['MaSize']]);
+        }
+
+        fclose($output);
         exit;
     }
 }

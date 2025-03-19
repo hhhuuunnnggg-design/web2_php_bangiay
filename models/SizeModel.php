@@ -72,6 +72,30 @@ class SizeModel
         return $stmt->execute();
     }
 
+    public function importSize($data)
+    {
+
+        $sqlCheck = "SELECT MaSize FROM size ";
+        $stmtCheck = $this->conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $data['MaSize']);
+        $stmtCheck->execute();
+        $result = $stmtCheck->get_result();
+
+        if ($result->num_rows > 0) {
+            // Update nếu MaSize đã tồn tại
+            $sql = "UPDATE size SET MaSize = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $data['MaSize']);
+            $stmt->execute();
+        } else {
+            // Insert nếu MaSize chưa tồn tại
+            $sql = "INSERT INTO size (MaSize) VALUES (?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $data['MaSize']);
+            $stmt->execute();
+        }
+    }
+
     public function __destruct()
     {
         $this->db->closeConnection();

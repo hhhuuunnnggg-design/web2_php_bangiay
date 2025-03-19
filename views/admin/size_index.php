@@ -7,11 +7,25 @@
         <button type="submit">Tìm</button>
     </form>
 
-    <?php if ($auth->checkPermission(3, 'add')): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=size&action=add">
-            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
-        </a>
-    <?php endif; ?>
+    <div>
+        <?php if ($auth->checkPermission(3, 'add')): ?>
+            <a href="/shoeimportsystem/public/index.php?controller=size&action=add">
+                <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+            </a>
+        <?php endif; ?>
+
+        <?php if ($auth->checkPermission(3, 'export')): ?>
+            <a href="/shoeimportsystem/public/index.php?controller=size&action=export">
+                <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
+            </a>
+        <?php endif; ?>
+        <?php if ($auth->checkPermission(3, 'import')): ?>
+            <button type="button" class="btn btn-success" style="margin-top: 40px; width: 100px; height: 40px;" onclick="document.getElementById('importModal').style.display='block'">Import</button>
+        <?php endif; ?>
+
+    </div>
+
+
 </div>
 
 <div id="message"></div>
@@ -25,42 +39,38 @@
         </tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
         require_once __DIR__ . '../../../core/Auth.php'; // Đường dẫn tới Auth.php
-        
+
         $auth = new Auth();
-        if (!empty($sizes)): 
+        if (!empty($sizes)):
             $stt = ($page - 1) * $limit + 1;
-            foreach ($sizes as $row): 
+            foreach ($sizes as $row):
         ?>
-        <tr data-id="<?php echo $row['MaSize']; ?>">
-            <td><?php echo $stt++; ?></td>
-            <td><?php echo $row['MaSize']; ?></td>
-            <td>
-                
+                <tr data-id="<?php echo $row['MaSize']; ?>">
+                    <td><?php echo $stt++; ?></td>
+                    <td><?php echo $row['MaSize']; ?></td>
+                    <td>
+                        <?php if ($auth->checkPermission(3, 'edit')): ?>
+                            <a href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=<?php echo $row['MaSize']; ?>">
+                                <button type="button" class="btn btn-warning">Sửa</button>
+                            </a>
+                        <?php endif; ?>
 
-                <?php if ($auth->checkPermission(3, 'edit')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=<?php echo $row['MaSize']; ?>">
-                        <button type="button" class="btn btn-warning">Sửa</button>
-                    </a>
-                <?php endif; ?>
-
-                <?php if ($auth->checkPermission(3, 'delete')): ?>
-                    <a class="delete-btn" data-id="<?php echo $row['MaSize']; ?>">
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                    </a>
-                <?php endif; ?>
-               
-               
-                
-                
-            </td>
-        </tr>
-        <?php 
+                        <?php if ($auth->checkPermission(3, 'delete')): ?>
+                            <a class="delete-btn" data-id="<?php echo $row['MaSize']; ?>">
+                                <button type="button" class="btn btn-danger">Xóa</button>
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php
             endforeach;
-        else: 
-        ?>
-            <tr><td colspan="3">Không có kích thước nào.</td></tr>
+        else:
+            ?>
+            <tr>
+                <td colspan="3">Không có kích thước nào.</td>
+            </tr>
         <?php endif; ?>
     </tbody>
 </table>
@@ -116,11 +126,31 @@
     </nav>
 </div>
 
+<!-- Modal để import -->
+<div id="importModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid #ccc;">
+    <h2>Import Size</h2>
+    <form id="importForm" enctype="multipart/form-data">
+        <label>Chọn file CSV:</label>
+        <input type="file" name="importFile" accept=".csv" required><br>
+        <button type="submit">Import</button>
+        <button type="button" onclick="closeModal()">Hủy</button>
+    </form>
+</div>
+
 
 <style>
-    .pagination { margin-top: 20px; }
-    .pagination a { margin: 0 5px; text-decoration: none; }
-    .pagination a:hover { text-decoration: underline; }
+    .pagination {
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        text-decoration: none;
+    }
+
+    .pagination a:hover {
+        text-decoration: underline;
+    }
 </style>
 <style>
     .pagination-container {
@@ -170,18 +200,44 @@
 
 
 <script>
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        if (confirm('Xóa kích thước này?')) {
-            fetch(`/shoeimportsystem/public/index.php?controller=size&action=delete&id=${id}`, {
-                method: 'POST'
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            if (confirm('Xóa kích thước này?')) {
+                fetch(`/shoeimportsystem/public/index.php?controller=size&action=delete&id=${id}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.querySelector(`tr[data-id="${id}"]`).remove();
+                            document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                        } else {
+                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!!!</p>';
+                    });
+            }
+        });
+    });
+
+    document.getElementById('importForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+
+        fetch('/shoeimportsystem/public/index.php?controller=size&action=import', {
+                method: 'POST',
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.querySelector(`tr[data-id="${id}"]`).remove();
-                    document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                    document.getElementById('message').innerHTML = '<p style="color:green;">Import thành công!</p>';
+                    closeModal();
+                    location.reload();
                 } else {
                     document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
                 }
@@ -190,7 +246,9 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                 console.error('Error:', error);
                 document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
             });
-        }
     });
-});
+
+    function closeModal() {
+        document.getElementById('importModal').style.display = 'none';
+    }
 </script>

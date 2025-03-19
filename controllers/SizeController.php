@@ -97,36 +97,77 @@ class SizeController
     public function import()
     {
         if (!$this->auth->checkPermission(3, 'import')) {
-            die("Bạn không có quyền import danh mục.");
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['importFile'])) {
-            $file = $_FILES['importFile'];
-            if ($file['type'] !== 'text/csv') {
-                echo json_encode(['success' => false, 'message' => 'File phải là định dạng CSV']);
-                exit;
-            }
-
-            $handle = fopen($file['tmp_name'], 'r');
-            if ($handle !== false) {
-                fgetcsv($handle); // Bỏ qua dòng tiêu đề
-                while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-                    if (count($data) >= 1) { // Giả sử CSV có ít nhất 2 cột: MaDM, TenDM
-                        $sizeData = [
-                            'MaSize' => $data[0], // MaDM từ cột 1
-
-                        ];
-                        $this->sizeModel->importSize($sizeData);
-                    }
-                }
-                fclose($handle);
-                echo json_encode(['success' => true, 'message' => 'Import danh mục thành công']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Không thể đọc file CSV']);
-            }
+            echo json_encode(['success' => false, 'message' => 'Bạn không có quyền import danh mục']);
             exit;
         }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_FILES['importFile'])) {
+            echo json_encode(['success' => false, 'message' => 'Không có file được gửi lên']);
+            exit;
+        }
+
+        $file = $_FILES['importFile'];
+        if ($file['error'] !== UPLOAD_ERR_OK || pathinfo($file['name'], PATHINFO_EXTENSION) !== 'csv') {
+            echo json_encode(['success' => false, 'message' => 'File phải là định dạng CSV và upload thành công']);
+            exit;
+        }
+
+        $handle = fopen($file['tmp_name'], 'r');
+        if ($handle === false) {
+            echo json_encode(['success' => false, 'message' => 'Không thể đọc file CSV']);
+            exit;
+        }
+
+        fgetcsv($handle); // Bỏ qua dòng tiêu đề
+        $success = true;
+        $importedSizes = [];
+        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            if (count($data) >= 1 && is_numeric($data[0])) {
+                $sizeData = ['MaSize' => (int)$data[0]];
+                if ($this->sizeModel->importSize($sizeData)) {
+                    $importedSizes[] = $sizeData['MaSize'];
+                } else {
+                    $success = false;
+                    break;
+                }
+            } else {
+                $success = false;
+                break;
+            }
+        }
+        fclose($handle);
+
+        // Lấy tổng số size sau khi import để cập nhật phân trang
+        $totalSizes = $this->sizeModel->getTotalSizes('');
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? 'Import kích thước thành công' : 'Lỗi khi import dữ liệu',
+            'importedSizes' => $importedSizes,
+            'totalSizes' => $totalSizes
+        ]);
+        exit;
     }
 
+    // Thêm phương thức để lấy danh sách size theo trang (dùng cho cập nhật động)
+    public function getSizes()
+    {
+        $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+
+        $sizes = $this->sizeModel->getAllSizes($search, $limit, $offset);
+        $totalSizes = $this->sizeModel->getTotalSizes($search);
+
+        echo json_encode([
+            'success' => true,
+            'sizes' => $sizes,
+            'totalSizes' => $totalSizes,
+            'page' => $page,
+            'limit' => $limit
+        ]);
+        exit;
+    }
     public function export()
     {
         if (!$this->auth->checkPermission(3, 'export')) {

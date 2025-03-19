@@ -74,25 +74,24 @@ class SizeModel
 
     public function importSize($data)
     {
+        try {
+            // Kiểm tra MaSize đã tồn tại chưa
+            $sqlCheck = "SELECT MaSize FROM size WHERE MaSize = ?";
+            $stmtCheck = $this->conn->prepare($sqlCheck);
+            $stmtCheck->bind_param("i", $data['MaSize']);
+            $stmtCheck->execute();
+            $result = $stmtCheck->get_result();
 
-        $sqlCheck = "SELECT MaSize FROM size ";
-        $stmtCheck = $this->conn->prepare($sqlCheck);
-        $stmtCheck->bind_param("i", $data['MaSize']);
-        $stmtCheck->execute();
-        $result = $stmtCheck->get_result();
-
-        if ($result->num_rows > 0) {
-            // Update nếu MaSize đã tồn tại
-            $sql = "UPDATE size SET MaSize = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $data['MaSize']);
-            $stmt->execute();
-        } else {
-            // Insert nếu MaSize chưa tồn tại
-            $sql = "INSERT INTO size (MaSize) VALUES (?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $data['MaSize']);
-            $stmt->execute();
+            if ($result->num_rows == 0) { // Chỉ insert nếu chưa tồn tại
+                $sql = "INSERT INTO size (MaSize) VALUES (?)";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bind_param("i", $data['MaSize']);
+                return $stmt->execute();
+            }
+            return true; // Nếu đã tồn tại, coi như thành công
+        } catch (Exception $e) {
+            error_log("Lỗi importSize: " . $e->getMessage());
+            return false;
         }
     }
 

@@ -217,8 +217,8 @@
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
-                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!!!</p>';
+                        console.error('Lỗi khi xóa:', error);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
                     });
             }
         });
@@ -226,25 +226,81 @@
 
     document.getElementById('importForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        let formData = new FormData(this);
+        const fileInput = this.querySelector('input[name="importFile"]');
+        if (!fileInput.files[0].name.endsWith('.csv')) {
+            document.getElementById('message').innerHTML = '<p style="color:red;">Vui lòng chọn file CSV!</p>';
+            return;
+        }
 
+        let formData = new FormData(this);
         fetch('/shoeimportsystem/public/index.php?controller=size&action=import', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            })
             .then(data => {
+                const messageDiv = document.getElementById('message');
                 if (data.success) {
-                    document.getElementById('message').innerHTML = '<p style="color:green;">Import thành công!</p>';
+                    messageDiv.innerHTML = '<p style="color:green;">Import thành công!</p>';
                     closeModal();
-                    location.reload();
+
+                    // Cập nhật bảng mà không reload
+                    const tbody = document.querySelector('#sizeTable tbody');
+                    let stt = parseInt(tbody.querySelector('tr:last-child td:first-child')?.textContent || '0') + 1;
+
+                    data.importedSizes.forEach(size => {
+                        if (!document.querySelector(`tr[data-id="${size}"]`)) { // Tránh trùng lặp
+                            const row = document.createElement('tr');
+                            row.setAttribute('data-id', size);
+                            row.innerHTML = `
+                            <td>${stt++}</td>
+                            <td>${size}</td>
+                            <td>
+                                ${<?php echo $auth->checkPermission(3, 'edit') ? 'true' : 'false'; ?> ? 
+                                    '<a href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=' + size + '"><button type="button" class="btn btn-warning">Sửa</button></a>' : ''}
+                                ${<?php echo $auth->checkPermission(3, 'delete') ? 'true' : 'false'; ?> ? 
+                                    '<a class="delete-btn" data-id="' + size + '"><button type="button" class="btn btn-danger">Xóa</button></a>' : ''}
+                            </td>
+                        `;
+                            tbody.appendChild(row);
+
+                            // Gắn sự kiện xóa cho nút mới
+                            const deleteBtn = row.querySelector('.delete-btn');
+                            if (deleteBtn) {
+                                deleteBtn.addEventListener('click', function() {
+                                    const id = this.getAttribute('data-id');
+                                    if (confirm('Xóa kích thước này?')) {
+                                        fetch(`/shoeimportsystem/public/index.php?controller=size&action=delete&id=${id}`, {
+                                                method: 'POST'
+                                            })
+                                            .then(res => res.json())
+                                            .then(result => {
+                                                if (result.success) {
+                                                    row.remove();
+                                                    messageDiv.innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                                                } else {
+                                                    messageDiv.innerHTML = '<p style="color:red;">Lỗi: ' + result.message + '</p>';
+                                                }
+                                            })
+                                            .catch(err => {
+                                                console.error('Lỗi khi xóa:', err);
+                                                messageDiv.innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + err.message + '</p>';
+                                            });
+                                    }
+                                });
+                            }
+                        }
+                    });
                 } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                    messageDiv.innerHTML = '<p style="color:red;">Lỗi: ' + (data.message || 'Không xác định') + '</p>';
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                console.error('Lỗi khi import:', error);
+                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra: ' + error.message + '</p>';
             });
     });
 

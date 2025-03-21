@@ -1,9 +1,9 @@
 </main>
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+<div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5">
     <div class="container py-5">
-        <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
-            <div class="row g-4">
+        <div class="mb-4 pb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+            <div class="g-4 row">
                 <div class="col-lg-3">
                     <a href="#">
                         <h1 class="text-primary mb-0">Fruitables</h1>
@@ -12,27 +12,27 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                        <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                        <input class="form-control border-0 rounded-pill w-100 px-4 py-3" type="number" placeholder="Your Email">
+                        <button type="submit" class="btn btn-primary border-0 border-secondary position-absolute rounded-pill text-white px-4 py-3" style="top: 0; right: 0;">Subscribe Now</button>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="d-flex justify-content-end pt-3">
-                        <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-twitter fab"></i></a>
+                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-facebook-f fab"></i></a>
+                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-youtube fab"></i></a>
+                        <a class="btn btn-md-square btn-outline-secondary rounded-circle" href=""><i class="fa-linkedin-in fab"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row g-5">
+        <div class="g-5 row">
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
                     <h4 class="text-light mb-3">Why People Like us!</h4>
                     <p class="mb-4">typesetting, remaining essentially unchanged. It was
                         popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                    <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
+                    <a href="" class="btn border-secondary rounded-pill text-primary px-4 py-2">Read More</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -97,6 +97,40 @@
         }
     });
 </script>
+
+<style>
+    .user-menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .user-menu .dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        min-width: 120px;
+    }
+
+    .user-menu:hover .dropdown {
+        display: block;
+    }
+
+    .user-menu .dropdown a {
+        display: block;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .user-menu .dropdown a:hover {
+        background: #f0f0f0;
+    }
+</style>
 
 
 </body>

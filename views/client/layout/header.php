@@ -33,32 +33,32 @@
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
-            <div class="container topbar bg-primary d-none d-lg-block">
+            <div class="container d-lg-block d-none bg-primary topbar">
                 <div class="d-flex justify-content-between">
-                    <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Đại học Sài Gòn</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">nguyendinhhungtc2020@gmail.com</a></small>
+                    <div class="ps-2 top-info">
+                        <small class="me-3"><i class="text-secondary fa-map-marker-alt fas me-2"></i> <a href="#" class="text-white">Đại học Sài Gòn</a></small>
+                        <small class="me-3"><i class="text-secondary fa-envelope fas me-2"></i><a href="#" class="text-white">nguyendinhhungtc2020@gmail.com</a></small>
                     </div>
 
                 </div>
             </div>
             <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                <nav class="navbar navbar-expand-xl navbar-light bg-white">
                     <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
-                        <h1 class="text-primary display-6"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
+                        <h1 class="display-6 text-primary"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
                         </h1>
                     </a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
+                    <button class="navbar-toggler px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="text-primary fa fa-bars"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Home</a>
                             <a href="/shoeimportsystem/index.php?controller=product&action=index" class="nav-item nav-link">Shop</a>
                             <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                            <div class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu bg-secondary m-0 rounded-0">
                                     <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="dropdown-item">Cart</a>
                                     <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="dropdown-item">Checkout</a>
                                     <a href="/shoeimportsystem/index.php?controller=testimonial&action=index" class="dropdown-item">Testimonial</a>
@@ -68,14 +68,21 @@
                             <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Contact</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                            <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
                             <a href="#" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                <i class="fa fa-2x fa-shopping-bag"></i>
+                                <span class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
-                            <a href="#" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
+                            <div class="user-menu">
+                                <a href="#" class="my-auto">
+                                    <i class="fa-2x fa-user fas"></i>
+                                </a>
+                                <div class="dropdown">
+                                    <a href="/login">Đăng nhập</a>
+                                    <a href="/logout">Đăng xuất</a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </nav>
@@ -84,29 +91,29 @@
         <!-- Navbar End -->
 
         <!-- Hero-Start -->
-        
-        <div class="container-fluid py-5 mb-5 hero-header">
+
+        <div class="container-fluid hero-header mb-5 py-5">
             <div class="container py-5">
-                <div class="row g-5 align-items-center">
-                    <div class="col-md-12 col-lg-7">
-                        
-                        <h1 class="mb-5 display-3 text-primary">Web bán giày siêu chất lượng cao</h1>
-                        
-                       <div>
-                       
-                       </div>
-                        
+                <div class="g-5 row align-items-center">
+                    <div class="col-lg-7 col-md-12">
+
+                        <h1 class="display-3 text-primary mb-5">Web bán giày siêu chất lượng cao</h1>
+
+                        <div>
+
+                        </div>
+
                     </div>
-                    <div class="col-md-12 col-lg-5">
-                        <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                    <div class="col-lg-5 col-md-12">
+                        <div id="carouselId" class="position-relative carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <div class="carousel-item active rounded">
-                                    <img src="/shoeimportsystem/views/client/layout/img/ADIDAS_FORUM_PANDA_3.jpg" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">ADIDAS</a>
+                                <div class="rounded active carousel-item">
+                                    <img src="/shoeimportsystem/views/client/layout/img/ADIDAS_FORUM_PANDA_3.jpg" class="bg-secondary h-100 rounded w-100 img-fluid" alt="First slide">
+                                    <a href="#" class="btn rounded text-white px-4 py-2">ADIDAS</a>
                                 </div>
-                                <div class="carousel-item rounded">
-                                    <img src="/shoeimportsystem/views/client/layout/img/ADIDAS_CAMPUS_00S_GREEN_3.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">SAMBA</a>
+                                <div class="rounded carousel-item">
+                                    <img src="/shoeimportsystem/views/client/layout/img/ADIDAS_CAMPUS_00S_GREEN_3.jpg" class="h-100 rounded w-100 img-fluid" alt="Second slide">
+                                    <a href="#" class="btn rounded text-white px-4 py-2">SAMBA</a>
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -122,57 +129,57 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Hero End -->
-    </header>
-        
-    <main>
-    <?php if (isset($_GET['controller']) && $_GET['controller'] === 'home' && (!isset($_GET['action']) || $_GET['action'] === 'index')): ?>
-        <div class="container mt-5">
-            <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
-            <?php if (isset($productsByCategory) && is_array($productsByCategory) && !empty($productsByCategory)): ?>
-                <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
-                    <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
-                        <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
-                        <div class="row">
-                            <?php foreach ($categoryData['products'] as $product): ?>
-                                <div class="col-md-3 mb-4">
-                                    <div class="card h-100">
-                                        <?php if (!empty($product['AnhNen'])): ?>
-                                            <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
-                                            </a>
-                                        <?php else: ?>
-                                            <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                                                <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
-                                            </a>
-                                        <?php endif; ?>
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
-                                            <p class="card-text">
-                                                <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
-                                                    <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                                    <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                                    <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+        </header>
+
+        <main>
+            <?php if (isset($_GET['controller']) && $_GET['controller'] === 'home' && (!isset($_GET['action']) || $_GET['action'] === 'index')): ?>
+                <div class="container mt-5">
+                    <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
+                    <?php if (isset($productsByCategory) && is_array($productsByCategory) && !empty($productsByCategory)): ?>
+                        <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
+                            <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
+                                <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
+                                <div class="row">
+                                    <?php foreach ($categoryData['products'] as $product): ?>
+                                        <div class="col-md-3 mb-4">
+                                            <div class="card h-100">
+                                                <?php if (!empty($product['AnhNen'])): ?>
+                                                    <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                                        <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
+                                                    </a>
                                                 <?php else: ?>
-                                                    <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                                    <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                                        <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+                                                    </a>
                                                 <?php endif; ?>
-                                            </p>
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
+                                                    <p class="card-text">
+                                                        <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                                                            <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                                            <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                                            <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                                        <?php else: ?>
+                                                            <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endforeach; ?>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <?php if (!isset($_GET['category'])): ?>
-                            <div class="text-center mt-3">
-                                <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
+                                <?php if (!isset($_GET['category'])): ?>
+                                    <div class="text-center mt-3">
+                                        <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="text-center">Không có sản phẩm nào theo danh mục.</p>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center">Không có sản phẩm nào theo danh mục.</p>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
-        </div>
-    <?php endif; ?>
-</main>
+        </main>

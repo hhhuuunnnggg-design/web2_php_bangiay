@@ -53,11 +53,11 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Home</a>
+                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chu</a>
                             <a href="/shoeimportsystem/index.php?controller=product&action=index" class="nav-item nav-link">Shop</a>
-                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Shop Detail</a>
+                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thong tin shop</a>
                             <div class="dropdown nav-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Pages</a>
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thuong hieu</a>
                                 <div class="dropdown-menu bg-secondary m-0 rounded-0">
                                     <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="dropdown-item">Cart</a>
                                     <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="dropdown-item">Checkout</a>
@@ -65,11 +65,12 @@
                                     <a href="/shoeimportsystem/index.php?controller=error&action=404" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
-                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Contact</a>
+                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Lien he</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
                             <a href="#" class="position-relative me-4 my-auto">
+
                                 <i class="fa fa-2x fa-shopping-bag"></i>
                                 <span class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>

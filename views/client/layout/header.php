@@ -69,10 +69,17 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
-
+                            <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto">
                                 <i class="fa fa-2x fa-shopping-bag"></i>
-                                <span class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                    <?php
+                                    if (isset($_SESSION['user'])) {
+                                        echo $_SESSION['cart_count'] ?? 0; // Lấy từ session
+                                    } else {
+                                        echo 0;
+                                    }
+                                    ?>
+                                </span>
                             </a>
                             <div class="user-menu">
                                 <?php if (isset($_SESSION['user'])): ?>
@@ -90,7 +97,6 @@
                                     </div>
                                 <?php endif; ?>
                             </div>
-
                         </div>
                     </div>
                 </nav>

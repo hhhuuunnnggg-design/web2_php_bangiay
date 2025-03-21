@@ -33,6 +33,10 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/CommentController.php';
         $controller = new CommentController($db);
         break;
+    case 'cart':
+        require_once __DIR__ . '/controllers/client/CartController.php';
+        $controller = new CartController($db);
+        break;
     default:
         die("Controller không tồn tại");
 }
@@ -68,6 +72,12 @@ switch ($action) {
     case 'updateProfile':
         $controller->updateProfile();
         break;
+    // case 'getProfile':
+    //     $controller->getProfile();
+    //     break;
+    case 'addToCart':
+        $controller->addToCart();
+        exit; // Dừng ngay sau khi xử lý AJAX
     default:
         die("Action không tồn tại");
 }

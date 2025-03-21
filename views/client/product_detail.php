@@ -79,7 +79,7 @@ include __DIR__ . '/layout/header.php';
                 </div>
             </div>
 
-            <!-- Nút thêm giỏ hàng và mua ngay -->
+            <!-- Trong phần HTML của product_detail.php -->
             <div class="mb-3">
                 <button class="btn btn-primary me-2" onclick="addToCart(<?php echo $product['MaSP']; ?>)">Thêm vào giỏ hàng</button>
                 <button class="btn btn-success" onclick="buyNow(<?php echo $product['MaSP']; ?>)">Mua ngay</button>
@@ -134,17 +134,6 @@ include __DIR__ . '/layout/header.php';
         }
     }
 
-    function addToCart(productId) {
-        let size = document.querySelector('input[name="size"]:checked')?.value;
-        let color = document.querySelector('input[name="color"]:checked')?.value;
-        let quantity = document.getElementById('quantity').value;
-        if (!size || !color) {
-            alert('Vui lòng chọn kích thước và màu sắc!');
-            return;
-        }
-        // Logic thêm vào giỏ hàng (có thể gửi AJAX request đến server)
-        alert(`Đã thêm sản phẩm ${productId} vào giỏ hàng với size: ${size}, màu: ${color}, số lượng: ${quantity}`);
-    }
 
     function buyNow(productId) {
         let size = document.querySelector('input[name="size"]:checked')?.value;
@@ -245,6 +234,53 @@ include __DIR__ . '/layout/header.php';
                 alert('Có lỗi xảy ra khi gửi đánh giá: ' + error.message);
             });
     });
+    // thêm vao gio hàng
+    function addToCart(productId) {
+        let size = document.querySelector('input[name="size"]:checked')?.value;
+        let color = document.querySelector('input[name="color"]:checked')?.value;
+        let quantity = document.getElementById('quantity').value;
+
+        if (!size || !color) {
+            alert('Vui lòng chọn kích thước và màu sắc!');
+            return;
+        }
+
+        console.log(`Sending: productId=${productId}, quantity=${quantity}, size=${size}, color=${color}`);
+
+        fetch('/shoeimportsystem/index.php?controller=cart&action=addToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        console.log('Raw response:', text); // In phản hồi thô
+                        throw new Error(`Server error: ${response.status} - ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Parsed JSON:', data);
+                if (data.success) {
+                    alert('Đã thêm vào giỏ hàng!');
+                    const cartCountElement = document.querySelector('#cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.cartCount;
+                    }
+                } else {
+                    alert(data.message || 'Không thể thêm vào giỏ hàng!');
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                alert('Có lỗi xảy ra khi thêm vào giỏ hàng: ' + error.message);
+            });
+    }
 </script>
 
 <style>

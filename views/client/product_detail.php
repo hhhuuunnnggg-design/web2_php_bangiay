@@ -104,26 +104,22 @@ include __DIR__ . '/layout/header.php';
                 <textarea name="comment" placeholder="Viết đánh giá..."></textarea><br>
                 <button type="button" id="submit-review" class="review-button">Đánh giá</button>
             </form>
-            <?php
-            // Truy vấn đánh giá từ bảng binhluan
-            $reviews = $this->model('CommentModel')->getReviewsByProductId($product['MaSP']);
-            if (!empty($reviews)):
-                foreach ($reviews as $review):
-            ?>
+            <?php if (!empty($reviews)): ?>
+                <?php foreach ($reviews as $review): ?>
                     <div class="review">
-                        <p><strong>Khách hàng:</strong> <?php echo htmlspecialchars($review['MaKH']); ?></p>
+                        <p><strong>Khách hàng:</strong> <?php echo htmlspecialchars($review['TenKH']); ?></p>
                         <p><strong>Thời gian:</strong> <?php echo htmlspecialchars($review['ThoiGian']); ?></p>
                         <p><?php echo htmlspecialchars($review['NoiDung']); ?></p>
                     </div>
-                <?php
-                endforeach;
-            else:
-                ?>
+                <?php endforeach; ?>
+            <?php else: ?>
                 <p class="no-reviews">CHƯA CÓ ĐÁNH GIÁ NÀO</p>
             <?php endif; ?>
         </div>
     </div>
 </div>
+
+
 </div>
 <script>
     function increaseQuantity() {
@@ -235,6 +231,43 @@ include __DIR__ . '/layout/header.php';
             });
     });
 </script>
+
+<style>
+    .review {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .review p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .review strong {
+        color: #333;
+    }
+
+    .review .review-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .review .review-header i {
+        color: #ffcc00;
+        /* Màu vàng cho icon */
+        font-size: 20px;
+    }
+
+    .review .stars {
+        color: #ffcc00;
+        font-size: 18px;
+    }
+</style>
 
 <?php
 include __DIR__ . '/layout/footer.php';

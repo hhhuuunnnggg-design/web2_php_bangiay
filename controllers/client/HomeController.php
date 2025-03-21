@@ -1,28 +1,34 @@
 <?php
 require_once __DIR__ . '/../../models/CategoryModel.php';
 require_once __DIR__ . '/../../models/client/ProductModel.php';
-require_once __DIR__ . '/../../controllers/client/CommentController.php';
+require_once __DIR__ . '/../../models/client/CommentModel.php';
 
-class HomeController {
+class HomeController
+{
     protected $db;
     private $categoryModel;
     private $productModel;
+    private $commentModel;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
         $this->categoryModel = new CategoryModel();
         $this->productModel = new ProductModel();
+        $this->commentModel = new CommentModel($this->db); // Khởi tạo CommentModel
     }
 
-    
-    
-    protected function model($model) {
+
+
+    protected function model($model)
+    {
         require_once __DIR__ . '/../../models/client/CommentModel.php';
         return new CommentModel($this->db);
     }
-    
 
-    public function index() {
+
+    public function index()
+    {
         // Lấy tất cả danh mục
         $categories = $this->categoryModel->getAllCategories('', PHP_INT_MAX, 0);
 
@@ -57,39 +63,23 @@ class HomeController {
         $title = "Trang chủ";
         include __DIR__ . '/../../views/client/home.php';
     }
-    public function detail() {
-        // Lấy ID sản phẩm từ URL, tham số id sẽ được truyền từ đây vào
+    public function detail()
+    {
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
         if (!$productId) {
-            // Redirect hoặc hiển thị lỗi nếu không có ID sản phẩm
             header("Location: /shoeimportsystem/index.php?controller=home&action=index");
             exit;
         }
-    
-        // Lấy thông tin sản phẩm
-        $product = $this->productModel->getProductById($productId); // Hàm này cần được thêm vào ProductModel
+
+        $product = $this->productModel->getProductById($productId);
         if (!$product) {
-            // Xử lý trường hợp không tìm thấy sản phẩm
             header("Location: /shoeimportsystem/index.php?controller=error&action=404");
             exit;
         }
-    
-        // Lấy chi tiết kích thước và màu sắc
-        $productDetails = $this->productModel->getProductDetails($productId); // Hàm này cần được thêm vào ProductModel
 
-        $commentController = new CommentController($this->db);
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
-            if ($commentController->addComment($productId)) {
-                // Thêm thành công
-                header("Location: /shoeimportsystem/index.php?controller=product&action=detail&id=$productId");
-                exit;
-            } else {
-                // Thêm thất bại
-                echo "Lỗi khi thêm bình luận.";
-            }
-        }
-    
-        // Gọi view
+        $productDetails = $this->productModel->getProductDetails($productId);
+        $reviews = $this->commentModel->getReviewsByProductId($productId); // Lấy danh sách đánh giá
+
         $title = "Chi tiết sản phẩm - " . $product['TenSP'];
         include __DIR__ . '/../../views/client/product_detail.php';
     }

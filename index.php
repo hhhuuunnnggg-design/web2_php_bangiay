@@ -33,7 +33,7 @@ switch ($controller) {
         $controller = new ShopdetailController();
         break;
     case 'auth':
-        require_once __DIR__ . '/controllers/client/AuthController.php';
+        require_once __DIR__ . '/controllers/AuthController.php';
         $controller = new AuthController($db);
         break;
     case 'comment':

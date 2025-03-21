@@ -10,6 +10,13 @@ $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $db = new PDO('mysql:host=localhost;dbname=naruto', 'root', '');
 
+try {
+    $db = new PDO('mysql:host=localhost;dbname=naruto', 'root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Lỗi kết nối database: " . $e->getMessage());
+}
+
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
 switch ($controller) {
@@ -71,3 +78,8 @@ switch ($action) {
     default:
         die("Action không tồn tại");
 }
+if (!method_exists($controller, $action)) {
+    die("Action '$action' không tồn tại trong controller '$controller'");
+}
+
+$controller->$action();

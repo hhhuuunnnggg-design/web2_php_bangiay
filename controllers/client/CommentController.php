@@ -1,49 +1,48 @@
 <?php
-
 require_once __DIR__ . '/../../models/client/CommentModel.php';
-class CommentController {
+
+class CommentController
+{
+    private $db;
     private $commentModel;
-    private $db; // Lưu trữ kết nối cơ sở dữ liệu
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
-        $this->commentModel = new CommentModel($db);
+        $this->commentModel = new CommentModel($this->db);
     }
 
-    public function addComment($productId) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                $comment = $_POST['comment'];
-                $MaKH = 1; // Giả sử MaKH là 1
-
-                $sql = "INSERT INTO binhluan (MaSP, MaKH, NoiDung) VALUES (:MaSP, :MaKH, :NoiDung)";
-                $stmt = $this->db->prepare($sql);
-                $stmt->bindParam(':MaSP', $productId, PDO::PARAM_INT);
-                $stmt->bindParam(':MaKH', $MaKH, PDO::PARAM_INT);
-                $stmt->bindParam(':NoiDung', $comment, PDO::PARAM_STR);
-
-                if ($stmt->execute()) {
-                    $response = [
-                        'success' => true,
-                        'MaKH' => $MaKH,
-                        'ThoiGian' => date('Y-m-d H:i:s'),
-                    ];
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                } else {
-                    $response = ['success' => false, 'error' => 'Lỗi khi thêm đánh giá vào cơ sở dữ liệu.'];
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                }
-            } catch (PDOException $e) {
-                error_log("Lỗi thêm đánh giá: " . $e->getMessage());
-                $response = ['success' => false, 'error' => 'Lỗi server. Vui lòng thử lại sau.'];
-                header('Content-Type: application/json');
-                echo json_encode($response);
-            }
+    public function addComment()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
+            exit;
         }
-    }
 
-    // Các phương thức khác có thể được thêm vào sau này (ví dụ: xóa bình luận)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $productId = $_GET['productId'] ?? null;
+            $comment = trim($_POST['comment'] ?? '');
+            $maKH = $_SESSION['user']['MaKH'];
+
+            if ($productId && $comment && $maKH) {
+                // Gọi hàm addComment với thứ tự đúng: productId, customerId, content
+                $result = $this->commentModel->addComment($productId, $maKH, $comment);
+                if ($result) {
+                    echo json_encode([
+                        'success' => true,
+                        'MaKH' => $maKH,
+                        'ThoiGian' => date('Y-m-d H:i:s')
+                    ]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Không thể thêm đánh giá!']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+        }
+        exit;
+    }
 }
-?>

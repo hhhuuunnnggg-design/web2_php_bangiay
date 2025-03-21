@@ -196,8 +196,13 @@ include __DIR__ . '/layout/header.php';
             return;
         <?php endif; ?>
         const form = document.getElementById('review-form');
-        const comment = form.comment.value;
+        const comment = form.comment.value.trim();
         const productId = <?php echo $product['MaSP']; ?>;
+
+        if (!comment) {
+            alert('Vui lòng nhập nội dung đánh giá!');
+            return;
+        }
 
         fetch('/shoeimportsystem/index.php?controller=comment&action=addComment&productId=' + productId, {
                 method: 'POST',
@@ -206,7 +211,12 @@ include __DIR__ . '/layout/header.php';
                 },
                 body: 'comment=' + encodeURIComponent(comment),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server trả về lỗi: ' + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     alert('Đánh giá của bạn đã được thêm thành công!');
@@ -216,12 +226,12 @@ include __DIR__ . '/layout/header.php';
                     document.querySelector('#reviews').appendChild(reviewDiv);
                     form.comment.value = '';
                 } else {
-                    alert('Có lỗi xảy ra khi thêm đánh giá.');
+                    alert(data.message || 'Có lỗi xảy ra khi thêm đánh giá.');
                 }
             })
             .catch(error => {
-                console.error('Lỗi:', error);
-                alert('Có lỗi xảy ra khi thêm đánh giá.');
+                console.error('Lỗi chi tiết:', error);
+                alert('Có lỗi xảy ra khi gửi đánh giá: ' + error.message);
             });
     });
 </script>

@@ -1,5 +1,5 @@
 <?php
-session_start(); // Khởi động session
+session_start();
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $db = new PDO('mysql:host=localhost;dbname=naruto', 'root', '');
@@ -19,9 +19,13 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/ShopdetailController.php';
         $controller = new ShopdetailController();
         break;
-    case 'auth': // Thêm case cho auth
+    case 'auth':
         require_once __DIR__ . '/controllers/client/AuthController.php';
         $controller = new AuthController($db);
+        break;
+    case 'comment': // Thêm case cho comment
+        require_once __DIR__ . '/controllers/client/CommentController.php';
+        $controller = new CommentController($db);
         break;
     default:
         die("Controller không tồn tại");
@@ -34,20 +38,23 @@ switch ($action) {
     case 'detail':
         $controller->detail();
         break;
-    case 'login': // Thêm action login
+    case 'login':
         $controller->login();
         break;
-    case 'doLogin': // Xử lý đăng nhập
+    case 'doLogin':
         $controller->doLogin();
         break;
-    case 'register': // Thêm action register
+    case 'register':
         $controller->register();
         break;
-    case 'doRegister': // Xử lý đăng ký
+    case 'doRegister':
         $controller->doRegister();
         break;
-    case 'logout': // Đăng xuất
+    case 'logout':
         $controller->logout();
+        break;
+    case 'addComment': // Thêm action cho thêm đánh giá
+        $controller->addComment();
         break;
     default:
         die("Action không tồn tại");

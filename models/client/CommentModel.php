@@ -1,43 +1,57 @@
 <?php
 require_once __DIR__ . '/../../core/db_connect.php';
 
-
-class CommentModel {
+class CommentModel
+{
     private $db;
 
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct($db)
+    {
+        $this->db = $db; // $db là đối tượng PDO từ index.php
     }
 
-    public function getCommentsByProductId($productId) {
-        $sql = "SELECT * FROM binhluan WHERE MaSP = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $productId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function addComment($productId, $customerId, $content) {
-        $sql = "INSERT INTO binhluan (MaSP, MaKH, NoiDung, ThoiGian) VALUES (?, ?, ?, NOW())";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("iis", $productId, $customerId, $content);
-        return $stmt->execute();
-    }
-
-    public function getReviewsByProductId($productId) {
+    // Lấy tất cả bình luận theo MaSP (không join với khachhang)
+    public function getCommentsByProductId($productId)
+    {
         try {
-            $stmt = $this->db->prepare("SELECT binhluan.*, khachhang.TenKH FROM binhluan JOIN khachhang ON binhluan.MaKH = khachhang.MaKH WHERE binhluan.MaSP = :productId");
-            $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
-            $stmt->execute();
-            $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $reviews;
+            $sql = "SELECT * FROM binhluan WHERE MaSP = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([(int)$productId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log("Database error: " . $e->getMessage());
+            error_log("Lỗi khi lấy bình luận: " . $e->getMessage());
             return [];
         }
     }
 
-    // Các phương thức khác có thể được thêm vào sau này
+    // Thêm bình luận mới
+    public function addComment($productId, $customerId, $content)
+    {
+        try {
+            $sql = "INSERT INTO binhluan (MaSP, MaKH, NoiDung, ThoiGian) VALUES (?, ?, ?, NOW())";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([(int)$productId, (int)$customerId, $content]);
+        } catch (PDOException $e) {
+            error_log("Lỗi khi thêm bình luận: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Lấy đánh giá theo MaSP (join với khachhang để lấy TenKH)
+    public function getReviewsByProductId($productId)
+    {
+        try {
+            $sql = "SELECT binhluan.*, khachhang.TenKH 
+                    FROM binhluan 
+                    JOIN khachhang ON binhluan.MaKH = khachhang.MaKH 
+                    WHERE binhluan.MaSP = ? 
+                    ORDER BY binhluan.ThoiGian DESC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([(int)$productId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Lỗi khi lấy đánh giá: " . $e->getMessage());
+            return [];
+        }
+    }
 }
-?>

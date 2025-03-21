@@ -96,6 +96,33 @@
             });
         }
     });
+
+    document.getElementById('cart-icon').addEventListener('click', function(e) {
+        e.preventDefault();
+        fetch('/shoeimportsystem/index.php?controller=cart&action=getCartDetails')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    let cartHtml = '';
+                    if (data.items.length > 0) {
+                        cartHtml = data.items.map(item => `
+                        <div class="cart-item mb-3">
+                            <img src="/shoeimportsystem/public/${item.AnhNen}" alt="${item.TenSP}" style="width: 50px; height: 50px;">
+                            <span>${item.TenSP} - Size: ${item.Size} - Màu: ${item.MaMau} - Số lượng: ${item.SoLuong}</span>
+                            <span class="float-end">${item.GiaKhuyenMai.toLocaleString('vi-VN')} VNĐ</span>
+                        </div>
+                    `).join('');
+                    } else {
+                        cartHtml = '<p>Giỏ hàng trống!</p>';
+                    }
+                    document.getElementById('cart-details').innerHTML = cartHtml;
+                    $('#cartModal').modal('show');
+                } else {
+                    alert(data.message || 'Không thể tải giỏ hàng!');
+                }
+            })
+            .catch(error => alert('Lỗi: ' + error));
+    });
 </script>
 
 <style>

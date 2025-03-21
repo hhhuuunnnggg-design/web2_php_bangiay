@@ -33,8 +33,13 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/CommentController.php';
         $controller = new CommentController($db);
         break;
+    case 'cart':
+        require_once __DIR__ . '/controllers/client/CartController.php';
+        $controller = new CartController($conn);
+        break;
     default:
-        die("Controller không tồn tại");
+        header("HTTP/1.0 404 Not Found");
+        exit("404 Not Found");
 }
 
 switch ($action) {

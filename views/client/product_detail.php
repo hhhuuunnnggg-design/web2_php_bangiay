@@ -142,8 +142,31 @@ include __DIR__ . '/layout/header.php';
             alert('Vui lòng chọn kích thước và màu sắc!');
             return;
         }
-        // Logic thêm vào giỏ hàng (có thể gửi AJAX request đến server)
-        alert(`Đã thêm sản phẩm ${productId} vào giỏ hàng với size: ${size}, màu: ${color}, số lượng: ${quantity}`);
+        <?php if (!isset($_SESSION['user'])): ?>
+            alert('Vui lòng đăng nhập để thêm vào giỏ hàng!');
+            window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
+            return;
+        <?php endif; ?>
+
+        fetch('/shoeimportsystem/index.php?controller=cart&action=add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `productId=${productId}&size=${size}&color=${color}&quantity=${quantity}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đã thêm vào giỏ hàng thành công!');
+                    // Cập nhật số lượng trên biểu tượng giỏ hàng
+                    let cartCount = parseInt(document.getElementById('cart-count').textContent);
+                    document.getElementById('cart-count').textContent = cartCount + parseInt(quantity);
+                } else {
+                    alert(data.message || 'Có lỗi xảy ra!');
+                }
+            })
+            .catch(error => alert('Lỗi: ' + error));
     }
 
     function buyNow(productId) {

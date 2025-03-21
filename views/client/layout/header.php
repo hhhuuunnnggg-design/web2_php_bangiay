@@ -74,6 +74,42 @@
                                 <i class="fa fa-2x fa-shopping-bag"></i>
                                 <span class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
+                            <!--  -->
+                            <a href="#" class="position-relative me-4 my-auto" id="cart-icon">
+                                <i class="fa fa-2x fa-shopping-bag"></i>
+                                <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                    <?php
+                                    // Đếm số lượng từ chitietgiohang dựa trên MaGH của người dùng
+                                    if (isset($_SESSION['user'])) {
+                                        require_once __DIR__ . '/../../../models/client/CartModel.php';
+                                        $cartModel = new CartModel();
+                                        $cartCount = $cartModel->getCartItemCount($_SESSION['user']['MaKH']);
+                                        echo $cartCount;
+                                    } else {
+                                        echo 0;
+                                    }
+                                    ?>
+                                </span>
+                            </a>
+
+                            <!-- Modal chi tiết giỏ hàng -->
+                            <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" id="cart-details">
+                                            <!-- Chi tiết giỏ hàng sẽ được tải động bằng AJAX -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="btn btn-primary">Thanh toán</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="user-menu">
                                 <?php if (isset($_SESSION['user'])): ?>
                                     <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>

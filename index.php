@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (!isset($_GET['controller']) && !isset($_GET['action'])) {
+    header("Location: /shoeimportsystem/index.php?controller=home&action=index");
+    exit;
+}
+
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $db = new PDO('mysql:host=localhost;dbname=naruto', 'root', '');
@@ -23,7 +29,7 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/AuthController.php';
         $controller = new AuthController($db);
         break;
-    case 'comment': // Thêm case cho comment
+    case 'comment':
         require_once __DIR__ . '/controllers/client/CommentController.php';
         $controller = new CommentController($db);
         break;
@@ -53,8 +59,14 @@ switch ($action) {
     case 'logout':
         $controller->logout();
         break;
-    case 'addComment': // Thêm action cho thêm đánh giá
+    case 'addComment':
         $controller->addComment();
+        break;
+    case 'profile':
+        $controller->profile();
+        break;
+    case 'updateProfile':
+        $controller->updateProfile();
         break;
     default:
         die("Action không tồn tại");

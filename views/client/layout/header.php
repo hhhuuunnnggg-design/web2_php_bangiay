@@ -79,6 +79,7 @@
                                     <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
                                     <div class="dropdown">
                                         <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=profile">Thông tin cá nhân</a>
                                         <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
                                     </div>
                                 <?php else: ?>

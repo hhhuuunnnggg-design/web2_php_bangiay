@@ -12,7 +12,52 @@ class AuthController
         $this->db = $db;
     }
 
-    // Hiển thị form đăng nhập
+    // Hiển thị trang thông tin cá nhân
+    public function profile()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
+            exit;
+        }
+
+        $userInfo = $this->userModel->getUserInfo($_SESSION['user']['MaKH']);
+        $title = "Thông tin cá nhân";
+        include __DIR__ . '/../../views/client/page/profile.php';
+    }
+
+    // Xử lý cập nhật thông tin cá nhân
+    public function updateProfile()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maKH = $_SESSION['user']['MaKH'];
+            $tenKH = $_POST['tenKH'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $sdt = $_POST['sdt'] ?? '';
+            $diaChi = $_POST['diaChi'] ?? '';
+            $matKhau = $_POST['matKhau'] ?? '';
+
+            if ($this->userModel->updateUser($maKH, $tenKH, $email, $sdt, $diaChi, $matKhau)) {
+                // Cập nhật lại session nếu cần
+                $_SESSION['user']['TenKH'] = $tenKH;
+                $success = "Cập nhật thông tin thành công!";
+            } else {
+                $error = "Cập nhật thất bại, vui lòng thử lại!";
+            }
+
+            $userInfo = $this->userModel->getUserInfo($maKH);
+            $title = "Thông tin cá nhân";
+            include __DIR__ . '/../../views/client/page/profile.php';
+        }
+    }
+
+    // Các hàm khác giữ nguyên: login(), doLogin(), register(), doRegister(), logout()
     public function login()
     {
         if (isset($_SESSION['user'])) {
@@ -23,7 +68,6 @@ class AuthController
         include __DIR__ . '/../../views/client/page/login.php';
     }
 
-    // Xử lý đăng nhập
     public function doLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,7 +77,7 @@ class AuthController
             $user = $this->userModel->login($email, $matKhau);
             if ($user) {
                 session_start();
-                $_SESSION['user'] = $user; // Lưu thông tin người dùng vào session
+                $_SESSION['user'] = $user;
                 header("Location: /shoeimportsystem/index.php?controller=home&action=index");
                 exit;
             } else {
@@ -44,7 +88,6 @@ class AuthController
         }
     }
 
-    // Hiển thị form đăng ký
     public function register()
     {
         if (isset($_SESSION['user'])) {
@@ -55,7 +98,6 @@ class AuthController
         include __DIR__ . '/../../views/client/page/register.php';
     }
 
-    // Xử lý đăng ký
     public function doRegister()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -82,7 +124,6 @@ class AuthController
         }
     }
 
-    // Đăng xuất
     public function logout()
     {
         session_start();

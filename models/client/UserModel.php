@@ -12,14 +12,39 @@ class UserModel
         $this->conn = $this->db->getConnection();
     }
 
-    // Đăng ký khách hàng mới (không mã hóa mật khẩu)
+    // Lấy thông tin người dùng theo MaKH
+    public function getUserInfo($maKH)
+    {
+        $sql = "SELECT TenKH, Email, SDT, DiaChi, MatKhau FROM khachhang WHERE MaKH = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $maKH);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    // Cập nhật thông tin người dùng
+    public function updateUser($maKH, $tenKH, $email, $sdt, $diaChi, $matKhau)
+    {
+        $tenKH = $this->conn->real_escape_string($tenKH);
+        $email = $this->conn->real_escape_string($email);
+        $sdt = $this->conn->real_escape_string($sdt);
+        $diaChi = $this->conn->real_escape_string($diaChi);
+        $matKhau = $this->conn->real_escape_string($matKhau);
+
+        $sql = "UPDATE khachhang SET TenKH = ?, Email = ?, SDT = ?, DiaChi = ?, MatKhau = ? WHERE MaKH = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ssissi", $tenKH, $email, $sdt, $diaChi, $matKhau, $maKH);
+        return $stmt->execute();
+    }
+
+    // Các hàm cũ giữ nguyên
     public function register($tenKH, $email, $sdt, $diaChi, $matKhau)
     {
         $email = $this->conn->real_escape_string($email);
         $tenKH = $this->conn->real_escape_string($tenKH);
         $sdt = $this->conn->real_escape_string($sdt);
         $diaChi = $this->conn->real_escape_string($diaChi);
-        $matKhau = $this->conn->real_escape_string($matKhau); // Lưu dạng văn bản thô
+        $matKhau = $this->conn->real_escape_string($matKhau);
 
         $sql = "INSERT INTO khachhang (TenKH, Email, SDT, DiaChi, MatKhau) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
@@ -27,7 +52,6 @@ class UserModel
         return $stmt->execute();
     }
 
-    // Kiểm tra email đã tồn tại chưa
     public function emailExists($email)
     {
         $email = $this->conn->real_escape_string($email);
@@ -38,7 +62,6 @@ class UserModel
         return $stmt->get_result()->num_rows > 0;
     }
 
-    // Đăng nhập (so sánh mật khẩu thô)
     public function login($email, $matKhau)
     {
         $email = $this->conn->real_escape_string($email);
@@ -49,7 +72,7 @@ class UserModel
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
 
-        if ($result && $matKhau === $result['MatKhau']) { // So sánh trực tiếp
+        if ($result && $matKhau === $result['MatKhau']) {
             return [
                 'MaKH' => $result['MaKH'],
                 'TenKH' => $result['TenKH']

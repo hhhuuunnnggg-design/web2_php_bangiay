@@ -17,7 +17,29 @@ class HomeController
         $this->productModel = new ProductModel();
         $this->commentModel = new CommentModel($this->db); // Khởi tạo CommentModel
     }
+    public function login() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
 
+            $user = $this->userModel->getUserByEmail($email);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user'] = $user;
+                header("Location: /shoeimportsystem/index.php?controller=home&action=index");
+                exit;
+            } else {
+                $error = "Sai email hoặc mật khẩu!";
+            }
+        }
+        include __DIR__ . '/../../views/client/login.php';
+    }
+
+        public function logout() {
+        session_destroy();
+        header("Location: /shoeimportsystem/index.php?controller=home&action=login");
+        exit;
+        }
 
 
     protected function model($model)

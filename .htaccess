@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Nếu truy cập thư mục gốc, chuyển hướng đến index.php?controller=home&action=index
+RewriteRule ^$ index.php?controller=home&action=index [L,QSA]
+
+# Nếu file không tồn tại, cũng chuyển hướng qua index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?controller=home&action=index [L,QSA]

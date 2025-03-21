@@ -73,9 +73,9 @@ include __DIR__ . '/layout/header.php';
             <div class="mb-3">
                 <label><strong>Số lượng:</strong></label>
                 <div class="input-group w-25">
-                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()" style="width: 0px;">-</button>
                     <input type="number" class="form-control text-center" id="quantity" value="1" min="1">
-                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()" style="width: 0px;">+</button>
                 </div>
             </div>
 

@@ -14,7 +14,7 @@ class CartController
 
     public function add()
     {
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json'); // Đã đặt trong index.php, không cần lặp lại
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
             exit;
@@ -31,20 +31,31 @@ class CartController
             exit;
         }
 
-        $success = $this->cartModel->addToCart($maKH, $maSP, $size, $maMau, $soLuong);
-        echo json_encode(['success' => $success, 'message' => $success ? 'Thêm thành công!' : 'Thêm thất bại!']);
+        try {
+            $success = $this->cartModel->addToCart($maKH, $maSP, $size, $maMau, $soLuong);
+            echo json_encode([
+                'success' => $success,
+                'message' => $success ? 'Thêm thành công!' : 'Thêm thất bại!'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Lỗi server: ' . $e->getMessage()]);
+        }
     }
 
     public function getCartDetails()
     {
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json'); // Đã đặt trong index.php
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
             exit;
         }
 
-        $maKH = $_SESSION['user']['MaKH'];
-        $items = $this->cartModel->getCartDetails($maKH);
-        echo json_encode(['success' => true, 'items' => $items]);
+        try {
+            $maKH = $_SESSION['user']['MaKH'];
+            $items = $this->cartModel->getCartDetails($maKH);
+            echo json_encode(['success' => true, 'items' => $items]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Lỗi server: ' . $e->getMessage()]);
+        }
     }
 }

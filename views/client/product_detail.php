@@ -155,18 +155,25 @@ include __DIR__ . '/layout/header.php';
                 },
                 body: `productId=${productId}&size=${size}&color=${color}&quantity=${quantity}`
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server trả về lỗi: ' + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     alert('Đã thêm vào giỏ hàng thành công!');
-                    // Cập nhật số lượng trên biểu tượng giỏ hàng
                     let cartCount = parseInt(document.getElementById('cart-count').textContent);
                     document.getElementById('cart-count').textContent = cartCount + parseInt(quantity);
                 } else {
                     alert(data.message || 'Có lỗi xảy ra!');
                 }
             })
-            .catch(error => alert('Lỗi: ' + error));
+            .catch(error => {
+                console.error('Lỗi chi tiết:', error);
+                alert('Lỗi: ' + error.message);
+            });
     }
 
     function buyNow(productId) {

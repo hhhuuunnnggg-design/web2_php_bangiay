@@ -6,10 +6,14 @@ class AuthController
     private $userModel;
     private $db;
 
-    public function __construct($db)
-    {
-        $this->userModel = new UserModel();
-        $this->db = $db;
+   public function __construct() {
+        $this->auth = new Auth();
+        try {
+            $this->db = new PDO("mysql:host=localhost;dbname=naruto", "root", "");
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Lỗi kết nối CSDL: " . $e->getMessage());
+        }
     }
 
     // Hiển thị trang thông tin cá nhân
@@ -58,77 +62,66 @@ class AuthController
     }
 
     // Các hàm khác giữ nguyên: login(), doLogin(), register(), doRegister(), logout()
-    public function login()
-    {
-        if (isset($_SESSION['user'])) {
-            header("Location: /shoeimportsystem/index.php?controller=home&action=index");
-            exit;
-        }
-        $title = "Đăng nhập";
-        include __DIR__ . '/../../views/client/page/login.php';
-    }
-
-    public function doLogin()
-    {
+     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $matKhau = $_POST['matKhau'] ?? '';
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
-            $user = $this->userModel->login($email, $matKhau);
-            if ($user) {
-                session_start();
-                $_SESSION['user'] = $user;
-                header("Location: /shoeimportsystem/index.php?controller=home&action=index");
+            if ($this->auth->login($email, $password)) {
+                header("Location: /shoeimportsystem/public/index.php?controller=category&action=index");
                 exit;
             } else {
-                $error = "Email hoặc mật khẩu không đúng!";
-                $title = "Đăng nhập";
-                include __DIR__ . '/../../views/client/page/login.php';
+                $error = "Email hoặc mật khẩu không đúng.";
             }
         }
+        include __DIR__ . '/../views/auth/login.php';
     }
 
-    public function register()
-    {
-        if (isset($_SESSION['user'])) {
-            header("Location: /shoeimportsystem/index.php?controller=home&action=index");
-            exit;
-        }
-        $title = "Đăng ký";
-        include __DIR__ . '/../../views/client/page/register.php';
-    }
-
-    public function doRegister()
-    {
+    public function register() {
+        $error = "";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $tenKH = $_POST['tenKH'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $sdt = $_POST['sdt'] ?? '';
-            $diaChi = $_POST['diaChi'] ?? '';
-            $matKhau = $_POST['matKhau'] ?? '';
-
-            if ($this->userModel->emailExists($email)) {
-                $error = "Email đã được sử dụng!";
-                $title = "Đăng ký";
-                include __DIR__ . '/../../views/client/page/register.php';
+            $tenNV = $_POST['tenNV'];
+            $email = $_POST['email'];
+            $sdt = $_POST['sdt'];
+            $diaChi = $_POST['diaChi'];
+            $matKhau = $_POST['matKhau'];
+            $confirmMatKhau = $_POST['confirmMatKhau'];
+    
+            if ($matKhau !== $confirmMatKhau) {
+                $error = "Mật khẩu nhập lại không khớp!";
             } else {
-                if ($this->userModel->register($tenKH, $email, $sdt, $diaChi, $matKhau)) {
-                    header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
-                    exit;
-                } else {
-                    $error = "Đăng ký thất bại, vui lòng thử lại!";
-                    $title = "Đăng ký";
-                    include __DIR__ . '/../../views/client/page/register.php';
+                try {
+                    $stmt = $this->db->prepare("SELECT * FROM nhanvien WHERE Email = ?");
+                    $stmt->execute([$email]);
+                    if ($stmt->fetch()) {
+                        $error = "Email đã tồn tại!";
+                    } else {
+                        $hashMatKhau = $matKhau; // ❌ Không mã hóa mật khẩu
+                        $quyen = 3;
+    
+                        $stmt = $this->db->prepare("INSERT INTO nhanvien (TenNV, Email, SDT, DiaChi, MatKhau, Quyen) VALUES (?, ?, ?, ?, ?, ?)");
+                        
+                        if ($stmt->execute([$tenNV, $email, $sdt, $diaChi, $hashMatKhau, $quyen])) {
+                            echo "✅ Đăng ký thành công! Chuyển hướng...";
+                            header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
+                            exit;
+                        } else {
+                            echo "❌ Lỗi khi đăng ký!";
+                            print_r($stmt->errorInfo()); 
+                        }
+                    }
+                } catch (PDOException $e) {
+                    die("Lỗi SQL: " . $e->getMessage()); 
                 }
             }
         }
+        include __DIR__ . '/../views/auth/register.php';
     }
-
-    public function logout()
-    {
-        session_start();
-        unset($_SESSION['user']);
-        header("Location: /shoeimportsystem/index.php?controller=home&action=index");
+    
+    public function logout() {
+        $this->auth->logout();
+        header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
         exit;
     }
 }
+

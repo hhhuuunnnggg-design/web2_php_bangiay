@@ -20,7 +20,7 @@ class AuthController
             exit;
         }
         $title = "Đăng nhập";
-        include __DIR__ . '/../../views/client/login.php';
+        include __DIR__ . '/../../views/client/page/login.php';
     }
 
     // Xử lý đăng nhập
@@ -39,7 +39,7 @@ class AuthController
             } else {
                 $error = "Email hoặc mật khẩu không đúng!";
                 $title = "Đăng nhập";
-                include __DIR__ . '/../../views/client/login.php';
+                include __DIR__ . '/../../views/client/page/login.php';
             }
         }
     }
@@ -52,7 +52,7 @@ class AuthController
             exit;
         }
         $title = "Đăng ký";
-        include __DIR__ . '/../../views/client/register.php';
+        include __DIR__ . '/../../views/client/page/register.php';
     }
 
     // Xử lý đăng ký
@@ -68,7 +68,7 @@ class AuthController
             if ($this->userModel->emailExists($email)) {
                 $error = "Email đã được sử dụng!";
                 $title = "Đăng ký";
-                include __DIR__ . '/../../views/client/register.php';
+                include __DIR__ . '/../../views/client/page/register.php';
             } else {
                 if ($this->userModel->register($tenKH, $email, $sdt, $diaChi, $matKhau)) {
                     header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
@@ -76,7 +76,7 @@ class AuthController
                 } else {
                     $error = "Đăng ký thất bại, vui lòng thử lại!";
                     $title = "Đăng ký";
-                    include __DIR__ . '/../../views/client/register.php';
+                    include __DIR__ . '/../../views/client/page/register.php';
                 }
             }
         }

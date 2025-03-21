@@ -74,13 +74,19 @@
                                 <span class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
                             <div class="user-menu">
-                                <a href="#" class="my-auto">
-                                    <i class="fa-2x fa-user fas"></i>
-                                </a>
-                                <div class="dropdown">
-                                    <a href="/login">Đăng nhập</a>
-                                    <a href="/logout">Đăng xuất</a>
-                                </div>
+                                <?php if (isset($_SESSION['user'])): ?>
+                                    <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                    <div class="dropdown">
+                                        <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
+                                    </div>
+                                <?php else: ?>
+                                    <a href="/shoeimportsystem/index.php?controller=auth&action=login" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                    <div class="dropdown">
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                         </div>

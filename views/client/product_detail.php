@@ -185,15 +185,15 @@ include __DIR__ . '/layout/header.php';
         });
     });
 
+
     document.getElementById('submit-review').addEventListener('click', function() {
         <?php if (!isset($_SESSION['user'])): ?>
             alert('Vui lòng đăng nhập để gửi đánh giá!');
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
             return;
         <?php endif; ?>
-
         const form = document.getElementById('review-form');
-        const comment = form.querySelector('textarea[name="comment"]').value.trim();
+        const comment = form.comment.value.trim();
         const productId = <?php echo $product['MaSP']; ?>;
 
         if (!comment) {
@@ -201,47 +201,33 @@ include __DIR__ . '/layout/header.php';
             return;
         }
 
-        // Gửi yêu cầu AJAX
         fetch('/shoeimportsystem/index.php?controller=comment&action=addComment&productId=' + productId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: 'comment=' + encodeURIComponent(comment)
+                body: 'comment=' + encodeURIComponent(comment),
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Lỗi server: ' + response.status);
+                    throw new Error('Server trả về lỗi: ' + response.status);
                 }
                 return response.json();
             })
             .then(data => {
                 if (data.success) {
-                    // Thêm bình luận mới vào giao diện
-                    const reviewContainer = document.querySelector('#reviews');
-                    const noReviews = reviewContainer.querySelector('.no-reviews');
-                    if (noReviews) {
-                        noReviews.remove(); // Xóa "CHƯA CÓ ĐÁNH GIÁ NÀO" nếu có
-                    }
-
-                    const newReview = document.createElement('div');
-                    newReview.classList.add('review');
-                    newReview.innerHTML = `
-                    <p><strong>Khách hàng:</strong> <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></p>
-                    <p><strong>Thời gian:</strong> ${data.ThoiGian}</p>
-                    <p>${comment}</p>
-                `;
-                    reviewContainer.insertBefore(newReview, form.nextSibling); // Thêm ngay sau form
-
-
-                    form.querySelector('textarea[name="comment"]').value = '';
                     alert('Đánh giá của bạn đã được thêm thành công!');
+                    const reviewDiv = document.createElement('div');
+                    reviewDiv.classList.add('review');
+                    reviewDiv.innerHTML = `<p><strong>Khách hàng:</strong> <?php echo $_SESSION['user']['MaKH']; ?></p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
+                    document.querySelector('#reviews').appendChild(reviewDiv);
+                    form.comment.value = '';
                 } else {
-                    alert(data.message || 'Có lỗi xảy ra khi thêm đánh giá!');
+                    alert(data.message || 'Có lỗi xảy ra khi thêm đánh giá.');
                 }
             })
             .catch(error => {
-                console.error('Lỗi AJAX:', error);
+                console.error('Lỗi chi tiết:', error);
                 alert('Có lỗi xảy ra khi gửi đánh giá: ' + error.message);
             });
     });

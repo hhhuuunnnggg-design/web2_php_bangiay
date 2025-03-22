@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../../models/client/SupplierModel.php';
+$supplierModel = new Supplier();
+$brands = $supplierModel->getAllBrands();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,10 +32,11 @@
 
     <!-- Template Stylesheet -->
     <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
+    <link href="/shoeimportsystem/views/client/layout/js/main.js" rel="stylesheet">
 </head>
 
 <body>
-    <>
+    
 
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -53,19 +60,24 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chu</a>
+                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chủ</a>
                             <a href="/shoeimportsystem/index.php?controller=product&action=index" class="nav-item nav-link">Shop</a>
-                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thong tin shop</a>
+                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thông tin shop</a>
                             <div class="dropdown nav-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thuong hieu</a>
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>
                                 <div class="dropdown-menu bg-secondary m-0 rounded-0">
-                                    <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="dropdown-item">Cart</a>
-                                    <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="dropdown-item">Checkout</a>
-                                    <a href="/shoeimportsystem/index.php?controller=testimonial&action=index" class="dropdown-item">Testimonial</a>
-                                    <a href="/shoeimportsystem/index.php?controller=error&action=404" class="dropdown-item">404 Page</a>
+                                <?php foreach ($brands as $brand): ?>
+                                    <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brand['MaNCC']; ?>" class="dropdown-item">
+                                        <?php echo htmlspecialchars($brand['TenNCC']); ?>
+                                    </a>
+                                <?php endforeach; ?>
+
                                 </div>
                             </div>
-                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Lien he</a>
+                            <div id="productList">
+                                    <!-- Sản phẩm load vào đây -->
+                                </div>
+                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>

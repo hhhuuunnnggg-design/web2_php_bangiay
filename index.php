@@ -50,6 +50,10 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/CartController.php';
         $controllerInstance = new CartController($db); // Sửa $conn thành $db
         break;
+    case 'brand':
+        require_once __DIR__ . '/controllers/client/BrandController.php';
+        $controllerInstance = new BrandController($db);
+        break;    
     default:
         header('Content-Type: application/json');
         header("HTTP/1.0 404 Not Found");

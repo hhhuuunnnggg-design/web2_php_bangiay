@@ -149,3 +149,52 @@
 
 })(jQuery);
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Load brands
+    fetch('/shoeimportsystem/index.php?controller=brand&action=getBrands')
+        .then(response => response.json())
+        .then(brands => {
+            const companyMenu = document.querySelector('.companyMenu');
+
+            brands.forEach(brand => {
+                let brandLink = document.createElement('a');
+                brandLink.href = "#";
+                brandLink.className = "dropdown-item";
+                brandLink.textContent = brand.TenNCC;
+                brandLink.dataset.id = brand.MaNCC;
+
+                // Khi click vào thương hiệu
+                brandLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadProductsByBrand(brand.MaNCC);
+                });
+
+                companyMenu.appendChild(brandLink);
+            });
+        });
+
+    // Load sản phẩm theo brand
+    function loadProductsByBrand(brandId) {
+        fetch(`/shoeimportsystem/index.php?controller=brand&action=getProductsByBrand&id=${brandId}`)
+            .then(response => response.json())
+            .then(products => {
+                const productList = document.getElementById('productList');
+                productList.innerHTML = '';
+
+                if (products.length > 0) {
+                    products.forEach(product => {
+                        let productDiv = document.createElement('div');
+                        productDiv.innerHTML = `
+                            <h4>${product.TenSP}</h4>
+                            <p>Giá: ${product.Gia} VNĐ</p>
+                            <img src="${product.HinhAnh}" alt="${product.TenSP}" width="100">
+                            <hr>
+                        `;
+                        productList.appendChild(productDiv);
+                    });
+                } else {
+                    productList.innerHTML = "<p>Không có sản phẩm nào!</p>";
+                }
+            });
+    }
+});

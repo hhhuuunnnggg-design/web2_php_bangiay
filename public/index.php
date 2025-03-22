@@ -49,7 +49,7 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/ProductDetailController.php';
         $controller = new ProductDetailController();
         break;
-    case 'product_promotion': // Thêm case mới
+    case 'product_promotion':
         require_once __DIR__ . '/../controllers/ProductPromotionController.php';
         $controller = new ProductPromotionController();
         break;
@@ -61,9 +61,13 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();
         break;
-    case 'stats': // Thêm case cho thống kê
+    case 'stats':
         require_once __DIR__ . '/../controllers/StatsController.php';
         $controller = new StatsController();
+        break;
+    case 'order': // Thêm case mới cho hóa đơn
+        require_once __DIR__ . '/../controllers/OrderController.php';
+        $controller = new OrderController();
         break;
     default:
         die("Controller không tồn tại");
@@ -79,6 +83,7 @@ switch ($action) {
     case 'edit':
         $controller->edit();
         break;
+
     case 'delete':
         $controller->delete();
         break;
@@ -93,6 +98,9 @@ switch ($action) {
         break;
     case 'export':
         $controller->export();
+        break;
+    case 'detail': // Thêm action cho xem chi tiết
+        $controller->detail();
         break;
     default:
         die("Action không tồn tại");

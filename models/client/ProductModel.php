@@ -113,8 +113,30 @@ class ProductModel
         ];
     }
 
+    public function getProductsByBrand($brand_id)
+    {
+        $brand_id = $this->conn->real_escape_string($brand_id);
+        $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC
+                FROM sanpham sp
+                LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
+                LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
+                WHERE sp.MaNCC = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $brand_id);
+        $stmt->execute();
+        $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $products;
+    }
+
     public function __destruct()
     {
         $this->db->closeConnection();
     }
+
+
+
 }
+
+
+

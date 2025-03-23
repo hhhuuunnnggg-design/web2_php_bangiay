@@ -9,53 +9,61 @@ class CartController
     public function __construct($db)
     {
         $this->db = $db;
-        $this->cartModel = new CartModel();
+        $this->cartModel = new CartModel($this->db);
     }
 
-    public function add()
+    public function addToCart()
     {
-        // header('Content-Type: application/json'); // Đã đặt trong index.php, không cần lặp lại
+        session_start();
+        header('Content-Type: application/json');
+        ob_end_clean(); // Xóa buffer để tránh HTML không mong muốn
+
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maKH = $_SESSION['user']['MaKH'];
+            $maSP = $_POST['productId'] ?? null;
+            $soLuong = $_POST['quantity'] ?? 1;
+            $size = $_POST['size'] ?? null;
+            $maMau = $_POST['color'] ?? null;
+
+            if ($maSP && $size && $maMau) {
+                $result = $this->cartModel->addToCart($maKH, $maSP, $soLuong, $size, $maMau);
+                if ($result) {
+                    $cartCount = $this->cartModel->getCartCount($maKH);
+                    $cartTotal = $this->cartModel->getCartTotal($maKH);
+                    $_SESSION['cart_count'] = $cartCount;
+                    echo json_encode([
+                        'success' => true,
+                        'cartCount' => $cartCount,
+                        'cartTotal' => $cartTotal
+                    ]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Không thể thêm vào giỏ hàng!']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+        }
+        exit;
+    }
+
+    public function index()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
             exit;
         }
 
         $maKH = $_SESSION['user']['MaKH'];
-        $maSP = $_POST['productId'] ?? null;
-        $size = $_POST['size'] ?? null;
-        $maMau = $_POST['color'] ?? null;
-        $soLuong = (int)($_POST['quantity'] ?? 1);
-
-        if (!$maSP || !$size || !$maMau) {
-            echo json_encode(['success' => false, 'message' => 'Thiếu thông tin sản phẩm!']);
-            exit;
-        }
-
-        try {
-            $success = $this->cartModel->addToCart($maKH, $maSP, $size, $maMau, $soLuong);
-            echo json_encode([
-                'success' => $success,
-                'message' => $success ? 'Thêm thành công!' : 'Thêm thất bại!'
-            ]);
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'message' => 'Lỗi server: ' . $e->getMessage()]);
-        }
-    }
-
-    public function getCartDetails()
-    {
-        // header('Content-Type: application/json'); // Đã đặt trong index.php
-        if (!isset($_SESSION['user'])) {
-            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
-            exit;
-        }
-
-        try {
-            $maKH = $_SESSION['user']['MaKH'];
-            $items = $this->cartModel->getCartDetails($maKH);
-            echo json_encode(['success' => true, 'items' => $items]);
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'message' => 'Lỗi server: ' . $e->getMessage()]);
-        }
+        $cartItems = $this->cartModel->getCartItems($maKH);
+        $title = "Giỏ hàng";
+        include __DIR__ . '/../../views/client/page/cart.php';
     }
 }

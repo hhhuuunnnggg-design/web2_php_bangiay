@@ -4,108 +4,109 @@ require_once __DIR__ . '/../../core/db_connect.php';
 class CartModel
 {
     private $db;
-    private $conn;
 
-    public function __construct()
+    public function __construct($db)
     {
-        $this->db = new Database();
-        $this->conn = $this->db->getConnection();
+        $this->db = $db;
     }
 
-    private function getCartId($maKH)
+    public function addToCart($maKH, $maSP, $soLuong, $size, $maMau)
     {
-        $sql = "SELECT MaGH FROM giohang WHERE MaKH = ?";
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Lỗi prepare: " . $this->conn->error);
-        }
-        $stmt->bind_param("i", $maKH);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
+        try {
+            // Lấy thông tin sản phẩm từ bảng sanpham
+            $sql = "SELECT TenSP, DonGia, AnhNen FROM sanpham WHERE MaSP = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maSP]);
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            return $result['MaGH'];
-        } else {
-            $sql = "INSERT INTO giohang (MaKH, NgayTao) VALUES (?, NOW())";
-            $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Lỗi prepare: " . $this->conn->error);
+            if (!$product) {
+                return false; // Sản phẩm không tồn tại
             }
-            $stmt->bind_param("i", $maKH);
-            if (!$stmt->execute()) {
-                throw new Exception("Lỗi insert: " . $stmt->error);
+
+            $tenSanPham = $product['TenSP'];
+            $giaTien = $product['DonGia'];
+            $img = $product['AnhNen'];
+            $tongTienChiTiet = $giaTien * $soLuong; // Tổng tiền cho sản phẩm này
+
+            // Kiểm tra giỏ hàng của khách hàng
+            $sql = "SELECT MaGH FROM giohang WHERE MaKH = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maKH]);
+            $maGH = $stmt->fetchColumn();
+
+            if (!$maGH) {
+                // Nếu chưa có giỏ hàng, tạo mới
+                $sql = "INSERT INTO giohang (MaKH, TongSoLuong, TongTien) VALUES (?, 0, 0)";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$maKH]);
+                $maGH = $this->db->lastInsertId();
             }
-            return $this->conn->insert_id;
-        }
-    }
 
-    public function addToCart($maKH, $maSP, $size, $maMau, $soLuong)
-    {
-        $maGH = $this->getCartId($maKH);
+            // Kiểm tra sản phẩm đã có trong giỏ chưa
+            $sql = "SELECT SoLuong FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maGH, $maSP, $size, $maMau]);
+            $existingQuantity = $stmt->fetchColumn();
 
-        $sql = "SELECT SoLuong FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Lỗi prepare: " . $this->conn->error);
-        }
-        $stmt->bind_param("iiis", $maGH, $maSP, $size, $maMau);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-
-        if ($result) {
-            $newQuantity = $result['SoLuong'] + $soLuong;
-            $sql = "UPDATE chitietgiohang SET SoLuong = ? WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
-            $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Lỗi prepare: " . $this->conn->error);
+            if ($existingQuantity !== false) {
+                // Nếu đã có, cập nhật số lượng và tổng tiền
+                $newQuantity = $existingQuantity + $soLuong;
+                $newTongTienChiTiet = $giaTien * $newQuantity;
+                $sql = "UPDATE chitietgiohang SET SoLuong = ?, TongTien = ? WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$newQuantity, $newTongTienChiTiet, $maGH, $maSP, $size, $maMau]);
+            } else {
+                // Nếu chưa có, thêm mới
+                $sql = "INSERT INTO chitietgiohang (MaGH, MaSP, TenSanPham, Img, GiaTien, TongTien, SoLuong, Size, MaMau) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$maGH, $maSP, $tenSanPham, $img, $giaTien, $tongTienChiTiet, $soLuong, $size, $maMau]);
             }
-            $stmt->bind_param("iiis", $newQuantity, $maGH, $maSP, $size, $maMau);
-        } else {
-            $sql = "INSERT INTO chitietgiohang (MaGH, MaSP, SoLuong, Size, MaMau) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Lỗi prepare: " . $this->conn->error);
-            }
-            $stmt->bind_param("iiiss", $maGH, $maSP, $soLuong, $size, $maMau);
+
+            // Cập nhật tổng số lượng và tổng tiền trong giỏ hàng
+            $this->updateCartTotals($maKH);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Lỗi khi thêm vào giỏ hàng: " . $e->getMessage());
+            return false;
         }
-        if (!$stmt->execute()) {
-            throw new Exception("Lỗi execute: " . $stmt->error);
-        }
-        return true;
     }
 
-    public function getCartItemCount($maKH)
+    public function getCartCount($maKH)
     {
-        $maGH = $this->getCartId($maKH);
-        $sql = "SELECT SUM(SoLuong) as total FROM chitietgiohang WHERE MaGH = ?";
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Lỗi prepare: " . $this->conn->error);
-        }
-        $stmt->bind_param("i", $maGH);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        return $result['total'] ?? 0;
+        $sql = "SELECT TongSoLuong FROM giohang WHERE MaKH = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$maKH]);
+        return $stmt->fetchColumn() ?: 0;
     }
 
-    public function getCartDetails($maKH)
+    public function getCartTotal($maKH)
     {
-        $maGH = $this->getCartId($maKH);
-        $sql = "SELECT ct.MaSP, ct.SoLuong, ct.Size, ct.MaMau, sp.TenSP, sp.AnhNen, sp.GiaKhuyenMai
-                FROM chitietgiohang ct
-                JOIN sanpham sp ON ct.MaSP = sp.MaSP
-                WHERE ct.MaGH = ?";
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Lỗi prepare: " . $this->conn->error);
-        }
-        $stmt->bind_param("i", $maGH);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $sql = "SELECT TongTien FROM giohang WHERE MaKH = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$maKH]);
+        return $stmt->fetchColumn() ?: 0;
     }
 
-    public function __destruct()
+    private function updateCartTotals($maKH)
     {
-        $this->db->closeConnection();
+        $sql = "UPDATE giohang 
+                SET TongSoLuong = (SELECT SUM(SoLuong) FROM chitietgiohang WHERE MaGH = giohang.MaGH), 
+                    TongTien = (SELECT SUM(TongTien) FROM chitietgiohang WHERE MaGH = giohang.MaGH) 
+                WHERE MaKH = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$maKH]);
+    }
+
+    public function getCartItems($maKH)
+    {
+        $sql = "SELECT ctgh.*, sp.TenSP, sp.DonGia, sp.AnhNen
+                FROM chitietgiohang ctgh
+                JOIN giohang gh ON ctgh.MaGH = gh.MaGH
+                JOIN sanpham sp ON ctgh.MaSP = sp.MaSP
+                WHERE gh.MaKH = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$maKH]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

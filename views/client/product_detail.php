@@ -138,41 +138,48 @@ include __DIR__ . '/layout/header.php';
         let size = document.querySelector('input[name="size"]:checked')?.value;
         let color = document.querySelector('input[name="color"]:checked')?.value;
         let quantity = document.getElementById('quantity').value;
+
         if (!size || !color) {
             alert('Vui lòng chọn kích thước và màu sắc!');
             return;
         }
-        <?php if (!isset($_SESSION['user'])): ?>
-            alert('Vui lòng đăng nhập để thêm vào giỏ hàng!');
-            window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
-            return;
-        <?php endif; ?>
 
-        fetch('/shoeimportsystem/index.php?controller=cart&action=add', {
+        console.log(`Sending: productId=${productId}, quantity=${quantity}, size=${size}, color=${color}`);
+
+        fetch('/shoeimportsystem/index.php?controller=cart&action=addToCart', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `productId=${productId}&size=${size}&color=${color}&quantity=${quantity}`
+                body: `productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`
             })
             .then(response => {
+                console.log('Response status:', response.status);
                 if (!response.ok) {
-                    throw new Error('Server trả về lỗi: ' + response.status);
+                    return response.text().then(text => {
+                        console.log('Raw response:', text);
+                        throw new Error(`Server error: ${response.status} - ${text}`);
+                    });
                 }
                 return response.json();
             })
             .then(data => {
+                console.log('Parsed JSON:', data);
                 if (data.success) {
-                    alert('Đã thêm vào giỏ hàng thành công!');
-                    let cartCount = parseInt(document.getElementById('cart-count').textContent);
-                    document.getElementById('cart-count').textContent = cartCount + parseInt(quantity);
+                    alert('Đã thêm vào giỏ hàng!');
+                    const cartCountElement = document.querySelector('#cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.cartCount;
+                    }
+                    // Nếu muốn hiển thị tổng tiền, thêm logic ở đây
+                    // Ví dụ: document.querySelector('#cart-total').textContent = data.cartTotal;
                 } else {
-                    alert(data.message || 'Có lỗi xảy ra!');
+                    alert(data.message || 'Không thể thêm vào giỏ hàng!');
                 }
             })
             .catch(error => {
-                console.error('Lỗi chi tiết:', error);
-                alert('Lỗi: ' + error.message);
+                console.error('Lỗi:', error);
+                alert('Có lỗi xảy ra khi thêm vào giỏ hàng: ' + error.message);
             });
     }
 

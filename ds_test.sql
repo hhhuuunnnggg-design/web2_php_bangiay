@@ -367,3 +367,48 @@ COMMIT;
 ALTER TABLE `khuyenmai`
   ADD COLUMN `NgayBatDau` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ADD COLUMN `NgayKetThuc` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+  ---   ---------------------------------------------------------------------
+
+  CREATE TABLE `giohang` (
+`MaGH` int(11) NOT NULL AUTO_INCREMENT,
+`MaKH` int(11) NOT NULL,
+`NgayTao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`TongSoLuong` int(11) DEFAULT 0,
+PRIMARY KEY (`MaGH`),
+KEY `MaKH` (`MaKH`),
+CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+CREATE TABLE `chitietgiohang` (
+`MaGH` int(11) NOT NULL,
+`MaSP` int(11) NOT NULL,
+`SoLuong` int(11) NOT NULL,
+`Size` int(11) NOT NULL,
+`MaMau` varchar(50) NOT NULL,
+PRIMARY KEY (`MaGH`, `MaSP`, `Size`, `MaMau`),
+KEY `MaSP` (`MaSP`),
+KEY `Size` (`Size`),
+KEY `MaMau` (`MaMau`),
+CONSTRAINT `chitietgiohang_ibfk_1` FOREIGN KEY (`MaGH`) REFERENCES `giohang` (`MaGH`),
+CONSTRAINT `chitietgiohang_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
+CONSTRAINT `chitietgiohang_ibfk_3` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`),
+CONSTRAINT `chitietgiohang_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+
+ALTER TABLE `giohang` DROP COLUMN `NgayTao`;
+
+ALTER TABLE `giohang` ADD COLUMN `TongTien` DECIMAL(10,2) DEFAULT 0 AFTER `TongSoLuong`;
+
+ALTER TABLE `chitietgiohang` 
+ADD COLUMN `TenSanPham` VARCHAR(255) NOT NULL AFTER `MaSP`,
+ADD COLUMN `GiaTien` INT NOT NULL AFTER `TenSanPham`,
+ADD COLUMN `TongTien` INT NOT NULL DEFAULT 0 AFTER `GiaTien`;
+
+ALTER TABLE `chitietgiohang` 
+ADD COLUMN `Img` VARCHAR(255) NOT NULL AFTER `TenSanPham`;
+
+
+
+---

@@ -33,7 +33,7 @@ class CartController
             if ($maSP && $size && $maMau) {
                 $result = $this->cartModel->addToCart($maKH, $maSP, $soLuong, $size, $maMau);
                 if ($result) {
-                    $cartCount = $this->cartModel->getCartCount($maKH);
+                    $cartCount = $this->cartModel->getCartCount($maKH); // Tổng số lượng thực tế
                     $cartTotal = $this->cartModel->getCartTotal($maKH);
                     $_SESSION['cart_count'] = $cartCount;
                     echo json_encode([
@@ -63,7 +63,7 @@ class CartController
 
         $maKH = $_SESSION['user']['MaKH'];
         $cartItems = $this->cartModel->getCartItems($maKH);
-        $cartTotal = $this->cartModel->getCartTotal($maKH); // Thêm tổng tiền
+        $cartTotal = $this->cartModel->getCartTotal($maKH);
         $title = "Giỏ hàng";
         include __DIR__ . '/../../views/client/page/cart.php';
     }

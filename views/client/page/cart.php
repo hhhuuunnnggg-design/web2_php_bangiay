@@ -33,7 +33,7 @@
             </tbody>
         </table>
         <div class="text-right">
-            <h4>Tổng tiền: <?php echo number_format($this->cartModel->getCartTotal($_SESSION['user']['MaKH']), 0, ',', '.') . ' VNĐ'; ?></h4>
+            <h4>Tổng tiền: <?php echo number_format($cartTotal, 0, ',', '.') . ' VNĐ'; ?></h4>
             <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="btn btn-success">Thanh toán</a>
         </div>
     <?php else: ?>
@@ -55,6 +55,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Đã xóa sản phẩm khỏi giỏ hàng!');
+                        document.querySelector('#cart-count').textContent = data.cartCount; // Cập nhật số lượng
                         location.reload(); // Tải lại trang để cập nhật giao diện
                     } else {
                         alert(data.message || 'Không thể xóa sản phẩm!');

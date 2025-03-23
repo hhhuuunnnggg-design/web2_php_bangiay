@@ -94,7 +94,7 @@ $brands = $supplierModel->getAllBrands();
                                 <?php
                                 session_start();
                                 if (isset($_SESSION['user'])) {
-                                    echo $_SESSION['cart_count'] ?? 0;
+                                    echo $_SESSION['cart_count'] ?? 0; // Tổng số lượng từ session
                                 } else {
                                     echo 0;
                                 }

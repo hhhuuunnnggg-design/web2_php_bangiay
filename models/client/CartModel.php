@@ -80,15 +80,33 @@ class CartModel
         return $stmt->fetchColumn() ?: 0;
     }
 
+    // private function updateCartTotals($maKH)
+    // {
+    //     $sql = "UPDATE giohang 
+    //             SET TongSoLuong = (SELECT SUM(SoLuong) FROM chitietgiohang WHERE MaGH = giohang.MaGH), 
+    //                 TongTien = (SELECT SUM(TongTien) FROM chitietgiohang WHERE MaGH = giohang.MaGH) 
+    //             WHERE MaKH = ?";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->execute([$maKH]);
+    // }
     private function updateCartTotals($maKH)
     {
         $sql = "UPDATE giohang 
-                SET TongSoLuong = (SELECT SUM(SoLuong) FROM chitietgiohang WHERE MaGH = giohang.MaGH), 
-                    TongTien = (SELECT SUM(TongTien) FROM chitietgiohang WHERE MaGH = giohang.MaGH) 
-                WHERE MaKH = ?";
+            SET TongSoLuong = (
+                SELECT COUNT(DISTINCT MaSP) 
+                FROM chitietgiohang 
+                WHERE MaGH = giohang.MaGH
+            ), 
+            TongTien = (
+                SELECT SUM(TongTien) 
+                FROM chitietgiohang 
+                WHERE MaGH = giohang.MaGH
+            ) 
+            WHERE MaKH = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$maKH]);
     }
+
 
     public function getCartItems($maKH)
     {
@@ -114,7 +132,6 @@ class CartModel
                 $sql = "DELETE FROM chitietgiohang WHERE MaGH = ?";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maGH]);
-
                 $sql = "DELETE FROM giohang WHERE MaKH = ?";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maKH]);
@@ -132,7 +149,6 @@ class CartModel
             $sql = "DELETE FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$maGH, $maSP, $size, $maMau]);
-
             $this->updateCartTotals($maKH);
 
             $sql = "SELECT COUNT(*) FROM chitietgiohang WHERE MaGH = ?";

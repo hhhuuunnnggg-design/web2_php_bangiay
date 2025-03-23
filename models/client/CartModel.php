@@ -26,7 +26,6 @@ class CartModel
             $img = $product['AnhNen'];
             $tongTienChiTiet = $giaTien * $soLuong;
 
-            // Kiểm tra giỏ hàng của khách hàng
             $sql = "SELECT MaGH FROM giohang WHERE MaKH = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$maKH]);
@@ -39,7 +38,6 @@ class CartModel
                 $maGH = $this->db->lastInsertId();
             }
 
-            // Kiểm tra sản phẩm trong giỏ
             $sql = "SELECT SoLuong FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$maGH, $maSP, $size, $maMau]);
@@ -104,7 +102,6 @@ class CartModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Xóa giỏ hàng của người dùng khi đăng xuất hoặc cần reset
     public function clearCart($maKH)
     {
         try {
@@ -114,12 +111,10 @@ class CartModel
             $maGH = $stmt->fetchColumn();
 
             if ($maGH) {
-                // Xóa chi tiết giỏ hàng
                 $sql = "DELETE FROM chitietgiohang WHERE MaGH = ?";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maGH]);
 
-                // Xóa giỏ hàng
                 $sql = "DELETE FROM giohang WHERE MaKH = ?";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maKH]);
@@ -127,6 +122,31 @@ class CartModel
             return true;
         } catch (PDOException $e) {
             error_log("Lỗi khi xóa giỏ hàng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function removeFromCart($maKH, $maGH, $maSP, $size, $maMau)
+    {
+        try {
+            $sql = "DELETE FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maGH, $maSP, $size, $maMau]);
+
+            $this->updateCartTotals($maKH);
+
+            $sql = "SELECT COUNT(*) FROM chitietgiohang WHERE MaGH = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maGH]);
+            if ($stmt->fetchColumn() == 0) {
+                $sql = "DELETE FROM giohang WHERE MaGH = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$maGH]);
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Lỗi khi xóa sản phẩm khỏi giỏ hàng: " . $e->getMessage());
             return false;
         }
     }

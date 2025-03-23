@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Nếu không có controller và action, chuyển hướng về trang chủ
 if (!isset($_GET['controller']) && !isset($_GET['action'])) {
     header("Location: /shoeimportsystem/index.php?controller=home&action=index");
     exit;
@@ -10,7 +9,6 @@ if (!isset($_GET['controller']) && !isset($_GET['action'])) {
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
-// Kết nối cơ sở dữ liệu
 try {
     $db = new PDO('mysql:host=localhost;dbname=naruto', 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -21,10 +19,8 @@ try {
     exit;
 }
 
-// Ghi log yêu cầu
 error_log("Request: controller=$controller, action=$action, method=" . $_SERVER['REQUEST_METHOD']);
 
-// Tải controller tương ứng
 switch ($controller) {
     case 'home':
         require_once __DIR__ . '/controllers/client/HomeController.php';
@@ -48,12 +44,12 @@ switch ($controller) {
         break;
     case 'cart':
         require_once __DIR__ . '/controllers/client/CartController.php';
-        $controllerInstance = new CartController($db); // Sửa $conn thành $db
+        $controllerInstance = new CartController($db);
         break;
     case 'brand':
         require_once __DIR__ . '/controllers/client/BrandController.php';
         $controllerInstance = new BrandController($db);
-        break;    
+        break;
     default:
         header('Content-Type: application/json');
         header("HTTP/1.0 404 Not Found");
@@ -61,10 +57,16 @@ switch ($controller) {
         exit;
 }
 
-// Xử lý action
 try {
     if (method_exists($controllerInstance, $action)) {
-        $controllerInstance->$action();
+        switch ($action) {
+            case 'addToCart':
+            case 'removeFromCart': // Thêm case cho removeFromCart
+                $controllerInstance->$action();
+                exit; // Dừng sau khi xử lý AJAX
+            default:
+                $controllerInstance->$action();
+        }
     } else {
         header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => "Action không tồn tại"]);

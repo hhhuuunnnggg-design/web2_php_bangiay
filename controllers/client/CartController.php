@@ -63,8 +63,50 @@ class CartController
 
         $maKH = $_SESSION['user']['MaKH'];
         $cartItems = $this->cartModel->getCartItems($maKH);
+        $cartTotal = $this->cartModel->getCartTotal($maKH); // Thêm tổng tiền
         $title = "Giỏ hàng";
         include __DIR__ . '/../../views/client/page/cart.php';
+    }
+
+    public function removeFromCart()
+    {
+        session_start();
+        header('Content-Type: application/json');
+        ob_end_clean();
+
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maKH = $_SESSION['user']['MaKH'];
+            $maGH = $_POST['maGH'] ?? null;
+            $maSP = $_POST['maSP'] ?? null;
+            $size = $_POST['size'] ?? null;
+            $maMau = $_POST['maMau'] ?? null;
+
+            if ($maGH && $maSP && $size && $maMau) {
+                $result = $this->cartModel->removeFromCart($maKH, $maGH, $maSP, $size, $maMau);
+                if ($result) {
+                    $cartCount = $this->cartModel->getCartCount($maKH);
+                    $cartTotal = $this->cartModel->getCartTotal($maKH);
+                    $_SESSION['cart_count'] = $cartCount;
+                    echo json_encode([
+                        'success' => true,
+                        'cartCount' => $cartCount,
+                        'cartTotal' => $cartTotal
+                    ]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Không thể xóa sản phẩm!']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+        }
+        exit;
     }
 
     public function getCartCount($maKH)

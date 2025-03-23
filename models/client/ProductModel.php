@@ -128,13 +128,70 @@ class ProductModel
 
         return $products;
     }
-
-    public function __destruct()
+    public function filterProducts($categoryIds = null, $brandIds = null, $minPrice = null, $maxPrice = null)
     {
-        $this->db->closeConnection();
+        $conditions = [];
+        $params = [];      
+        $types = '';   
+    
+        // Lọc theo danh mục
+        if (!empty($categoryIds)) {
+            $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
+            $conditions[] = "sp.MaDM IN ($placeholders)";
+            foreach ($categoryIds as $id) {
+                $params[] = $id;
+                $types .= 'i';
+            }
+        }
+    
+        // Lọc theo nhà cung cấp
+        if (!empty($brandIds)) {
+            $placeholders = implode(',', array_fill(0, count($brandIds), '?'));
+            $conditions[] = "sp.MaNCC IN ($placeholders)";
+            foreach ($brandIds as $id) {
+                $params[] = $id;
+                $types .= 'i';
+            }
+        }
+    
+        // Lọc theo khoảng giá
+        if (!empty($minPrice)) {
+            $conditions[] = "sp.DonGia >= ?";
+            $params[] = $minPrice;
+            $types .= 'i';
+        }
+        if (!empty($maxPrice)) {
+            $conditions[] = "sp.DonGia <= ?";
+            $params[] = $maxPrice;
+            $types .= 'i';
+        }
+    
+        // Xây dựng query
+        $whereClause = '';
+        if (!empty($conditions)) {
+            $whereClause = "WHERE " . implode(' AND ', $conditions);
+        }
+    
+        $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC 
+                FROM sanpham sp
+                LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
+                LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
+                $whereClause";
+
+        
+    
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+        return $products;
     }
+    
 
-
+    
+    
 
 }
 

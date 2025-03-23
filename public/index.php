@@ -102,6 +102,13 @@ switch ($action) {
     case 'detail': // Thêm action cho xem chi tiết
         $controller->detail();
         break;
+    case 'assignShipper': // Thêm action mới
+        if ($controller instanceof OrderController) {
+            $controller->assignShipper();
+        } else {
+            die("Action không hợp lệ cho controller này");
+        }
+        break;
     default:
         die("Action không tồn tại");
 }

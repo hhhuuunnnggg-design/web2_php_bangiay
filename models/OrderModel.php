@@ -15,12 +15,13 @@ class OrderModel
     public function getAllOrders($search = '', $limit = 5, $offset = 0)
     {
         $search = $this->conn->real_escape_string($search);
-        $sql = "SELECT h.*, kh.TenKH, nv.TenNV 
-                FROM hoadon h 
-                LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
-                LEFT JOIN nhanvien nv ON h.MaNV = nv.MaNV 
-                WHERE h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%'
-                LIMIT ? OFFSET ?";
+        $sql = "SELECT h.*, kh.TenKH, nv.TenNV AS TenNVQuanLy, nv_gh.TenNV AS TenShipper 
+            FROM hoadon h 
+            LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
+            LEFT JOIN nhanvien nv ON h.MaNV = nv.MaNV 
+            LEFT JOIN nhanvien nv_gh ON h.MaNVGH = nv_gh.MaNV 
+            WHERE h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%'
+            LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -71,6 +72,23 @@ class OrderModel
         $sql = "UPDATE hoadon SET TinhTrang = ?, NgayGiao = ? WHERE MaHD = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssi", $tinhTrang, $ngayGiao, $maHD);
+        return $stmt->execute();
+    }
+
+    public function getShippers()
+    {
+        $sql = "SELECT MaNV, TenNV FROM nhanvien WHERE Quyen = 2";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Gán Shipper cho hóa đơn
+    public function assignShipper($maHD, $maNVGH)
+    {
+        $sql = "UPDATE hoadon SET MaNVGH = ? WHERE MaHD = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $maNVGH, $maHD);
         return $stmt->execute();
     }
 

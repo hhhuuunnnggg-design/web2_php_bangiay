@@ -16,7 +16,8 @@
             <th>STT</th>
             <th>Mã HD</th>
             <th>Khách hàng</th>
-            <th>Nhân viên</th>
+
+            <th>Shipper</th> <!-- Thêm cột Shipper -->
             <th>Ngày đặt</th>
             <th>Ngày giao</th>
             <th>Tình trạng</th>
@@ -36,12 +37,13 @@
                     <td><?php echo $stt++; ?></td>
                     <td><?php echo $row['MaHD']; ?></td>
                     <td><?php echo htmlspecialchars($row['TenKH']); ?></td>
-                    <td><?php echo htmlspecialchars($row['TenNV'] ?? 'Chưa phân công'); ?></td>
+
+                    <td><?php echo htmlspecialchars($row['TenShipper'] ?? 'Chưa gán'); ?></td> <!-- Hiển thị tên Shipper -->
                     <td><?php echo $row['NgayDat']; ?></td>
                     <td><?php echo $row['NgayGiao'] ?? 'Chưa giao'; ?></td>
                     <td>
                         <?php
-                        if ($row['TinhTrang'] === 'hoàn thành') {
+                        if ($row['TinhTrang'] === 'hoàn thành') {
                             echo '<span style="color: green;">' . $row['TinhTrang'] . '</span>';
                         } elseif ($row['TinhTrang'] === 'Hủy Bỏ') {
                             echo '<span style="color: orange;">' . $row['TinhTrang'] . '</span>';
@@ -59,6 +61,11 @@
                             <a href="/shoeimportsystem/public/index.php?controller=order&action=edit&id=<?php echo urlencode($row['MaHD']); ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
+                            <?php if (!$row['MaNVGH'] && $row['TinhTrang'] !== 'hoàn thành' && $row['TinhTrang'] !== 'Hủy Bỏ'): ?>
+                                <a href="/shoeimportsystem/public/index.php?controller=order&action=assignShipper&id=<?php echo urlencode($row['MaHD']); ?>">
+                                    <button type="button" class="btn btn-primary">Gán Shipper</button>
+                                </a>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -67,7 +74,7 @@
         else:
             ?>
             <tr>
-                <td colspan="9">Không có hóa đơn nào.</td>
+                <td colspan="10">Không có hóa đơn nào.</td>
             </tr>
         <?php endif; ?>
     </tbody>

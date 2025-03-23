@@ -101,4 +101,42 @@ class OrderController
         $content_file = __DIR__ . '/../views/admin/order_edit.php';
         include __DIR__ . '/../views/admin/layout/layout.php';
     }
+    public function assignShipper()
+    {
+        if (!$this->auth->checkPermission(13, 'edit')) {
+            die("Bạn không có quyền gán Shipper cho hóa đơn.");
+        }
+
+        $maHD = isset($_GET['id']) ? $_GET['id'] : null;
+        if (!$maHD) {
+            header("Location: /shoeimportsystem/public/index.php?controller=order&action=index");
+            exit;
+        }
+
+        $order = $this->orderModel->getOrderById($maHD);
+        if (!$order) {
+            header("Location: /shoeimportsystem/public/index.php?controller=order&action=index");
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maNVGH = $_POST['MaNVGH'] ?? null;
+            if (!$maNVGH) {
+                echo json_encode(['success' => false, 'message' => 'Vui lòng chọn Shipper']);
+                exit;
+            }
+
+            if ($this->orderModel->assignShipper($maHD, $maNVGH)) {
+                echo json_encode(['success' => true, 'message' => 'Gán Shipper thành công']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Lỗi khi gán Shipper']);
+            }
+            exit;
+        }
+
+        $shippers = $this->orderModel->getShippers();
+        $title = "Gán Shipper cho hóa đơn - " . $maHD;
+        $content_file = __DIR__ . '/../views/admin/order_assign_shipper.php';
+        include __DIR__ . '/../views/admin/layout/layout.php';
+    }
 }

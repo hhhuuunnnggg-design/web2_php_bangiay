@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 19, 2025 lúc 06:07 AM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.1.25
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th3 23, 2025 lúc 02:10 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -110,7 +110,67 @@ INSERT INTO `binhluan` (`MaBL`, `MaSP`, `MaKH`, `NoiDung`, `ThoiGian`) VALUES
 (17, 4, 6, 'a', '2023-06-12 13:54:31'),
 (18, 4, 6, 'test', '2023-06-12 13:54:56'),
 (19, 4, 6, 'okii nò', '2023-06-12 13:55:12'),
-(20, 4, 1, 'oki', '2023-06-21 08:24:14');
+(20, 4, 1, 'oki', '2023-06-21 08:24:14'),
+(26, 7, 16, 'asda', '2025-03-21 14:32:38'),
+(27, 7, 16, 'san pham nhu cai lon', '2025-03-21 14:32:54'),
+(28, 9, 16, 'sadasd', '2025-03-21 14:36:59'),
+(29, 9, 16, 'asda', '2025-03-21 14:42:01'),
+(30, 4, 16, 'qua dang cap', '2025-03-21 14:42:50'),
+(31, 113, 16, 's', '2025-03-21 14:43:59'),
+(32, 73, 16, 'san pham nhu cai lz', '2025-03-21 14:47:10'),
+(33, 9, 16, 'aa', '2025-03-21 15:54:46'),
+(34, 9, 16, 'sad', '2025-03-21 15:54:50'),
+(35, 9, 16, 'a', '2025-03-21 15:54:57'),
+(36, 9, 16, 'asda', '2025-03-21 15:55:41'),
+(37, 9, 16, 'huing', '2025-03-21 15:56:44'),
+(38, 9, 16, 'aa', '2025-03-21 15:57:05'),
+(39, 9, 16, 'a', '2025-03-21 23:43:20'),
+(40, 75, 16, '1234', '2025-03-21 23:44:15'),
+(41, 75, 16, 'asd', '2025-03-21 23:44:19'),
+(42, 75, 16, 'aasdasd', '2025-03-21 23:46:00'),
+(43, 73, 16, 'weqweqweq', '2025-03-21 23:46:33'),
+(44, 73, 16, 'asdasd', '2025-03-21 23:47:02'),
+(45, 73, 16, 'asda', '2025-03-21 23:47:05'),
+(46, 10, 16, 'asdas', '2025-03-21 23:50:00'),
+(47, 10, 16, 'asd', '2025-03-21 23:50:04'),
+(48, 10, 16, 'asda', '2025-03-22 00:33:49'),
+(49, 77, 16, 'ma no xau', '2025-03-22 00:34:04'),
+(50, 77, 16, '1', '2025-03-22 00:37:24'),
+(51, 54, 16, '1', '2025-03-22 00:39:12'),
+(52, 54, 16, 'a', '2025-03-22 00:40:43'),
+(53, 11, 16, '1', '2025-03-22 00:41:17'),
+(54, 54, 16, '2', '2025-03-22 00:47:05'),
+(55, 11, 16, '2', '2025-03-22 00:49:01'),
+(56, 77, 20, '2', '2025-03-22 01:05:54'),
+(57, 11, 16, 'asda', '2025-03-23 15:14:23'),
+(58, 9, 16, 'ss', '2025-03-23 18:08:57'),
+(59, 77, 16, 'duma no xau da man', '2025-03-23 18:09:17');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `chitietgiohang`
+--
+
+CREATE TABLE `chitietgiohang` (
+  `MaGH` int(11) NOT NULL,
+  `MaSP` int(11) NOT NULL,
+  `TenSanPham` varchar(255) NOT NULL,
+  `Img` varchar(255) NOT NULL,
+  `GiaTien` int(11) NOT NULL,
+  `TongTien` int(11) NOT NULL DEFAULT 0,
+  `SoLuong` int(11) NOT NULL,
+  `Size` int(11) NOT NULL,
+  `MaMau` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitietgiohang`
+--
+
+INSERT INTO `chitietgiohang` (`MaGH`, `MaSP`, `TenSanPham`, `Img`, `GiaTien`, `TongTien`, `SoLuong`, `Size`, `MaMau`) VALUES
+(29, 9, 'ADIDAS GAZELLE BOLD BLACK (HQ6912)', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg', 2650000, 2650000, 1, 39, 'Đen - Trắng'),
+(29, 73, 'JORDAN 1 LOW WOLF GREY (DC0774-105)', 'images/anh_nen/67d5444f97954-ADIDAS_GREY_4.jpg', 2500000, 2500000, 1, 38, 'Đen ');
 
 -- --------------------------------------------------------
 
@@ -125,23 +185,35 @@ CREATE TABLE `chitiethoadon` (
   `DonGia` decimal(10,0) NOT NULL,
   `ThanhTien` decimal(10,0) NOT NULL,
   `Size` int(11) NOT NULL,
-  `MaMau` varchar(50) NOT NULL
+  `MaMau` varchar(50) NOT NULL,
+  `img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `chitiethoadon`
 --
 
-INSERT INTO `chitiethoadon` (`MaHD`, `MaSP`, `SoLuong`, `DonGia`, `ThanhTien`, `Size`, `MaMau`) VALUES
-(70, 7, 3, 2449000, 7347000, 41, 'Trắng'),
-(70, 11, 1, 4649000, 4649000, 39, 'none'),
-(86, 4, 2, 3779000, 7558000, 37, 'none'),
-(86, 53, 1, 1700000, 1700000, 42, 'none'),
-(86, 70, 2, 1700000, 3400000, 41, 'Trắng'),
-(87, 54, 2, 730000, 1460000, 42, 'Đen '),
-(88, 4, 2, 3779000, 7558000, 36, 'none'),
-(88, 12, 1, 2019000, 2019000, 39, 'Vàng'),
-(89, 4, 1, 3779000, 3779000, 37, 'Hồng');
+INSERT INTO `chitiethoadon` (`MaHD`, `MaSP`, `SoLuong`, `DonGia`, `ThanhTien`, `Size`, `MaMau`, `img`) VALUES
+(70, 7, 3, 2449000, 7347000, 41, 'Trắng', ''),
+(70, 11, 1, 4649000, 4649000, 39, 'none', ''),
+(86, 4, 2, 3779000, 7558000, 37, 'none', ''),
+(86, 53, 1, 1700000, 1700000, 42, 'none', ''),
+(86, 70, 2, 1700000, 3400000, 41, 'Trắng', ''),
+(87, 54, 2, 730000, 1460000, 42, 'Đen ', ''),
+(88, 4, 2, 3779000, 7558000, 36, 'none', ''),
+(88, 12, 1, 2019000, 2019000, 39, 'Vàng', ''),
+(89, 4, 1, 3779000, 3779000, 37, 'Hồng', ''),
+(92, 4, 3, 1490001, 4470003, 37, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
+(92, 4, 1, 1490001, 1490001, 39, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
+(92, 9, 1, 2650000, 2650000, 39, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
+(92, 9, 1, 2650000, 2650000, 40, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
+(93, 4, 2, 1490001, 2980002, 39, 'Hồng', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
+(93, 7, 2, 1800000, 3600000, 40, 'Đen - Trắng', 'images/anh_nen/67d543c819584-ADIDAS_BE.jpg'),
+(93, 77, 1, 1400000, 1400000, 40, 'Đen - Trắng', 'images/anh_nen/67d544cf491f2-ADIDAS_BE_3.jpg'),
+(94, 9, 1, 2650000, 2650000, 39, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
+(95, 6, 1, 2150000, 2150000, 40, 'Đen ', 'images/anh_nen/67d544e1de93a-ADIDAS_GREEN.jpg'),
+(96, 75, 1, 1400000, 1400000, 40, 'Đen ', 'images/anh_nen/67d5446bde1eb-ADIDAS_BLACK_2.jpg'),
+(97, 4, 1, 1490001, 1490001, 37, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -202,6 +274,9 @@ INSERT INTO `chitietquyen` (`manhomquyen`, `chucnang`, `hanhdong`) VALUES
 (2, 2, 'add'),
 (2, 2, 'edit'),
 (2, 2, 'view'),
+(2, 13, 'add'),
+(2, 13, 'edit'),
+(2, 13, 'view'),
 (3, 1, 'view'),
 (3, 3, 'add'),
 (3, 3, 'edit'),
@@ -394,7 +469,19 @@ INSERT INTO `chitietsanpham` (`MaSP`, `MaSize`, `MaMau`, `SoLuong`) VALUES
 (114, 90, 'má mày', 10),
 (114, 90, 'saaaa', 5),
 (114, 123123, 'má mày', 15),
-(114, 123123, 'saaaa', 152);
+(114, 123123, 'saaaa', 152),
+(115, 36, 'má mày', 90),
+(115, 36, 'saaaa', 0),
+(115, 36, 'tess\'', 0),
+(115, 37, 'má mày', 0),
+(115, 37, 'saaaa', 0),
+(115, 37, 'tess\'', 0),
+(115, 38, 'má mày', 0),
+(115, 38, 'saaaa', 0),
+(115, 38, 'tess\'', 0),
+(115, 39, 'má mày', 0),
+(115, 39, 'saaaa', 0),
+(115, 39, 'tess\'', 0);
 
 --
 -- Bẫy `chitietsanpham`
@@ -428,17 +515,10 @@ CREATE TABLE `danhmuc` (
 --
 
 INSERT INTO `danhmuc` (`MaDM`, `TenDM`) VALUES
-(1, 'Sản Phẩm Nổi Bật'),
+(1, 'Sản Phẩm Nổi Bật 123'),
 (2, 'Sản Phẩm Mới'),
 (3, 'Sản Phẩm bán chạy'),
-(7, '133'),
-(10, 'danh mục test 1213'),
-(26, 'aa'),
-(97, 'sp test1'),
-(98, 'sp test2'),
-(99, 'sp test3'),
-(100, 'sp test4'),
-(101, 'khùng123');
+(10, 'danh mục test 1213');
 
 -- --------------------------------------------------------
 
@@ -465,7 +545,28 @@ INSERT INTO `danhmucchucnang` (`chucnang`, `tenchucnang`) VALUES
 (7, 'Quản lý chi tiết quyền'),
 (8, 'Quản lý danh mục chức năng'),
 (9, 'Quản lý khuyến mãi'),
-(10, 'Quản lý sản phẩm');
+(10, 'Quản lý sản phẩm'),
+(13, 'Quản lý hóa đơn');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `giohang`
+--
+
+CREATE TABLE `giohang` (
+  `MaGH` int(11) NOT NULL,
+  `MaKH` int(11) NOT NULL,
+  `TongSoLuong` int(11) DEFAULT 0,
+  `TongTien` decimal(10,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `giohang`
+--
+
+INSERT INTO `giohang` (`MaGH`, `MaKH`, `TongSoLuong`, `TongTien`) VALUES
+(29, 23, 2, 5150000.00);
 
 -- --------------------------------------------------------
 
@@ -489,11 +590,17 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`MaHD`, `MaKH`, `MaNV`, `NgayDat`, `NgayGiao`, `TinhTrang`, `TongTien`, `MaNVGH`) VALUES
-(70, 6, 3, '2023-06-16 16:55:54', '2023-12-15 21:01:29', 'hoàn thành', 11996000, '3'),
-(86, 1, 3, '2023-06-19 16:52:51', NULL, 'Hủy Bỏ', 12658000, NULL),
+(70, 6, 3, '2023-06-16 16:55:54', '2025-03-22 05:15:26', 'hoàn thành', 11996000, '3'),
+(86, 1, 3, '2023-06-19 16:52:51', '2025-03-22 04:59:54', 'hoàn thành', 12658000, NULL),
 (87, 1, 3, '2023-06-19 17:20:30', '2023-12-15 21:01:28', 'hoàn thành', 1460000, '3'),
-(88, 1, 3, '2023-06-20 09:18:27', '2023-06-21 10:23:59', 'hoàn thành', 9577000, '3'),
-(89, 1, 3, '2023-06-21 08:31:12', '2023-06-22 08:32:24', 'hoàn thành', 3679000, '3');
+(88, 1, 3, '2023-06-20 09:18:27', '2025-03-22 04:59:33', 'hoàn thành', 9577000, '3'),
+(89, 1, 3, '2023-06-21 08:31:12', '2023-06-22 08:32:24', 'hoàn thành', 3679000, '3'),
+(92, 16, NULL, '2025-03-23 19:12:37', NULL, 'Chờ xử lý', 11260004, NULL),
+(93, 23, NULL, '2025-03-23 19:14:39', '2025-03-23 13:37:34', 'hoàn thành', 7980002, NULL),
+(94, 23, NULL, '2025-03-23 19:21:50', NULL, 'Chờ xử lý', 2650000, NULL),
+(95, 23, NULL, '2025-03-23 19:33:34', NULL, 'Chờ xử lý', 2150000, NULL),
+(96, 23, NULL, '2025-03-23 19:33:50', NULL, 'Chờ xử lý', 1400000, NULL),
+(97, 23, NULL, '2025-03-23 19:42:31', NULL, 'Chờ xử lý', 1490001, NULL);
 
 -- --------------------------------------------------------
 
@@ -515,7 +622,15 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`MaKH`, `TenKH`, `Email`, `SDT`, `DiaChi`, `MatKhau`) VALUES
+(20, '123', '123@gmail.com', 123, '213', '123456'),
+(21, 'abc', 'abc@gmail.com', 123456, '132456', '123456'),
 (6, 'Nguyễn Nam Cường', 'cuong@gmail.com', 1228923743, 'diachi', '123456'),
+(18, 'hahahha', 'haha@gmail.com', 1457895622, '1541651', '123456'),
+(16, 'Nguyen123', 'hung@gmail.com', 787495636, 'tan chau tay ninh', '123456'),
+(17, 'huy', 'huy@gmail.com', 0, '51616', '123456'),
+(22, 'nguyen duy manh', 'manh@gmail.com', 1165165156, '6516516515', '123456'),
+(19, 'oo', 'o@gmail.com', 1561651, '1', '1'),
+(23, 'qeqweq', 'test@gmail.com', 123, '123', '123456'),
 (1, 'Nguyễn Đình Trí', 'tringuyen25071998@gmail.com', 778923743, '62/32 trần thánh tông - tân bình - hcm', '123456');
 
 -- --------------------------------------------------------
@@ -539,11 +654,13 @@ CREATE TABLE `khuyenmai` (
 --
 
 INSERT INTO `khuyenmai` (`MaKM`, `TenKM`, `MoTa`, `KM_PT`, `TienKM`, `NgayBD`, `NgayKT`) VALUES
-(1, 'Tri Ân Khách Hàng', 'sale', 0, 50000, '2020-01-01', '2024-01-31'),
+(1, 'Tri Ân Khách Hàng', 'sale', NULL, 50000, '2020-01-01', '2024-05-31'),
 (3, 'Vui Xuân - Đón Tết ', NULL, 30, NULL, '2019-12-19', '2020-02-29'),
 (4, 'Khuyến Mãi Đặc Biệt', NULL, NULL, 100000, '2019-12-19', '2020-01-31'),
 (5, 'khuyễn mãi đặc biệt trị giá 500.000 đ', 'ok', NULL, 500000, '2025-03-12', '2025-03-18'),
-(7, 'test khuyễn mãi', '123456', NULL, 9999, '2025-03-16', '2025-03-21');
+(7, 'test khuyễn mãi', '123456', NULL, 9999, '2025-03-16', '2025-03-31'),
+(8, 'mai dinh', '123', 20, NULL, '2025-03-21', '2025-03-31'),
+(9, 'vui ve k bun', '221651561', 20, NULL, '2025-03-22', '2025-04-30');
 
 -- --------------------------------------------------------
 
@@ -560,12 +677,9 @@ CREATE TABLE `mau` (
 --
 
 INSERT INTO `mau` (`MaMau`) VALUES
-('12312312'),
 ('9999'),
 ('áda'),
 ('ádasdas'),
-('bạc phận'),
-('bạch kim ánh sao'),
 ('Đen '),
 ('Đen - Trắng'),
 ('Đỏ'),
@@ -573,6 +687,7 @@ INSERT INTO `mau` (`MaMau`) VALUES
 ('má mày'),
 ('none'),
 ('saaaa'),
+('tess\''),
 ('Trắng'),
 ('Vàng'),
 ('Xanh');
@@ -599,7 +714,13 @@ INSERT INTO `nguoinhan` (`MaHD`, `TenNN`, `DiaChiNN`, `SDTNN`) VALUES
 (86, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
 (87, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
 (88, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
-(89, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743);
+(89, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
+(92, 'Nguyen123', 'tan chau tay ninh ', 787495636),
+(93, 'qeqweq', '123', 123),
+(94, 'qeqweq', '123', 123),
+(95, 'qeqweq', '123', 123),
+(96, 'qeqweq', '123', 123),
+(97, 'qeqweq', '123', 123);
 
 -- --------------------------------------------------------
 
@@ -624,7 +745,10 @@ INSERT INTO `nhacc` (`MaNCC`, `TenNCC`) VALUES
 (28, '98'),
 (29, '123'),
 (30, 'ád'),
-(31, 'áda');
+(31, 'áda'),
+(98, 'hung'),
+(99, 'huy'),
+(100, 'hai');
 
 -- --------------------------------------------------------
 
@@ -648,10 +772,10 @@ CREATE TABLE `nhanvien` (
 
 INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `Email`, `SDT`, `DiaChi`, `MatKhau`, `Quyen`) VALUES
 (3, 'Admin', 'admin@gmail.com', 905027527, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', 'admin', 1),
+(99, 'boss', 'boss@gmail.com', 905027527, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', '123456', 2),
 (6, 'kk', 'hung123@gmail.com', 895252521, 'sadsdasdasd', '123456', 1),
 (4, 'Hương Nhung', 'nhung@gmail.com', 132465798, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', '123456', 3),
-(2, 'Nhân Viên Bán Hàng ', 'NVBH@gmail.com', 123456789, 'Đà Nẵng', '123456', 4),
-(1, 'Quản Lý', 'thongkul@gmail.com', 778923743, '12 núi thàng - đà nẵng', '123456', 2);
+(2, 'Nhân Viên Bán Hàng ', 'NVBH@gmail.com', 123456789, 'Đà Nẵng', '123456', 4);
 
 -- --------------------------------------------------------
 
@@ -847,7 +971,8 @@ INSERT INTO `phieunhap` (`MaPN`, `MaNV`, `MaSP`, `SoLuong`, `DonGia`, `TongTien`
 (177, 3, 114, 10, 99969, 999690, '2025-03-17 11:34:17', 'hahahah', 90, 'má mày'),
 (178, 3, 114, 5, 150, 750, '2025-03-17 11:34:32', 'ádasd', 90, 'saaaa'),
 (179, 3, 114, 15, 1560, 23400, '2025-03-17 11:34:47', '1515', 123123, 'má mày'),
-(180, 3, 114, 152, 2032, 308864, '2025-03-17 11:34:55', '203', 123123, 'saaaa');
+(180, 3, 114, 152, 2032, 308864, '2025-03-17 11:34:55', '203', 123123, 'saaaa'),
+(181, 3, 115, 90, 15000000, 1350000000, '2025-03-23 17:17:39', 'dssada', 36, 'má mày');
 
 -- --------------------------------------------------------
 
@@ -893,10 +1018,11 @@ CREATE TABLE `quyen` (
 
 INSERT INTO `quyen` (`id`, `Ten`, `MoTa`) VALUES
 (1, 'admin', 'full quyền'),
-(2, 'Project Manager', 'quản trị viên'),
+(2, 'Shipper', 'Ship hang cho khach hang nha ban yeu'),
 (3, 'Quản lý Kho', ''),
 (4, 'Nhân viên Bán Hàng', ''),
-(5, 'Nhân viên giao hàng', '');
+(5, 'Nhân viên giao hàng', ''),
+(6, 'dime may', 'can cak');
 
 -- --------------------------------------------------------
 
@@ -961,7 +1087,8 @@ INSERT INTO `sanpham` (`MaSP`, `TenSP`, `MaDM`, `MaNCC`, `SoLuong`, `MoTa`, `Don
 (110, 'khùng điên', NULL, 1, NULL, 'sá', 1234, ''),
 (111, 'sản phẩm test1', NULL, 1, 0, 'ưq', 1212, 'images/anh_nen/67d3e1e29531f-mb_bank.jpg'),
 (113, 'con gà con', 1, 1, 6, 'ads165as1d65as1d65as1d', 111111111, 'images/anh_nen/67d451c7c37e5-con_ga_con.png'),
-(114, 'sản phầm b', 1, 1, 182, 'ádasdasdasd', 1500000, 'images/anh_nen/67d7a615d2713-ADIDAS_BE_2.jpg');
+(114, 'sản phầm b', 1, 1, 182, 'ádasdasdasd', 1500000, 'images/anh_nen/67d7a615d2713-ADIDAS_BE_2.jpg'),
+(115, 'nguyen dinh hung', 3, 1, 90, 'dep vai ca lon', 99999999, '');
 
 -- --------------------------------------------------------
 
@@ -979,7 +1106,7 @@ CREATE TABLE `sanphamkhuyenmai` (
 --
 
 INSERT INTO `sanphamkhuyenmai` (`MaSP`, `MaKM`) VALUES
-(4, 5),
+(4, 7),
 (111, 7),
 (114, 7);
 
@@ -1007,6 +1134,9 @@ INSERT INTO `size` (`MaSize`) VALUES
 (42),
 (43),
 (90),
+(91),
+(92),
+(93),
 (123123);
 
 --
@@ -1026,6 +1156,15 @@ ALTER TABLE `binhluan`
   ADD PRIMARY KEY (`MaBL`,`MaSP`,`MaKH`),
   ADD KEY `MaKH` (`MaKH`),
   ADD KEY `MaSP` (`MaSP`);
+
+--
+-- Chỉ mục cho bảng `chitietgiohang`
+--
+ALTER TABLE `chitietgiohang`
+  ADD PRIMARY KEY (`MaGH`,`MaSP`,`Size`,`MaMau`),
+  ADD KEY `MaSP` (`MaSP`),
+  ADD KEY `Size` (`Size`),
+  ADD KEY `MaMau` (`MaMau`);
 
 --
 -- Chỉ mục cho bảng `chitiethoadon`
@@ -1062,6 +1201,13 @@ ALTER TABLE `danhmuc`
 --
 ALTER TABLE `danhmucchucnang`
   ADD PRIMARY KEY (`chucnang`);
+
+--
+-- Chỉ mục cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  ADD PRIMARY KEY (`MaGH`),
+  ADD KEY `MaKH` (`MaKH`);
 
 --
 -- Chỉ mục cho bảng `hoadon`
@@ -1169,49 +1315,55 @@ ALTER TABLE `size`
 -- AUTO_INCREMENT cho bảng `binhluan`
 --
 ALTER TABLE `binhluan`
-  MODIFY `MaBL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `MaBL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `MaDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `MaDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+
+--
+-- AUTO_INCREMENT cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  MODIFY `MaGH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `MaKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `MaKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
-  MODIFY `MaKM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MaKM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `nhacc`
 --
 ALTER TABLE `nhacc`
-  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT cho bảng `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  MODIFY `MaPN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `MaPN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT cho bảng `phieuxuat`
@@ -1223,7 +1375,7 @@ ALTER TABLE `phieuxuat`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -1235,6 +1387,15 @@ ALTER TABLE `sanpham`
 ALTER TABLE `binhluan`
   ADD CONSTRAINT `binhluan_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`),
   ADD CONSTRAINT `binhluan_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`);
+
+--
+-- Các ràng buộc cho bảng `chitietgiohang`
+--
+ALTER TABLE `chitietgiohang`
+  ADD CONSTRAINT `chitietgiohang_ibfk_1` FOREIGN KEY (`MaGH`) REFERENCES `giohang` (`MaGH`),
+  ADD CONSTRAINT `chitietgiohang_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
+  ADD CONSTRAINT `chitietgiohang_ibfk_3` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`),
+  ADD CONSTRAINT `chitietgiohang_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
 
 --
 -- Các ràng buộc cho bảng `chitiethoadon`
@@ -1259,6 +1420,12 @@ ALTER TABLE `chitietsanpham`
   ADD CONSTRAINT `chitietsanpham_ibfk_1` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`),
   ADD CONSTRAINT `chitietsanpham_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
   ADD CONSTRAINT `chitietsanpham_ibfk_3` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
+
+--
+-- Các ràng buộc cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`);
 
 --
 -- Các ràng buộc cho bảng `hoadon`

@@ -61,7 +61,7 @@ $brands = $supplierModel->getAllBrands();
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
                         <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chủ</a>
-                        <a href="/shoeimportsystem/index.php?controller=product&action=index" class="nav-item nav-link">Shop</a>
+                        <a href="/shoeimportsystem/index.php?controller=shop&action=index" class="nav-item nav-link">Shop</a>
                         <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thông tin shop</a>
                         <div class="dropdown nav-item">
                             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>

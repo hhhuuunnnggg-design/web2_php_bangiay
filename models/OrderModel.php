@@ -12,7 +12,7 @@ class OrderModel
         $this->conn = $this->db->getConnection();
     }
 
-    public function getAllOrders($search = '', $limit = 5, $offset = 0)
+    public function getAllOrders($search = '', $limit = 5, $offset = 0, $maNV = null, $quyen = null)
     {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT h.*, kh.TenKH, nv.TenNV AS TenNVQuanLy, nv_gh.TenNV AS TenShipper 
@@ -20,22 +20,45 @@ class OrderModel
             LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
             LEFT JOIN nhanvien nv ON h.MaNV = nv.MaNV 
             LEFT JOIN nhanvien nv_gh ON h.MaNVGH = nv_gh.MaNV 
-            WHERE h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%'
-            LIMIT ? OFFSET ?";
+            WHERE (h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%')";
+
+        // Nếu là Shipper (Quyen = 2), chỉ hiển thị hóa đơn được gán cho họ
+        if ($quyen == 2 && $maNV !== null) {
+            $sql .= " AND h.MaNVGH = ?";
+        }
+
+        $sql .= " LIMIT ? OFFSET ?";
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $limit, $offset);
+
+        if ($quyen == 2 && $maNV !== null) {
+            $stmt->bind_param("iii", $maNV, $limit, $offset);
+        } else {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTotalOrders($search = '')
+    public function getTotalOrders($search = '', $maNV = null, $quyen = null)
     {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total 
-                FROM hoadon h 
-                LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
-                WHERE h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%'";
-        $result = $this->conn->query($sql);
+            FROM hoadon h 
+            LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
+            WHERE (h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%')";
+
+        if ($quyen == 2 && $maNV !== null) {
+            $sql .= " AND h.MaNVGH = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $maNV);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        } else {
+            $result = $this->conn->query($sql);
+        }
+
         return $result->fetch_assoc()['total'];
     }
 

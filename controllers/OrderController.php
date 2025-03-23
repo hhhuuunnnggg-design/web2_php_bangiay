@@ -22,13 +22,19 @@ class OrderController
         if (!$this->auth->checkPermission(13, 'view')) {
             die("Bạn không có quyền xem quản lý hóa đơn.");
         }
+
+        $currentUser = $this->auth->getCurrentUser(); // Giả sử trả về mảng chứa MaNV và Quyen
+        $maNV = $currentUser['MaNV'] ?? null;
+        $quyen = $currentUser['Quyen'] ?? null;
+
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
         $offset = ($page - 1) * $limit;
 
-        $orders = $this->orderModel->getAllOrders($search, $limit, $offset);
-        $totalOrders = $this->orderModel->getTotalOrders($search);
+        // Truyền MaNV và Quyen vào model để lọc hóa đơn
+        $orders = $this->orderModel->getAllOrders($search, $limit, $offset, $maNV, $quyen);
+        $totalOrders = $this->orderModel->getTotalOrders($search, $maNV, $quyen);
         $totalPages = ceil($totalOrders / $limit);
 
         $title = "Quản lý hóa đơn";

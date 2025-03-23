@@ -50,6 +50,10 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/BrandController.php';
         $controllerInstance = new BrandController($db);
         break;
+    case 'shop':
+        require_once __DIR__ . '/controllers/client/ShopController.php';
+        $controllerInstance = new ShopController($db);
+        break;    
     default:
         header('Content-Type: application/json');
         header("HTTP/1.0 404 Not Found");

@@ -92,10 +92,47 @@ class OrderModel
     // Cập nhật hàm để xử lý cả TinhTrang và NgayGiao
     public function updateOrderStatus($maHD, $tinhTrang, $ngayGiao)
     {
-        $sql = "UPDATE hoadon SET TinhTrang = ?, NgayGiao = ? WHERE MaHD = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssi", $tinhTrang, $ngayGiao, $maHD);
-        return $stmt->execute();
+        $this->conn->begin_transaction();
+
+        try {
+            // Lấy thông tin hóa đơn hiện tại
+            $currentOrder = $this->getOrderById($maHD);
+            if (!$currentOrder) {
+                throw new Exception("Hóa đơn không tồn tại.");
+            }
+
+            // Cập nhật tình trạng và ngày giao
+            $sql = "UPDATE hoadon SET TinhTrang = ?, NgayGiao = ? WHERE MaHD = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssi", $tinhTrang, $ngayGiao, $maHD);
+            $stmt->execute();
+
+            // Nếu chuyển sang "Hủy Bỏ" và trước đó không phải "Hủy Bỏ"
+            if ($tinhTrang === 'Hủy Bỏ' && $currentOrder['TinhTrang'] !== 'Hủy Bỏ') {
+                $orderDetails = $this->getOrderDetails($maHD);
+                foreach ($orderDetails as $detail) {
+                    // Cộng lại số lượng vào bảng sanpham
+                    $sql = "UPDATE sanpham SET SoLuong = SoLuong + ? WHERE MaSP = ?";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bind_param("ii", $detail['SoLuong'], $detail['MaSP']);
+                    $stmt->execute();
+
+                    // Cộng lại số lượng vào bảng chitietsanpham
+                    $sql = "UPDATE chitietsanpham SET SoLuong = SoLuong + ? 
+                        WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bind_param("iiss", $detail['SoLuong'], $detail['MaSP'], $detail['Size'], $detail['MaMau']);
+                    $stmt->execute();
+                }
+            }
+
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            error_log("Lỗi khi cập nhật hóa đơn: " . $e->getMessage());
+            return false;
+        }
     }
 
     public function getShippers()
@@ -114,6 +151,7 @@ class OrderModel
         $stmt->bind_param("si", $maNVGH, $maHD);
         return $stmt->execute();
     }
+
 
     public function __destruct()
     {

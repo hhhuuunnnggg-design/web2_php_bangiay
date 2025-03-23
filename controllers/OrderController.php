@@ -98,7 +98,7 @@ class OrderController
             if ($this->orderModel->updateOrderStatus($maHD, $tinhTrang, $ngayGiao)) {
                 echo json_encode(['success' => true, 'message' => 'Cập nhật tình trạng thành công']);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Lỗi cập nhật tình trạng']);
+                echo json_encode(['success' => false, 'message' => 'Lỗi cập nhật tình trạng hoặc hoàn tác số lượng']);
             }
             exit;
         }

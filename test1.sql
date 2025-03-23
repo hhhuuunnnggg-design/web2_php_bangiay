@@ -1,63 +1,69 @@
-CREATE TABLE `giohang` (
-  `MaGH` int(11) NOT NULL,
+CREATE TABLE `hoadon` (
+  `MaHD` int(11) NOT NULL,
   `MaKH` int(11) NOT NULL,
-  `TongSoLuong` int(11) DEFAULT 0,
-  `TongTien` decimal(10,2) DEFAULT 0.00
+  `MaNV` int(11) DEFAULT NULL,
+  `NgayDat` datetime DEFAULT current_timestamp(),
+  `NgayGiao` datetime DEFAULT NULL,
+  `TinhTrang` varchar(20) DEFAULT NULL,
+  `TongTien` decimal(10,0) NOT NULL,
+  `MaNVGH` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
-ALTER TABLE `giohang`
-  ADD PRIMARY KEY (`MaGH`),
-  ADD KEY `MaKH` (`MaKH`);
+ALTER TABLE `hoadon`
+  ADD PRIMARY KEY (`MaHD`),
+  ADD KEY `MaKH` (`MaKH`),
+  ADD KEY `MaNV` (`MaNV`);
 
-  ALTER TABLE `giohang`
-  MODIFY `MaGH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `hoadon`
+  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+  ALTER TABLE `hoadon`
+  ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`),
+  ADD CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`);
 
 
 
-
-CREATE TABLE `chitietgiohang` (
-  `MaGH` int(11) NOT NULL,
+-- Chỉ mục cho bảng `chitiethoadon`
+CREATE TABLE `chitiethoadon` (
+  `MaHD` int(11) NOT NULL,
   `MaSP` int(11) NOT NULL,
-  `TenSanPham` varchar(255) NOT NULL,
-  `Img` varchar(255) NOT NULL,
-  `GiaTien` int(11) NOT NULL,
-  `TongTien` int(11) NOT NULL DEFAULT 0,
   `SoLuong` int(11) NOT NULL,
+  `DonGia` decimal(10,0) NOT NULL,
+  `ThanhTien` decimal(10,0) NOT NULL,
   `Size` int(11) NOT NULL,
-  `MaMau` varchar(50) NOT NULL
+  `MaMau` varchar(50) NOT NULL,
+  `img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
-ALTER TABLE `chitietgiohang`
-  ADD PRIMARY KEY (`MaGH`,`MaSP`,`Size`,`MaMau`),
+
+ALTER TABLE `chitiethoadon`
+  ADD PRIMARY KEY (`MaHD`,`MaSP`,`Size`,`MaMau`),
   ADD KEY `MaSP` (`MaSP`),
   ADD KEY `Size` (`Size`),
   ADD KEY `MaMau` (`MaMau`);
 
 
-  ALTER TABLE `chitietgiohang`
-  ADD CONSTRAINT `chitietgiohang_ibfk_1` FOREIGN KEY (`MaGH`) REFERENCES `giohang` (`MaGH`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_3` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
+  ALTER TABLE `chitiethoadon`
+  ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`),
+  ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
+  ADD CONSTRAINT `chitiethoadon_ibfk_3` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`),
+  ADD CONSTRAINT `chitiethoadon_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
 
 
-CREATE TABLE `sanpham` (
-  `MaSP` int(11) NOT NULL,
-  `TenSP` varchar(50) NOT NULL,
-  `MaDM` int(11) DEFAULT NULL,
-  `MaNCC` int(11) NOT NULL,
-  `SoLuong` int(11) DEFAULT 0,
-  `MoTa` text DEFAULT NULL,
-  `DonGia` decimal(10,0) NOT NULL,
-  `AnhNen` varchar(50) DEFAULT NULL
+
+
+
+  CREATE TABLE `nguoinhan` (
+  `MaHD` int(11) NOT NULL,
+  `TenNN` varchar(50) NOT NULL,
+  `DiaChiNN` text NOT NULL,
+  `SDTNN` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
-
-CREATE TABLE `size` (
-  `MaSize` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+ALTER TABLE `nguoinhan`
+  ADD PRIMARY KEY (`MaHD`);
 
 
-CREATE TABLE `mau` (
-  `MaMau` varchar(50) NOT NULL DEFAULT 'none'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+ALTER TABLE `nguoinhan`
+  ADD CONSTRAINT `nguoinhan_ibfk_1` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`);
+

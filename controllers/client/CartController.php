@@ -1,15 +1,18 @@
 <?php
 require_once __DIR__ . '/../../models/client/CartModel.php';
+require_once __DIR__ . '/../../models/client/UserModel.php'; // Thêm để lấy thông tin khách hàng
 
 class CartController
 {
     private $db;
     private $cartModel;
+    private $userModel;
 
     public function __construct($db)
     {
         $this->db = $db;
         $this->cartModel = new CartModel($this->db);
+        $this->userModel = new UserModel(); // Khởi tạo UserModel
     }
 
     public function addToCart()
@@ -112,5 +115,61 @@ class CartController
     public function getCartCount($maKH)
     {
         return $this->cartModel->getCartCount($maKH);
+    }
+
+    public function checkout()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
+            exit;
+        }
+
+        $maKH = $_SESSION['user']['MaKH'];
+        $cartItems = $this->cartModel->getCartItems($maKH);
+        $cartTotal = $this->cartModel->getCartTotal($maKH);
+        if (empty($cartItems)) {
+            header("Location: /shoeimportsystem/index.php?controller=cart&action=index");
+            exit;
+        }
+        // Lấy thông tin khách hàng
+        $userInfo = $this->userModel->getUserInfo($maKH);
+
+        $title = "Thanh toán";
+        include __DIR__ . '/../../views/client/page/checkout.php';
+    }
+
+    public function confirmCheckout()
+    {
+        session_start();
+        header('Content-Type: application/json');
+        ob_end_clean();
+
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maKH = $_SESSION['user']['MaKH'];
+            $tenNN = $_POST['tenNN'] ?? null;
+            $diaChiNN = $_POST['diaChiNN'] ?? null;
+            $sdtNN = $_POST['sdtNN'] ?? null;
+
+            if ($tenNN && $diaChiNN && $sdtNN) {
+                $result = $this->cartModel->processCheckout($maKH, $tenNN, $diaChiNN, $sdtNN);
+                if ($result) {
+                    $_SESSION['cart_count'] = 0;
+                    echo json_encode(['success' => true, 'message' => 'Thanh toán thành công!']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Không thể xử lý thanh toán!']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Thông tin người nhận không hợp lệ!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+        }
+        exit;
     }
 }

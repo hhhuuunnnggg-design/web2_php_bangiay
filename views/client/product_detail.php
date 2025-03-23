@@ -83,7 +83,9 @@ include __DIR__ . '/layout/header.php';
             <div class="mb-3">
                 <button class="btn btn-primary me-2" onclick="addToCart(<?php echo $product['MaSP']; ?>)">Thêm vào giỏ hàng</button>
                 <button class="btn btn-success" onclick="buyNow(<?php echo $product['MaSP']; ?>)">Mua ngay</button>
+
             </div>
+
         </div>
     </div>
 </div>
@@ -174,7 +176,7 @@ include __DIR__ . '/layout/header.php';
                     // Nếu muốn hiển thị tổng tiền, thêm logic ở đây
                     // Ví dụ: document.querySelector('#cart-total').textContent = data.cartTotal;
                 } else {
-                    alert(data.message || 'Không thể thêm vào giỏ hàng!');
+                    alert(data.message || 'Không thể thêm vào giỏ hàng!!!');
                 }
             })
             .catch(error => {

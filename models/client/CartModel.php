@@ -80,15 +80,7 @@ class CartModel
         return $stmt->fetchColumn() ?: 0;
     }
 
-    // private function updateCartTotals($maKH)
-    // {
-    //     $sql = "UPDATE giohang 
-    //             SET TongSoLuong = (SELECT SUM(SoLuong) FROM chitietgiohang WHERE MaGH = giohang.MaGH), 
-    //                 TongTien = (SELECT SUM(TongTien) FROM chitietgiohang WHERE MaGH = giohang.MaGH) 
-    //             WHERE MaKH = ?";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->execute([$maKH]);
-    // }
+
     private function updateCartTotals($maKH)
     {
         $sql = "UPDATE giohang 
@@ -163,6 +155,65 @@ class CartModel
             return true;
         } catch (PDOException $e) {
             error_log("Lỗi khi xóa sản phẩm khỏi giỏ hàng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function processCheckout($maKH, $tenNN, $diaChiNN, $sdtNN)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            // Lấy thông tin giỏ hàng
+            $sql = "SELECT MaGH, TongTien FROM giohang WHERE MaKH = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maKH]);
+            $cart = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$cart) {
+                throw new Exception("Giỏ hàng không tồn tại!");
+            }
+
+            $maGH = $cart['MaGH'];
+            $tongTien = $cart['TongTien'];
+
+            // Tạo hóa đơn mới
+            $sql = "INSERT INTO hoadon (MaKH, TongTien, TinhTrang) VALUES (?, ?, 'Chờ xử lý')";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maKH, $tongTien]);
+            $maHD = $this->db->lastInsertId();
+
+            // Lấy chi tiết giỏ hàng
+            $cartItems = $this->getCartItems($maKH);
+            foreach ($cartItems as $item) {
+                $sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia, ThanhTien, Size, MaMau, img) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([
+                    $maHD,
+                    $item['MaSP'],
+                    $item['SoLuong'],
+                    $item['GiaTien'],
+                    $item['TongTien'],
+                    $item['Size'],
+                    $item['MaMau'],
+                    $item['Img']
+                ]);
+            }
+
+            // Thêm thông tin người nhận
+            $sql = "INSERT INTO nguoinhan (MaHD, TenNN, DiaChiNN, SDTNN) VALUES (?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maHD, $tenNN, $diaChiNN, $sdtNN]);
+
+            // Xóa giỏ hàng
+            $this->clearCart($maKH);
+
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            error_log("Lỗi khi xử lý thanh toán: " . $e->getMessage());
             return false;
         }
     }

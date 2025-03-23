@@ -11,11 +11,9 @@
             display: none;
         }
     </style>
-
 </head>
 <?php
 include __DIR__ . '/layout/header.php';
-
 ?>
 
 <div class="container mt-5">
@@ -45,9 +43,9 @@ include __DIR__ . '/layout/header.php';
             <div class="mb-3">
                 <label><strong>Kích thước:</strong></label><br>
                 <?php
-                $sizes = array_unique(array_column($productDetails, 'MaSize')); // Lấy danh sách kích thước duy nhất
+                $sizes = array_unique(array_column($productDetails, 'MaSize'));
                 foreach ($sizes as $size):
-                    if ($size): // Chỉ hiển thị nếu có MaSize
+                    if ($size):
                 ?>
                         <input type="radio" name="size" value="<?php echo $size; ?>" id="size-<?php echo $size; ?>">
                         <label for="size-<?php echo $size; ?>"><?php echo $size; ?></label>
@@ -59,9 +57,9 @@ include __DIR__ . '/layout/header.php';
             <div class="mb-3">
                 <label><strong>Màu sắc:</strong></label><br>
                 <?php
-                $colors = array_unique(array_column($productDetails, 'MaMau')); // Lấy danh sách màu duy nhất
+                $colors = array_unique(array_column($productDetails, 'MaMau'));
                 foreach ($colors as $color):
-                    if ($color): // Chỉ hiển thị nếu có MaMau
+                    if ($color):
                 ?>
                         <input type="radio" name="color" value="<?php echo $color; ?>" id="color-<?php echo $color; ?>">
                         <label for="color-<?php echo $color; ?>"><?php echo $color; ?></label>
@@ -83,13 +81,10 @@ include __DIR__ . '/layout/header.php';
             <div class="mb-3">
                 <button class="btn btn-primary me-2" onclick="addToCart(<?php echo $product['MaSP']; ?>)">Thêm vào giỏ hàng</button>
                 <button class="btn btn-success" onclick="buyNow(<?php echo $product['MaSP']; ?>)">Mua ngay</button>
-
             </div>
-
         </div>
     </div>
 </div>
-
 
 <div class="product-details">
     <div class="description-reviews">
@@ -270,6 +265,43 @@ include __DIR__ . '/layout/header.php';
                 alert('Có lỗi xảy ra khi gửi đánh giá: ' + error.message);
             });
     });
+
+    function buyNow(productId) {
+        let size = document.querySelector('input[name="size"]:checked')?.value;
+        let color = document.querySelector('input[name="color"]:checked')?.value;
+        let quantity = document.getElementById('quantity').value;
+
+        if (!size || !color) {
+            alert('Vui lòng chọn kích thước và màu sắc!');
+            return;
+        }
+
+        <?php if (!isset($_SESSION['user'])): ?>
+            alert('Vui lòng đăng nhập để mua hàng!');
+            window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
+        <?php else: ?>
+            fetch('/shoeimportsystem/index.php?controller=cart&action=addToCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector('#cart-count').textContent = data.cartCount;
+                        window.location.href = '/shoeimportsystem/index.php?controller=cart&action=checkout';
+                    } else {
+                        alert(data.message || 'Không thể thêm vào giỏ hàng để mua ngay!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Có lỗi xảy ra khi mua ngay!');
+                });
+        <?php endif; ?>
+    }
 </script>
 
 <style>

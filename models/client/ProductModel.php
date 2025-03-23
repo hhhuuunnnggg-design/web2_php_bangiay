@@ -13,18 +13,19 @@ class ProductModel
     }
 
     // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
+    // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
     public function getProductsByCategory($categoryId, $limit = 5, $offset = 0)
     {
         $categoryId = $this->conn->real_escape_string($categoryId);
         $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC, 
-                       km.KM_PT, km.TienKM, km.NgayBD, km.NgayKT
-                FROM sanpham sp 
-                LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM 
-                LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC 
-                LEFT JOIN sanphamkhuyenmai spkm ON sp.MaSP = spkm.MaSP
-                LEFT JOIN khuyenmai km ON spkm.MaKM = km.MaKM
-                WHERE sp.MaDM = ? 
-                LIMIT ? OFFSET ?";
+                   km.KM_PT, km.TienKM, km.NgayBD, km.NgayKT
+            FROM sanpham sp 
+            LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM 
+            LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC 
+            LEFT JOIN sanphamkhuyenmai spkm ON sp.MaSP = spkm.MaSP
+            LEFT JOIN khuyenmai km ON spkm.MaKM = km.MaKM
+            WHERE sp.MaDM = ? AND sp.SoLuong > 1 
+            LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("iii", $categoryId, $limit, $offset);
         $stmt->execute();
@@ -131,9 +132,9 @@ class ProductModel
     public function filterProducts($categoryIds = null, $brandIds = null, $minPrice = null, $maxPrice = null)
     {
         $conditions = [];
-        $params = [];      
-        $types = '';   
-    
+        $params = [];
+        $types = '';
+
         // Lọc theo danh mục
         if (!empty($categoryIds)) {
             $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
@@ -143,7 +144,7 @@ class ProductModel
                 $types .= 'i';
             }
         }
-    
+
         // Lọc theo nhà cung cấp
         if (!empty($brandIds)) {
             $placeholders = implode(',', array_fill(0, count($brandIds), '?'));
@@ -153,7 +154,7 @@ class ProductModel
                 $types .= 'i';
             }
         }
-    
+
         // Lọc theo khoảng giá
         if (!empty($minPrice)) {
             $conditions[] = "sp.DonGia >= ?";
@@ -165,35 +166,27 @@ class ProductModel
             $params[] = $maxPrice;
             $types .= 'i';
         }
-    
+
         // Xây dựng query
         $whereClause = '';
         if (!empty($conditions)) {
             $whereClause = "WHERE " . implode(' AND ', $conditions);
         }
-    
+
         $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC 
                 FROM sanpham sp
                 LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
                 LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
                 $whereClause";
 
-        
-    
-        
+
+
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    
+
         return $products;
     }
-    
-
-    
-    
-
 }
-
-
-

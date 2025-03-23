@@ -201,16 +201,23 @@ class CartModel
                     $item['Img']
                 ]);
 
-                // Cập nhật số lượng trong bảng sanpham
-                $sql = "UPDATE sanpham SET SoLuong = SoLuong - ? WHERE MaSP = ?";
+                // Cập nhật số lượng trong bảng sanpham với kiểm tra số lượng
+                $sql = "UPDATE sanpham SET SoLuong = SoLuong - ? 
+                    WHERE MaSP = ? AND SoLuong >= ?";
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute([$item['SoLuong'], $item['MaSP']]);
+                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['SoLuong']]);
+                if ($stmt->rowCount() == 0) {
+                    throw new Exception("Số lượng sản phẩm không đủ trong bảng sanpham cho MaSP: " . $item['MaSP']);
+                }
 
-                // Cập nhật số lượng trong bảng chitietsanpham
+                // Cập nhật số lượng trong bảng chitietsanpham với kiểm tra số lượng
                 $sql = "UPDATE chitietsanpham SET SoLuong = SoLuong - ? 
-                    WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
+                    WHERE MaSP = ? AND MaSize = ? AND MaMau = ? AND SoLuong >= ?";
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['Size'], $item['MaMau']]);
+                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['Size'], $item['MaMau'], $item['SoLuong']]);
+                if ($stmt->rowCount() == 0) {
+                    throw new Exception("Số lượng sản phẩm không đủ trong bảng chitietsanpham cho MaSP: " . $item['MaSP'] . ", Size: " . $item['Size'] . ", MaMau: " . $item['MaMau']);
+                }
             }
 
             // Thêm thông tin người nhận

@@ -1,32 +1,30 @@
 <?php
 require_once __DIR__ . '/../../core/db_connect.php';
+require_once __DIR__ . '/ProductModel.php';
 
 class CartModel
 {
     private $db;
+    private $productModel;
 
     public function __construct($db)
     {
         $this->db = $db;
+        $this->productModel = new ProductModel();
     }
 
     public function addToCart($maKH, $maSP, $soLuong, $size, $maMau)
     {
         try {
-            // Lấy thông tin sản phẩm từ bảng sanpham
-            $sql = "SELECT TenSP, DonGia, AnhNen FROM sanpham WHERE MaSP = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$maSP]);
-            $product = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            $product = $this->productModel->getProductById($maSP);
             if (!$product) {
-                return false; // Sản phẩm không tồn tại
+                return false;
             }
 
             $tenSanPham = $product['TenSP'];
-            $giaTien = $product['DonGia'];
+            $giaTien = $product['GiaKhuyenMai'];
             $img = $product['AnhNen'];
-            $tongTienChiTiet = $giaTien * $soLuong; // Tổng tiền cho sản phẩm này
+            $tongTienChiTiet = $giaTien * $soLuong;
 
             // Kiểm tra giỏ hàng của khách hàng
             $sql = "SELECT MaGH FROM giohang WHERE MaKH = ?";
@@ -35,35 +33,31 @@ class CartModel
             $maGH = $stmt->fetchColumn();
 
             if (!$maGH) {
-                // Nếu chưa có giỏ hàng, tạo mới
                 $sql = "INSERT INTO giohang (MaKH, TongSoLuong, TongTien) VALUES (?, 0, 0)";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maKH]);
                 $maGH = $this->db->lastInsertId();
             }
 
-            // Kiểm tra sản phẩm đã có trong giỏ chưa
+            // Kiểm tra sản phẩm trong giỏ
             $sql = "SELECT SoLuong FROM chitietgiohang WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$maGH, $maSP, $size, $maMau]);
             $existingQuantity = $stmt->fetchColumn();
 
             if ($existingQuantity !== false) {
-                // Nếu đã có, cập nhật số lượng và tổng tiền
                 $newQuantity = $existingQuantity + $soLuong;
                 $newTongTienChiTiet = $giaTien * $newQuantity;
                 $sql = "UPDATE chitietgiohang SET SoLuong = ?, TongTien = ? WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$newQuantity, $newTongTienChiTiet, $maGH, $maSP, $size, $maMau]);
             } else {
-                // Nếu chưa có, thêm mới
                 $sql = "INSERT INTO chitietgiohang (MaGH, MaSP, TenSanPham, Img, GiaTien, TongTien, SoLuong, Size, MaMau) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([$maGH, $maSP, $tenSanPham, $img, $giaTien, $tongTienChiTiet, $soLuong, $size, $maMau]);
             }
 
-            // Cập nhật tổng số lượng và tổng tiền trong giỏ hàng
             $this->updateCartTotals($maKH);
             return true;
         } catch (PDOException $e) {
@@ -108,5 +102,32 @@ class CartModel
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$maKH]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Xóa giỏ hàng của người dùng khi đăng xuất hoặc cần reset
+    public function clearCart($maKH)
+    {
+        try {
+            $sql = "SELECT MaGH FROM giohang WHERE MaKH = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maKH]);
+            $maGH = $stmt->fetchColumn();
+
+            if ($maGH) {
+                // Xóa chi tiết giỏ hàng
+                $sql = "DELETE FROM chitietgiohang WHERE MaGH = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$maGH]);
+
+                // Xóa giỏ hàng
+                $sql = "DELETE FROM giohang WHERE MaKH = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$maKH]);
+            }
+            return true;
+        } catch (PDOException $e) {
+            error_log("Lỗi khi xóa giỏ hàng: " . $e->getMessage());
+            return false;
+        }
     }
 }

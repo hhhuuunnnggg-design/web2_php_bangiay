@@ -1,14 +1,17 @@
 <?php
 require_once __DIR__ . '/../../models/client/UserModel.php';
+require_once __DIR__ . '/../../models/client/CartModel.php';
 
 class AuthController
 {
     private $userModel;
+    private $cartModel;
     private $db;
 
     public function __construct($db)
     {
         $this->userModel = new UserModel();
+        $this->cartModel = new CartModel($db);
         $this->db = $db;
     }
 
@@ -77,7 +80,12 @@ class AuthController
             $user = $this->userModel->login($email, $matKhau);
             if ($user) {
                 session_start();
+                // Xóa giỏ hàng cũ của người dùng trước đó (nếu có)
+                if (isset($_SESSION['user'])) {
+                    $this->cartModel->clearCart($_SESSION['user']['MaKH']);
+                }
                 $_SESSION['user'] = $user;
+                $_SESSION['cart_count'] = $this->cartModel->getCartCount($user['MaKH']); // Khởi tạo cart_count
                 header("Location: /shoeimportsystem/index.php?controller=home&action=index");
                 exit;
             } else {
@@ -128,6 +136,7 @@ class AuthController
     {
         session_start();
         unset($_SESSION['user']);
+        unset($_SESSION['cart_count']); // Xóa cart_count khỏi session
         header("Location: /shoeimportsystem/index.php?controller=home&action=index");
         exit;
     }

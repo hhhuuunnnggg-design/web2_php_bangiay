@@ -16,7 +16,7 @@ class CartController
     {
         session_start();
         header('Content-Type: application/json');
-        ob_end_clean(); // Xóa buffer để tránh HTML không mong muốn
+        ob_end_clean();
 
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
@@ -65,5 +65,10 @@ class CartController
         $cartItems = $this->cartModel->getCartItems($maKH);
         $title = "Giỏ hàng";
         include __DIR__ . '/../../views/client/page/cart.php';
+    }
+
+    public function getCartCount($maKH)
+    {
+        return $this->cartModel->getCartCount($maKH);
     }
 }

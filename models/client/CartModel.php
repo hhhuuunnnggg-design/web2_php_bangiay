@@ -186,8 +186,9 @@ class CartModel
             // Lấy chi tiết giỏ hàng
             $cartItems = $this->getCartItems($maKH);
             foreach ($cartItems as $item) {
+                // Thêm chi tiết hóa đơn
                 $sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia, ThanhTien, Size, MaMau, img) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([
                     $maHD,
@@ -199,6 +200,17 @@ class CartModel
                     $item['MaMau'],
                     $item['Img']
                 ]);
+
+                // Cập nhật số lượng trong bảng sanpham
+                $sql = "UPDATE sanpham SET SoLuong = SoLuong - ? WHERE MaSP = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$item['SoLuong'], $item['MaSP']]);
+
+                // Cập nhật số lượng trong bảng chitietsanpham
+                $sql = "UPDATE chitietsanpham SET SoLuong = SoLuong - ? 
+                    WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['Size'], $item['MaMau']]);
             }
 
             // Thêm thông tin người nhận

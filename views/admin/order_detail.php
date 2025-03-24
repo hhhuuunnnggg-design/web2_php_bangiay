@@ -23,11 +23,14 @@
         <tr>
             <th>STT</th>
             <th>Tên sản phẩm</th>
+            <th>Hình ảnh</th> <!-- Thêm cột Hình ảnh -->
             <th>Số lượng</th>
             <th>Đơn giá</th>
-            <th>Thành tiền</th>
             <th>Kích thước</th>
             <th>Màu sắc</th>
+            <th>Thành tiền</th>
+
+
         </tr>
     </thead>
     <tbody>
@@ -37,16 +40,25 @@
                 <tr>
                     <td><?php echo $stt++; ?></td>
                     <td><?php echo htmlspecialchars($detail['TenSP']); ?></td>
+                    <td>
+                        <?php if (!empty($detail['img'])): ?>
+                            <img src="<?php echo htmlspecialchars($detail['img']); ?>" alt="Hình ảnh sản phẩm" style="max-width: 100px; height: auto;">
+                        <?php else: ?>
+                            Không có hình ảnh
+                        <?php endif; ?>
+                    </td>
                     <td><?php echo $detail['SoLuong']; ?></td>
                     <td><?php echo number_format($detail['DonGia'], 0, ',', '.') . ' VNĐ'; ?></td>
-                    <td><?php echo number_format($detail['ThanhTien'], 0, ',', '.') . ' VNĐ'; ?></td>
                     <td><?php echo $detail['Size']; ?></td>
                     <td><?php echo $detail['MaMau']; ?></td>
+
+                    <td><?php echo number_format($detail['ThanhTien'], 0, ',', '.') . ' VNĐ'; ?></td>
+
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="7">Không có sản phẩm nào trong hóa đơn.</td>
+                <td colspan="8">Không có sản phẩm nào trong hóa đơn.</td> <!-- Cập nhật colspan thành 8 -->
             </tr>
         <?php endif; ?>
     </tbody>

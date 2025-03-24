@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th>Mã HD</th>
+
             <th>Khách hàng</th>
 
             <th>Shipper</th> <!-- Thêm cột Shipper -->
@@ -35,7 +35,7 @@
         ?>
                 <tr data-id="<?php echo $row['MaHD']; ?>">
                     <td><?php echo $stt++; ?></td>
-                    <td><?php echo $row['MaHD']; ?></td>
+
                     <td><?php echo htmlspecialchars($row['TenKH']); ?></td>
 
                     <td><?php echo htmlspecialchars($row['TenShipper'] ?? 'Chưa gán'); ?></td> <!-- Hiển thị tên Shipper -->

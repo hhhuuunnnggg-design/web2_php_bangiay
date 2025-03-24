@@ -37,33 +37,33 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
-                    <h4 class="text-light mb-3">Shop Info</h4>
-                    <a class="btn-link" href="">About Us</a>
-                    <a class="btn-link" href="/shoeimportsystem/index.php?controller=contact&action=index">Contact Us</a>
-                    <a class="btn-link" href="">Privacy Policy</a>
-                    <a class="btn-link" href="">Terms & Condition</a>
-                    <a class="btn-link" href="">Return Policy</a>
-                    <a class="btn-link" href="">FAQs & Help</a>
+                    <h4 class="text-light mb-3">Thông tin cửa hàng</h4>
+                    <a class="btn-link" href="">Về chúng tôi</a>
+                    <a class="btn-link" href="/shoeimportsystem/index.php?controller=contact&action=index">Liên hệ với chúng tôi</a>
+                    <a class="btn-link" href="">Chính sách bảo mật</a>
+                    <a class="btn-link" href="">Điều khoản & Điều kiện</a>
+                    <a class="btn-link" href="">Chính sách đổi trả</a>
+                    <a class="btn-link" href="">Hỗ trợ khách hàng</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
-                    <h4 class="text-light mb-3">Account</h4>
-                    <a class="btn-link" href="">My Account</a>
-                    <a class="btn-link" href="/shoeimportsystem/index.php?controller=shopdetail&action=index">Shop details</a>
-                    <a class="btn-link" href="">Shopping Cart</a>
-                    <a class="btn-link" href="">Wishlist</a>
-                    <a class="btn-link" href="">Order History</a>
-                    <a class="btn-link" href="">International Orders</a>
+                    <h4 class="text-light mb-3">Tài khoản</h4>
+                    <a class="btn-link" href="">Tài khoản của tôi</a>
+                    <a class="btn-link" href="/shoeimportsystem/index.php?controller=shopdetail&action=index">Thông tin cửa hàng</a>
+                    <a class="btn-link" href="">Giỏ hàng</a>
+                    <a class="btn-link" href="">Sản phẩm yêu thích</a>
+                    <a class="btn-link" href="">Lịch sử đơn hàng</a>
+                    <a class="btn-link" href="">Đơn hàng quốc tế</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
-                    <h4 class="text-light mb-3">Contact</h4>
-                    <p>Address: 1429 Netus Rd, NY 48247</p>
-                    <p>Email: Example@gmail.com</p>
-                    <p>Phone: +0123 4567 8910</p>
-                    <p>Payment Accepted</p>
+                    <h4 class="text-light mb-3">Liên hệ</h4>
+                    <p>Địa chỉ: 273 An Dương Vương, P.2, Q.5, TP. Hồ Chí Minh</p>
+                    <p>Email: nguyendinhhungtc2020@gmail.com</p>
+                    <p>Phone: (028) 38-303-108</p>
+                    <p>Đã thanh toán</p>
                     <img src="img/payment.png" class="img-fluid" alt="">
                 </div>
             </div>

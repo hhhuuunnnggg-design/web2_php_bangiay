@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th3 23, 2025 lúc 02:10 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Mar 24, 2025 at 10:21 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `naruto`
+-- Database: `naruto`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `anhsp`
+-- Table structure for table `anhsp`
 --
 
 CREATE TABLE `anhsp` (
@@ -36,47 +36,50 @@ CREATE TABLE `anhsp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `anhsp`
+-- Dumping data for table `anhsp`
 --
 
 INSERT INTO `anhsp` (`MaSP`, `Anh1`, `Anh2`, `Anh3`, `Anh4`) VALUES
-(4, 'ADIDAS_4DFWD_BLACK_2.jpg', 'ADIDAS_4DFWD_BLACK_3.jpg', 'ADIDAS_4DFWD_BLACK_4.jpg', 'ADIDAS_4DFWD_BLACK_5.jpg'),
-(103, 'ADIDAS_ADICANE_CLOGS_BEGIE_2.jpg', 'ADIDAS_ADICANE_CLOGS_BEGIE_3.jpg', 'ADIDAS_ADICANE_CLOGS_BEGIE_4.jpg', 'ADIDAS_ADICANE_CLOGS_BEGIE_5.jpg'),
-(53, 'ADIDAS_ADICANE_SLIDE_GREY_2.jpg', 'ADIDAS_ADICANE_SLIDE_GREY_3.jpg', 'ADIDAS_ADICANE_SLIDE_GREY_4.jpg', 'ADIDAS_ADICANE_SLIDE_GREY_5.jpg'),
-(5, 'ADIDAS_CAMPUS_00S_BE_2.jpg', 'ADIDAS_CAMPUS_00S_BE_3.jpg', 'ADIDAS_CAMPUS_00S_BE_4.jpg', 'ADIDAS_CAMPUS_00S_BE_5.jpg'),
-(6, 'ADIDAS_CAMPUS_00S_GREEN_2.jpg', 'ADIDAS_CAMPUS_00S_GREEN_3.jpg', 'ADIDAS_CAMPUS_00S_GREEN_4.jpg', 'ADIDAS_CAMPUS_00S_GREEN_5.jpg'),
-(7, 'ADIDAS_FORUM_PANDA_2.jpg', 'ADIDAS_FORUM_PANDA_3.jpg', 'ADIDAS_FORUM_PANDA_4.jpg', 'ADIDAS_FORUM_PANDA_5.jpg'),
-(9, 'ADIDAS_GAZELLE_BOLD_BLACK_2.jpg', 'ADIDAS_GAZELLE_BOLD_BLACK_3.jpg', 'ADIDAS_GAZELLE_BOLD_BLACK_4.jpg', 'ADIDAS_GAZELLE_BOLD_BLACK_5.jpg'),
-(10, 'ADIDAS_SAMBA_OG WHITE_GREEN_2.jpg', 'ADIDAS_SAMBA_OG WHITE_GREEN_3.jpg', 'ADIDAS_SAMBA_OG WHITE_GREEN_4.jpg', 'ADIDAS_SAMBA_OG WHITE_GREEN_5.jpg'),
-(99, 'ADILETTE_22_GREY_SILVER_GREEN_2.jpg', 'ADILETTE_22_GREY_SILVER_GREEN_3.jpg', 'ADILETTE_22_GREY_SILVER_GREEN_4.jpg', 'ADILETTE_22_GREY_SILVER_GREEN_5.jpg'),
-(54, 'ADILETTE_22_WHITE_BLACK_2.jpg', 'ADILETTE_22_WHITE_BLACK_3.jpg', 'ADILETTE_22_WHITE_BLACK_4.jpg', 'ADILETTE_22_WHITE_BLACK_5.jpg'),
-(70, 'AIR_FORCE_1_LOW_WHITE_2.jpg', 'AIR_FORCE_1_LOW_WHITE_3.jpg', 'AIR_FORCE_1_LOW_WHITE_4.jpg', 'AIR_FORCE_1_LOW_WHITE_5.jpg'),
-(101, 'DEP_ADIFOM_ADILETTE_WHITE_2.jpg', 'DEP_ADIFOM_ADILETTE_WHITE_3.jpg', 'DEP_ADIFOM_ADILETTE_WHITE_4.jpg', 'DEP_ADIFOM_ADILETTE_WHITE_5.jpg'),
-(71, 'DUNK_LOW_UNIVERSITY_RED_2.jpg', 'DUNK_LOW_UNIVERSITY_RED_3.jpg', 'DUNK_LOW_UNIVERSITY_RED_4.jpg', 'DUNK_LOW_UNIVERSITY_RED_5.jpg'),
-(72, 'JORDAN_1_LOW_AQUATONE_2.jpg', 'JORDAN_1_LOW_AQUATONE_3.jpg', 'JORDAN_1_LOW_AQUATONE_4.jpg', 'JORDAN_1_LOW_AQUATONE_5.jpg'),
-(55, 'JORDAN_1_LOW_QUILTED_WHITE_2.jpg', 'JORDAN_1_LOW_QUILTED_WHITE_3.jpg', 'JORDAN_1_LOW_QUILTED_WHITE_4.jpg', 'JORDAN_1_LOW_QUILTED_WHITE_5.jpg'),
-(73, 'JORDAN_1_LOW_WOLF_GREY_2.jpg', 'JORDAN_1_LOW_WOLF_GREY_3.jpg', 'JORDAN_1_LOW_WOLF_GREY_4.jpg', 'JORDAN_1_LOW_WOLF_GREY_5.jpg'),
-(102, 'NIKE_CALM_MULE_BE_2.jpg', 'NIKE_CALM_MULE_BE_3.jpg', 'NIKE_CALM_MULE_BE_4.jpg', 'NIKE_CALM_MULE_BE_5.jpg'),
-(98, 'NIKE_CALM_SLIDE_BLACK_2.jpg', 'NIKE_CALM_SLIDE_BLACK_3.jpg', 'NIKE_CALM_SLIDE_BLACK_4.jpg', NULL),
-(100, 'NIKE_CALM_SLIDE_WHITE_2.jpg', 'NIKE_CALM_SLIDE_WHITE_3.jpg', 'NIKE_CALM_SLIDE_WHITE_4.jpg', 'NIKE_CALM_SLIDE_WHITE_5.jpg'),
-(68, 'NIKE_COURT_BOROUGH_WHITE_PINK_2.jpg', 'NIKE_COURT_BOROUGH_WHITE_PINK_3.jpg', 'NIKE_COURT_BOROUGH_WHITE_PINK_4.jpg', 'NIKE_COURT_BOROUGH_WHITE_PINK_5.jpg'),
+(5, 'ADIDAS_BE_2.jpg', 'ADIDAS_BE_3.jpg', 'ADIDAS_BE_4.jpg', 'ADIDAS_BE_5.jpg'),
+(9, 'ADIDAS_BLACK_2.jpg', 'ADIDAS_BLACK_3.jpg', 'ADIDAS_BLACK_4.jpg', 'ADIDAS_BLACK_5.jpg'),
+(4, 'ADIDAS_D_BLACK_2.jpg', 'ADIDAS_D_BLACK_3.jpg', 'ADIDAS_D_BLACK_4.jpg', 'ADIDAS_D_BLACK_5.jpg'),
+(6, 'ADIDAS_GREEN_2.jpg', 'ADIDAS_GREEN_3.jpg', 'ADIDAS_GREEN_4.jpg', 'ADIDAS_GREEN_5.jpg'),
+(53, 'ADIDAS_GREY_2.jpg', 'ADIDAS_GREY_3.jpg', 'ADIDAS_GREY_4.jpg', 'ADIDAS_GREY_5.jpg'),
+(7, 'ADIDAS_PANDA_2.jpg', 'ADIDAS_PANDA_3.jpg', 'ADIDAS_PANDA_4.jpg', 'ADIDAS_PANDA_5.jpg'),
+(10, 'ADIDAS_S_GREEN_2.jpg', 'ADIDAS_S_GREEN_3.jpg', 'ADIDAS_S_GREEN_4.jpg', 'ADIDAS_S_GREEN_5.jpg'),
+(54, 'ADILETTE_BLACK_2.jpg', 'ADILETTE_BLACK_3.jpg', 'ADILETTE_BLACK_4.jpg', 'ADILETTE_BLACK_5.jpg'),
+(99, 'ADILETTE_GREEN_2.jpg', 'ADILETTE_GREEN_3.jpg', 'ADILETTE_GREEN_4.jpg', 'ADILETTE_GREEN_5.jpg'),
+(70, 'AIR_WHITE_2.jpg', 'AIR_WHITE_3.jpg', 'AIR_WHITE_4.jpg', 'AIR_WHITE_5.jpg'),
+(71, 'DUNK_RED_2.jpg', 'DUNK_RED_3.jpg', 'DUNK_RED_4.jpg', 'DUNK_RED_5.jpg'),
+(72, 'JORDAN_2.jpg', 'JORDAN_3.jpg', 'JORDAN_4.jpg', 'JORDAN_5.jpg'),
+(73, 'JORDAN_GREY_2.jpg', 'JORDAN_GREY_3.jpg', 'JORDAN_GREY_4.jpg', 'JORDAN_GREY_5.jpg'),
+(55, 'JORDAN_WHITE_2.jpg', 'JORDAN_WHITE_3.jpg', 'JORDAN_WHITE_4.jpg', 'JORDAN_WHITE_5.jpg'),
+(102, 'NIKE_BE_2.jpg', 'NIKE_BE_3.jpg', 'NIKE_BE_4.jpg', 'NIKE_BE_5.jpg'),
+(98, 'NIKE_BLACK.jpg', 'NIKE_BLACK_2.jpg', 'NIKE_BLACK_3.jpg', 'NIKE_BLACK_4.jpg'),
 (69, 'NIKE_DUNK_LOW_2.jpg', 'NIKE_DUNK_LOW_3.jpg', 'NIKE_DUNK_LOW_4.jpg', 'NIKE_DUNK_LOW_5.jpg'),
-(56, 'NIKE_DUNK_LOW_INDIGO_HAZE_2.jpg', 'NIKE_DUNK_LOW_INDIGO_HAZE_3.jpg', 'NIKE_DUNK_LOW_INDIGO_HAZE_4.jpg', 'NIKE_DUNK_LOW_INDIGO_HAZE_5.jpg'),
-(76, 'PUMA_MULE_WHITE_PINK_2.jpg', 'PUMA_MULE_WHITE_PINK_3.jpg', 'PUMA_MULE_WHITE_PINK_4.jpg', 'PUMA_MULE_WHITE_PINK_5.jpg'),
-(75, 'PUMA_REBOUND_BLUE_2.jpg', 'PUMA_REBOUND_BLUE_3.jpg', 'PUMA_REBOUND_BLUE_4.jpg', 'PUMA_REBOUND_BLUE_5.jpg'),
-(74, 'PUMA_REBOUND_HAZE_CORAL_2.jpg', 'PUMA_REBOUND_HAZE_CORAL_3.jpg', 'PUMA_REBOUND_HAZE_CORAL_4.jpg', 'PUMA_REBOUND_HAZE_CORAL_5.jpg'),
+(56, 'NIKE_DUNK_LOW_HAZE_2.jpg', 'NIKE_DUNK_LOW_HAZE_3.jpg', 'NIKE_DUNK_LOW_HAZE_4.jpg', 'NIKE_DUNK_LOW_HAZE_5.jpg'),
+(68, 'NIKE_PINK_2.jpg', 'NIKE_PINK_3.jpg', 'NIKE_PINK_4.jpg', 'NIKE_PINK_5.jpg'),
+(100, 'NIKE_WHITE_2.jpg', 'NIKE_WHITE_3.jpg', 'NIKE_WHITE_4.jpg', 'NIKE_WHITE_5.jpg'),
+(75, 'PUMA_BLUE_2.jpg', 'PUMA_BLUE_3.jpg', 'PUMA_BLUE_4.jpg', 'PUMA_BLUE_5.jpg'),
+(74, 'PUMA_CORAL_2.jpg', 'PUMA_CORAL_3.jpg', 'PUMA_CORAL_4.jpg', 'PUMA_CORAL_5.jpg'),
+(76, 'PUMA_PINK_2.jpg', 'PUMA_PINK_3.jpg', 'PUMA_PINK_4.jpg', 'PUMA_PINK_5.jpg'),
 (97, 'PUMA_RS-X3_PUZZLE_BLACK_WHITE_2.jpg', 'PUMA_RS-X3_PUZZLE_BLACK_WHITE_3.jpg', 'PUMA_RS-X3_PUZZLE_BLACK_WHITE_4.jpg', NULL),
 (96, 'PUMA_RS-X3_PUZZLE_LIMESTONE_2.jpg', 'PUMA_RS-X3_PUZZLE_LIMESTONE_3.jpg', 'PUMA_RS-X3_PUZZLE_LIMESTONE_4.jpg', 'PUMA_RS-X3_PUZZLE_LIMESTONE_5.jpg'),
 (94, 'PUMA_RS-X3_PUZZLE_PINK_2.jpg', 'PUMA_RS-X3_PUZZLE_PINK_3.jpg', 'PUMA_RS-X3_PUZZLE_PINK_4.jpg', 'PUMA_RS-X3_PUZZLE_PINK_5.jpg'),
 (77, 'PUMA_RS-X3_PUZZLE_WHITE_2.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_3.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_4.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_5.jpg'),
 (95, 'PUMA_RS-X3_WHITE_RED_2.jpg', 'PUMA_RS-X3_WHITE_RED_3.jpg', 'PUMA_RS-X3_WHITE_RED_4.jpg', 'PUMA_RS-X3_WHITE_RED_5.jpg'),
 (11, 'PUREBOOST_22_BLACK_WHITE_2.jpg', 'PUREBOOST_22_BLACK_WHITE_3.jpg', 'PUREBOOST_22_BLACK_WHITE_4.jpg', 'PUREBOOST_22_BLACK_WHITE_5.jpg'),
-(12, 'SAMBA_OG_HALO_BLUE_2.jpg', 'SAMBA_OG_HALO_BLUE_3.jpg', 'SAMBA_OG_HALO_BLUE_4.jpg', 'SAMBA_OG_HALO_BLUE_5.jpg');
+(11, 'PUREBOOST_BLACK', 'PUREBOOST_BLACK_2', 'PUREBOOST_BLACK_3', NULL),
+(11, 'PUREBOOST_BLACK.jpg', 'PUREBOOST_BLACK_2.jpg', 'PUREBOOST_BLACK_3.jpg', NULL),
+(11, 'PUREBOOST_BLACK.jpg.jpg', 'PUREBOOST_BLACK.jpg', 'PUREBOOST_BLACK.jpg', 'DEP_WHITE_5.jpg'),
+(11, 'PUREBOOST_BLACKjpg', 'PUREBOOST_BLACK2.jpg', 'PUREBOOST_BLACK3.jpg', ''),
+(12, 'SAMBA_OG_HALO_BLUE_2.jpg', 'SAMBA_OG_HALO_BLUE_3.jpg', 'SAMBA_OG_HALO_BLUE_4.jpg', 'SAMBA_OG_HALO_BLUE_5.jpg'),
+(0, '[value-2]', '[value-3]', '[value-4]', '[value-5]');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `binhluan`
+-- Table structure for table `binhluan`
 --
 
 CREATE TABLE `binhluan` (
@@ -88,7 +91,7 @@ CREATE TABLE `binhluan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `binhluan`
+-- Dumping data for table `binhluan`
 --
 
 INSERT INTO `binhluan` (`MaBL`, `MaSP`, `MaKH`, `NoiDung`, `ThoiGian`) VALUES
@@ -110,72 +113,12 @@ INSERT INTO `binhluan` (`MaBL`, `MaSP`, `MaKH`, `NoiDung`, `ThoiGian`) VALUES
 (17, 4, 6, 'a', '2023-06-12 13:54:31'),
 (18, 4, 6, 'test', '2023-06-12 13:54:56'),
 (19, 4, 6, 'okii nò', '2023-06-12 13:55:12'),
-(20, 4, 1, 'oki', '2023-06-21 08:24:14'),
-(26, 7, 16, 'asda', '2025-03-21 14:32:38'),
-(27, 7, 16, 'san pham nhu cai lon', '2025-03-21 14:32:54'),
-(28, 9, 16, 'sadasd', '2025-03-21 14:36:59'),
-(29, 9, 16, 'asda', '2025-03-21 14:42:01'),
-(30, 4, 16, 'qua dang cap', '2025-03-21 14:42:50'),
-(31, 113, 16, 's', '2025-03-21 14:43:59'),
-(32, 73, 16, 'san pham nhu cai lz', '2025-03-21 14:47:10'),
-(33, 9, 16, 'aa', '2025-03-21 15:54:46'),
-(34, 9, 16, 'sad', '2025-03-21 15:54:50'),
-(35, 9, 16, 'a', '2025-03-21 15:54:57'),
-(36, 9, 16, 'asda', '2025-03-21 15:55:41'),
-(37, 9, 16, 'huing', '2025-03-21 15:56:44'),
-(38, 9, 16, 'aa', '2025-03-21 15:57:05'),
-(39, 9, 16, 'a', '2025-03-21 23:43:20'),
-(40, 75, 16, '1234', '2025-03-21 23:44:15'),
-(41, 75, 16, 'asd', '2025-03-21 23:44:19'),
-(42, 75, 16, 'aasdasd', '2025-03-21 23:46:00'),
-(43, 73, 16, 'weqweqweq', '2025-03-21 23:46:33'),
-(44, 73, 16, 'asdasd', '2025-03-21 23:47:02'),
-(45, 73, 16, 'asda', '2025-03-21 23:47:05'),
-(46, 10, 16, 'asdas', '2025-03-21 23:50:00'),
-(47, 10, 16, 'asd', '2025-03-21 23:50:04'),
-(48, 10, 16, 'asda', '2025-03-22 00:33:49'),
-(49, 77, 16, 'ma no xau', '2025-03-22 00:34:04'),
-(50, 77, 16, '1', '2025-03-22 00:37:24'),
-(51, 54, 16, '1', '2025-03-22 00:39:12'),
-(52, 54, 16, 'a', '2025-03-22 00:40:43'),
-(53, 11, 16, '1', '2025-03-22 00:41:17'),
-(54, 54, 16, '2', '2025-03-22 00:47:05'),
-(55, 11, 16, '2', '2025-03-22 00:49:01'),
-(56, 77, 20, '2', '2025-03-22 01:05:54'),
-(57, 11, 16, 'asda', '2025-03-23 15:14:23'),
-(58, 9, 16, 'ss', '2025-03-23 18:08:57'),
-(59, 77, 16, 'duma no xau da man', '2025-03-23 18:09:17');
+(20, 4, 1, 'oki', '2023-06-21 08:24:14');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitietgiohang`
---
-
-CREATE TABLE `chitietgiohang` (
-  `MaGH` int(11) NOT NULL,
-  `MaSP` int(11) NOT NULL,
-  `TenSanPham` varchar(255) NOT NULL,
-  `Img` varchar(255) NOT NULL,
-  `GiaTien` int(11) NOT NULL,
-  `TongTien` int(11) NOT NULL DEFAULT 0,
-  `SoLuong` int(11) NOT NULL,
-  `Size` int(11) NOT NULL,
-  `MaMau` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
---
--- Đang đổ dữ liệu cho bảng `chitietgiohang`
---
-
-INSERT INTO `chitietgiohang` (`MaGH`, `MaSP`, `TenSanPham`, `Img`, `GiaTien`, `TongTien`, `SoLuong`, `Size`, `MaMau`) VALUES
-(29, 9, 'ADIDAS GAZELLE BOLD BLACK (HQ6912)', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg', 2650000, 2650000, 1, 39, 'Đen - Trắng'),
-(29, 73, 'JORDAN 1 LOW WOLF GREY (DC0774-105)', 'images/anh_nen/67d5444f97954-ADIDAS_GREY_4.jpg', 2500000, 2500000, 1, 38, 'Đen ');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `chitiethoadon`
+-- Table structure for table `chitiethoadon`
 --
 
 CREATE TABLE `chitiethoadon` (
@@ -185,40 +128,28 @@ CREATE TABLE `chitiethoadon` (
   `DonGia` decimal(10,0) NOT NULL,
   `ThanhTien` decimal(10,0) NOT NULL,
   `Size` int(11) NOT NULL,
-  `MaMau` varchar(50) NOT NULL,
-  `img` varchar(255) NOT NULL
+  `MaMau` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chitiethoadon`
+-- Dumping data for table `chitiethoadon`
 --
 
-INSERT INTO `chitiethoadon` (`MaHD`, `MaSP`, `SoLuong`, `DonGia`, `ThanhTien`, `Size`, `MaMau`, `img`) VALUES
-(70, 7, 3, 2449000, 7347000, 41, 'Trắng', ''),
-(70, 11, 1, 4649000, 4649000, 39, 'none', ''),
-(86, 4, 2, 3779000, 7558000, 37, 'none', ''),
-(86, 53, 1, 1700000, 1700000, 42, 'none', ''),
-(86, 70, 2, 1700000, 3400000, 41, 'Trắng', ''),
-(87, 54, 2, 730000, 1460000, 42, 'Đen ', ''),
-(88, 4, 2, 3779000, 7558000, 36, 'none', ''),
-(88, 12, 1, 2019000, 2019000, 39, 'Vàng', ''),
-(89, 4, 1, 3779000, 3779000, 37, 'Hồng', ''),
-(92, 4, 3, 1490001, 4470003, 37, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
-(92, 4, 1, 1490001, 1490001, 39, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
-(92, 9, 1, 2650000, 2650000, 39, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
-(92, 9, 1, 2650000, 2650000, 40, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
-(93, 4, 2, 1490001, 2980002, 39, 'Hồng', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
-(93, 7, 2, 1800000, 3600000, 40, 'Đen - Trắng', 'images/anh_nen/67d543c819584-ADIDAS_BE.jpg'),
-(93, 77, 1, 1400000, 1400000, 40, 'Đen - Trắng', 'images/anh_nen/67d544cf491f2-ADIDAS_BE_3.jpg'),
-(94, 9, 1, 2650000, 2650000, 39, 'Đen - Trắng', 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
-(95, 6, 1, 2150000, 2150000, 40, 'Đen ', 'images/anh_nen/67d544e1de93a-ADIDAS_GREEN.jpg'),
-(96, 75, 1, 1400000, 1400000, 40, 'Đen ', 'images/anh_nen/67d5446bde1eb-ADIDAS_BLACK_2.jpg'),
-(97, 4, 1, 1490001, 1490001, 37, 'Đỏ', 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg');
+INSERT INTO `chitiethoadon` (`MaHD`, `MaSP`, `SoLuong`, `DonGia`, `ThanhTien`, `Size`, `MaMau`) VALUES
+(70, 7, 3, 2449000, 7347000, 41, 'Trắng'),
+(70, 11, 1, 4649000, 4649000, 39, 'none'),
+(86, 4, 2, 3779000, 7558000, 37, 'none'),
+(86, 53, 1, 1700000, 1700000, 42, 'none'),
+(86, 70, 2, 1700000, 3400000, 41, 'Trắng'),
+(87, 54, 2, 730000, 1460000, 42, 'Đen '),
+(88, 4, 2, 3779000, 7558000, 36, 'none'),
+(88, 12, 1, 2019000, 2019000, 39, 'Vàng'),
+(89, 4, 1, 3779000, 3779000, 37, 'Hồng');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitietquyen`
+-- Table structure for table `chitietquyen`
 --
 
 CREATE TABLE `chitietquyen` (
@@ -228,7 +159,7 @@ CREATE TABLE `chitietquyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chitietquyen`
+-- Dumping data for table `chitietquyen`
 --
 
 INSERT INTO `chitietquyen` (`manhomquyen`, `chucnang`, `hanhdong`) VALUES
@@ -274,26 +205,24 @@ INSERT INTO `chitietquyen` (`manhomquyen`, `chucnang`, `hanhdong`) VALUES
 (2, 2, 'add'),
 (2, 2, 'edit'),
 (2, 2, 'view'),
-(2, 13, 'add'),
-(2, 13, 'edit'),
-(2, 13, 'view'),
 (3, 1, 'view'),
 (3, 3, 'add'),
 (3, 3, 'edit'),
 (3, 3, 'view'),
-(4, 1, 'add'),
-(4, 1, 'delete'),
 (4, 1, 'edit'),
-(4, 1, 'export'),
 (4, 1, 'view'),
-(4, 2, 'export'),
+(4, 2, 'add'),
 (4, 2, 'view'),
+(4, 5, 'add'),
+(4, 5, 'view'),
+(4, 6, 'add'),
+(4, 10, 'view'),
 (5, 10, 'add');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitietsanpham`
+-- Table structure for table `chitietsanpham`
 --
 
 CREATE TABLE `chitietsanpham` (
@@ -304,7 +233,7 @@ CREATE TABLE `chitietsanpham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chitietsanpham`
+-- Dumping data for table `chitietsanpham`
 --
 
 INSERT INTO `chitietsanpham` (`MaSP`, `MaSize`, `MaMau`, `SoLuong`) VALUES
@@ -465,26 +394,10 @@ INSERT INTO `chitietsanpham` (`MaSP`, `MaSize`, `MaMau`, `SoLuong`) VALUES
 (113, 36, 'Trắng', 3),
 (113, 36, 'Vàng', 3),
 (113, 37, 'Trắng', 0),
-(113, 37, 'Vàng', 0),
-(114, 90, 'má mày', 10),
-(114, 90, 'saaaa', 5),
-(114, 123123, 'má mày', 15),
-(114, 123123, 'saaaa', 152),
-(115, 36, 'má mày', 90),
-(115, 36, 'saaaa', 0),
-(115, 36, 'tess\'', 0),
-(115, 37, 'má mày', 0),
-(115, 37, 'saaaa', 0),
-(115, 37, 'tess\'', 0),
-(115, 38, 'má mày', 0),
-(115, 38, 'saaaa', 0),
-(115, 38, 'tess\'', 0),
-(115, 39, 'má mày', 0),
-(115, 39, 'saaaa', 0),
-(115, 39, 'tess\'', 0);
+(113, 37, 'Vàng', 0);
 
 --
--- Bẫy `chitietsanpham`
+-- Triggers `chitietsanpham`
 --
 DELIMITER $$
 CREATE TRIGGER `tongsl` AFTER UPDATE ON `chitietsanpham` FOR EACH ROW UPDATE sanpham SET SoLuong= (SELECT SUM(SoLuong) from chitietsanpham WHERE MaSP = NEW.MaSP) WHERE MaSP = NEW.MaSP
@@ -502,7 +415,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `danhmuc`
+-- Table structure for table `danhmuc`
 --
 
 CREATE TABLE `danhmuc` (
@@ -511,19 +424,18 @@ CREATE TABLE `danhmuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `danhmuc`
+-- Dumping data for table `danhmuc`
 --
 
 INSERT INTO `danhmuc` (`MaDM`, `TenDM`) VALUES
-(1, 'Sản Phẩm Nổi Bật 123'),
+(1, 'Sản Phẩm Nổi Bật'),
 (2, 'Sản Phẩm Mới'),
-(3, 'Sản Phẩm bán chạy'),
-(10, 'danh mục test 1213');
+(3, 'Sản Phẩm bán chạy');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `danhmucchucnang`
+-- Table structure for table `danhmucchucnang`
 --
 
 CREATE TABLE `danhmucchucnang` (
@@ -532,7 +444,7 @@ CREATE TABLE `danhmucchucnang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `danhmucchucnang`
+-- Dumping data for table `danhmucchucnang`
 --
 
 INSERT INTO `danhmucchucnang` (`chucnang`, `tenchucnang`) VALUES
@@ -545,33 +457,12 @@ INSERT INTO `danhmucchucnang` (`chucnang`, `tenchucnang`) VALUES
 (7, 'Quản lý chi tiết quyền'),
 (8, 'Quản lý danh mục chức năng'),
 (9, 'Quản lý khuyến mãi'),
-(10, 'Quản lý sản phẩm'),
-(13, 'Quản lý hóa đơn');
+(10, 'Quản lý sản phẩm');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `giohang`
---
-
-CREATE TABLE `giohang` (
-  `MaGH` int(11) NOT NULL,
-  `MaKH` int(11) NOT NULL,
-  `TongSoLuong` int(11) DEFAULT 0,
-  `TongTien` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
---
--- Đang đổ dữ liệu cho bảng `giohang`
---
-
-INSERT INTO `giohang` (`MaGH`, `MaKH`, `TongSoLuong`, `TongTien`) VALUES
-(29, 23, 2, 5150000.00);
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `hoadon`
+-- Table structure for table `hoadon`
 --
 
 CREATE TABLE `hoadon` (
@@ -586,26 +477,20 @@ CREATE TABLE `hoadon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `hoadon`
+-- Dumping data for table `hoadon`
 --
 
 INSERT INTO `hoadon` (`MaHD`, `MaKH`, `MaNV`, `NgayDat`, `NgayGiao`, `TinhTrang`, `TongTien`, `MaNVGH`) VALUES
-(70, 6, 3, '2023-06-16 16:55:54', '2025-03-22 05:15:26', 'hoàn thành', 11996000, '3'),
-(86, 1, 3, '2023-06-19 16:52:51', '2025-03-22 04:59:54', 'hoàn thành', 12658000, NULL),
+(70, 6, 3, '2023-06-16 16:55:54', '2023-12-15 21:01:29', 'hoàn thành', 11996000, '3'),
+(86, 1, 3, '2023-06-19 16:52:51', NULL, 'Hủy Bỏ', 12658000, NULL),
 (87, 1, 3, '2023-06-19 17:20:30', '2023-12-15 21:01:28', 'hoàn thành', 1460000, '3'),
-(88, 1, 3, '2023-06-20 09:18:27', '2025-03-22 04:59:33', 'hoàn thành', 9577000, '3'),
-(89, 1, 3, '2023-06-21 08:31:12', '2023-06-22 08:32:24', 'hoàn thành', 3679000, '3'),
-(92, 16, NULL, '2025-03-23 19:12:37', NULL, 'Chờ xử lý', 11260004, NULL),
-(93, 23, NULL, '2025-03-23 19:14:39', '2025-03-23 13:37:34', 'hoàn thành', 7980002, NULL),
-(94, 23, NULL, '2025-03-23 19:21:50', NULL, 'Chờ xử lý', 2650000, NULL),
-(95, 23, NULL, '2025-03-23 19:33:34', NULL, 'Chờ xử lý', 2150000, NULL),
-(96, 23, NULL, '2025-03-23 19:33:50', NULL, 'Chờ xử lý', 1400000, NULL),
-(97, 23, NULL, '2025-03-23 19:42:31', NULL, 'Chờ xử lý', 1490001, NULL);
+(88, 1, 3, '2023-06-20 09:18:27', '2023-06-21 10:23:59', 'hoàn thành', 9577000, '3'),
+(89, 1, 3, '2023-06-21 08:31:12', '2023-06-22 08:32:24', 'hoàn thành', 3679000, '3');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khachhang`
+-- Table structure for table `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -618,25 +503,18 @@ CREATE TABLE `khachhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khachhang`
+-- Dumping data for table `khachhang`
 --
 
 INSERT INTO `khachhang` (`MaKH`, `TenKH`, `Email`, `SDT`, `DiaChi`, `MatKhau`) VALUES
-(20, '123', '123@gmail.com', 123, '213', '123456'),
-(21, 'abc', 'abc@gmail.com', 123456, '132456', '123456'),
 (6, 'Nguyễn Nam Cường', 'cuong@gmail.com', 1228923743, 'diachi', '123456'),
-(18, 'hahahha', 'haha@gmail.com', 1457895622, '1541651', '123456'),
-(16, 'Nguyen123', 'hung@gmail.com', 787495636, 'tan chau tay ninh', '123456'),
-(17, 'huy', 'huy@gmail.com', 0, '51616', '123456'),
-(22, 'nguyen duy manh', 'manh@gmail.com', 1165165156, '6516516515', '123456'),
-(19, 'oo', 'o@gmail.com', 1561651, '1', '1'),
-(23, 'qeqweq', 'test@gmail.com', 123, '123', '123456'),
+(16, 'danh', 'nguyendanh3503@gmail.com', 2832122922, 'c', '123456'),
 (1, 'Nguyễn Đình Trí', 'tringuyen25071998@gmail.com', 778923743, '62/32 trần thánh tông - tân bình - hcm', '123456');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khuyenmai`
+-- Table structure for table `khuyenmai`
 --
 
 CREATE TABLE `khuyenmai` (
@@ -650,22 +528,19 @@ CREATE TABLE `khuyenmai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khuyenmai`
+-- Dumping data for table `khuyenmai`
 --
 
 INSERT INTO `khuyenmai` (`MaKM`, `TenKM`, `MoTa`, `KM_PT`, `TienKM`, `NgayBD`, `NgayKT`) VALUES
-(1, 'Tri Ân Khách Hàng', 'sale', NULL, 50000, '2020-01-01', '2024-05-31'),
+(1, 'Tri Ân Khách Hàng', 'sale', 0, 50000, '2020-01-01', '2024-01-31'),
 (3, 'Vui Xuân - Đón Tết ', NULL, 30, NULL, '2019-12-19', '2020-02-29'),
 (4, 'Khuyến Mãi Đặc Biệt', NULL, NULL, 100000, '2019-12-19', '2020-01-31'),
-(5, 'khuyễn mãi đặc biệt trị giá 500.000 đ', 'ok', NULL, 500000, '2025-03-12', '2025-03-18'),
-(7, 'test khuyễn mãi', '123456', NULL, 9999, '2025-03-16', '2025-03-31'),
-(8, 'mai dinh', '123', 20, NULL, '2025-03-21', '2025-03-31'),
-(9, 'vui ve k bun', '221651561', 20, NULL, '2025-03-22', '2025-04-30');
+(5, 'khuyễn mãi đặc biệt trị giá 500.000 đ', 'ok', 1, 500000, '2020-01-02', '2020-01-04');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `mau`
+-- Table structure for table `mau`
 --
 
 CREATE TABLE `mau` (
@@ -673,21 +548,19 @@ CREATE TABLE `mau` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `mau`
+-- Dumping data for table `mau`
 --
 
 INSERT INTO `mau` (`MaMau`) VALUES
 ('9999'),
-('áda'),
-('ádasdas'),
+('ádas'),
 ('Đen '),
 ('Đen - Trắng'),
 ('Đỏ'),
 ('Hồng'),
-('má mày'),
 ('none'),
-('saaaa'),
-('tess\''),
+('ppppp'),
+('tào lao'),
 ('Trắng'),
 ('Vàng'),
 ('Xanh');
@@ -695,7 +568,7 @@ INSERT INTO `mau` (`MaMau`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nguoinhan`
+-- Table structure for table `nguoinhan`
 --
 
 CREATE TABLE `nguoinhan` (
@@ -706,7 +579,7 @@ CREATE TABLE `nguoinhan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nguoinhan`
+-- Dumping data for table `nguoinhan`
 --
 
 INSERT INTO `nguoinhan` (`MaHD`, `TenNN`, `DiaChiNN`, `SDTNN`) VALUES
@@ -714,18 +587,12 @@ INSERT INTO `nguoinhan` (`MaHD`, `TenNN`, `DiaChiNN`, `SDTNN`) VALUES
 (86, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
 (87, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
 (88, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
-(89, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743),
-(92, 'Nguyen123', 'tan chau tay ninh ', 787495636),
-(93, 'qeqweq', '123', 123),
-(94, 'qeqweq', '123', 123),
-(95, 'qeqweq', '123', 123),
-(96, 'qeqweq', '123', 123),
-(97, 'qeqweq', '123', 123);
+(89, 'Nguyễn Đình Trí', '62/32 trần thánh tông - tân bình - hcm', 778923743);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nhacc`
+-- Table structure for table `nhacc`
 --
 
 CREATE TABLE `nhacc` (
@@ -734,26 +601,19 @@ CREATE TABLE `nhacc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nhacc`
+-- Dumping data for table `nhacc`
 --
 
 INSERT INTO `nhacc` (`MaNCC`, `TenNCC`) VALUES
 (1, 'ADIDAS'),
 (2, 'NIKE'),
 (3, 'PUMA'),
-(4, 'DÉP2'),
-(28, '98'),
-(29, '123'),
-(30, 'ád'),
-(31, 'áda'),
-(98, 'hung'),
-(99, 'huy'),
-(100, 'hai');
+(4, 'DÉP2');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nhanvien`
+-- Table structure for table `nhanvien`
 --
 
 CREATE TABLE `nhanvien` (
@@ -767,20 +627,19 @@ CREATE TABLE `nhanvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nhanvien`
+-- Dumping data for table `nhanvien`
 --
 
 INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `Email`, `SDT`, `DiaChi`, `MatKhau`, `Quyen`) VALUES
 (3, 'Admin', 'admin@gmail.com', 905027527, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', 'admin', 1),
-(99, 'boss', 'boss@gmail.com', 905027527, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', '123456', 2),
-(6, 'kk', 'hung123@gmail.com', 895252521, 'sadsdasdasd', '123456', 1),
 (4, 'Hương Nhung', 'nhung@gmail.com', 132465798, 'Số 451 Hoàng Diệu - Thành phố Đà Nẵng', '123456', 3),
-(2, 'Nhân Viên Bán Hàng ', 'NVBH@gmail.com', 123456789, 'Đà Nẵng', '123456', 4);
+(2, 'Nhân Viên Bán Hàng ', 'NVBH@gmail.com', 123456789, 'Đà Nẵng', '123456', 4),
+(1, 'Quản Lý', 'thongkul@gmail.com', 778923743, '12 núi thàng - đà nẵng', '123456', 2);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieugiamgia`
+-- Table structure for table `phieugiamgia`
 --
 
 CREATE TABLE `phieugiamgia` (
@@ -790,7 +649,7 @@ CREATE TABLE `phieugiamgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phieugiamgia`
+-- Dumping data for table `phieugiamgia`
 --
 
 INSERT INTO `phieugiamgia` (`id`, `TenPhieu`, `SoTien`) VALUES
@@ -799,7 +658,7 @@ INSERT INTO `phieugiamgia` (`id`, `TenPhieu`, `SoTien`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieunhap`
+-- Table structure for table `phieunhap`
 --
 
 CREATE TABLE `phieunhap` (
@@ -816,7 +675,7 @@ CREATE TABLE `phieunhap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phieunhap`
+-- Dumping data for table `phieunhap`
 --
 
 INSERT INTO `phieunhap` (`MaPN`, `MaNV`, `MaSP`, `SoLuong`, `DonGia`, `TongTien`, `NgayNhap`, `Note`, `Size`, `Mau`) VALUES
@@ -967,17 +826,12 @@ INSERT INTO `phieunhap` (`MaPN`, `MaNV`, `MaSP`, `SoLuong`, `DonGia`, `TongTien`
 (173, 3, 4, 100, 3, 300, '2023-06-21 08:22:42', '', 42, 'none'),
 (174, 3, 4, 100, 3, 300, '2023-06-21 08:22:42', '', 43, 'none'),
 (175, 3, 113, 3, 999, 2997, '2025-03-14 22:58:01', 'rẻ z ta', 36, 'Trắng'),
-(176, 3, 113, 3, 999999, 2999997, '2025-03-14 22:58:21', 'đủ má nó mắc z', 36, 'Vàng'),
-(177, 3, 114, 10, 99969, 999690, '2025-03-17 11:34:17', 'hahahah', 90, 'má mày'),
-(178, 3, 114, 5, 150, 750, '2025-03-17 11:34:32', 'ádasd', 90, 'saaaa'),
-(179, 3, 114, 15, 1560, 23400, '2025-03-17 11:34:47', '1515', 123123, 'má mày'),
-(180, 3, 114, 152, 2032, 308864, '2025-03-17 11:34:55', '203', 123123, 'saaaa'),
-(181, 3, 115, 90, 15000000, 1350000000, '2025-03-23 17:17:39', 'dssada', 36, 'má mày');
+(176, 3, 113, 3, 999999, 2999997, '2025-03-14 22:58:21', 'đủ má nó mắc z', 36, 'Vàng');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phieuxuat`
+-- Table structure for table `phieuxuat`
 --
 
 CREATE TABLE `phieuxuat` (
@@ -994,7 +848,7 @@ CREATE TABLE `phieuxuat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phieuxuat`
+-- Dumping data for table `phieuxuat`
 --
 
 INSERT INTO `phieuxuat` (`MaPX`, `MaNV`, `MaSP`, `Mau`, `Size`, `SoLuong`, `DonGia`, `TongTien`, `Note`, `NgayXuat`) VALUES
@@ -1003,7 +857,7 @@ INSERT INTO `phieuxuat` (`MaPX`, `MaNV`, `MaSP`, `Mau`, `Size`, `SoLuong`, `DonG
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `quyen`
+-- Table structure for table `quyen`
 --
 
 CREATE TABLE `quyen` (
@@ -1013,21 +867,20 @@ CREATE TABLE `quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `quyen`
+-- Dumping data for table `quyen`
 --
 
 INSERT INTO `quyen` (`id`, `Ten`, `MoTa`) VALUES
 (1, 'admin', 'full quyền'),
-(2, 'Shipper', 'Ship hang cho khach hang nha ban yeu'),
+(2, 'Project Manager', 'quản trị viên'),
 (3, 'Quản lý Kho', ''),
 (4, 'Nhân viên Bán Hàng', ''),
-(5, 'Nhân viên giao hàng', ''),
-(6, 'dime may', 'can cak');
+(5, 'Nhân viên giao hàng', '');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sanpham`
+-- Table structure for table `sanpham`
 --
 
 CREATE TABLE `sanpham` (
@@ -1042,35 +895,35 @@ CREATE TABLE `sanpham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `sanpham`
+-- Dumping data for table `sanpham`
 --
 
 INSERT INTO `sanpham` (`MaSP`, `TenSP`, `MaDM`, `MaNCC`, `SoLuong`, `MoTa`, `DonGia`, `AnhNen`) VALUES
-(4, 'sản phầm a', 3, 1, 2399, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1500000, 'images/anh_nen/67d543a650c02-ADIDAS_2.jpg'),
-(5, 'ADIDAS CAMPUS 00S BE (GY0042)', 3, 1, 396, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1800000, 'images/anh_nen/67d543b017ef7-ADIDAS_3.jpg'),
-(6, 'ADIDAS CAMPUS 00S GREEN (HO3472)', 3, 1, 196, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2150000, 'images/anh_nen/67d544e1de93a-ADIDAS_GREEN.jpg'),
-(7, 'ADIDAS FORUM PANDA (IF2649)', 1, 1, 195, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1800000, 'images/anh_nen/67d543c819584-ADIDAS_BE.jpg'),
-(9, 'ADIDAS GAZELLE BOLD BLACK (HQ6912)', 1, 1, 199, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2650000, 'images/anh_nen/67d543e45a94c-ADIDAS_BE_2.jpg'),
-(10, 'ADIDAS SAMBA OG WHITE GREEN (IG1024)', 1, 1, 382, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'images/anh_nen/67d544096dbe9-ADIDAS_BE_3.jpg'),
-(11, 'PUREBOOST 22 BLACK WHITE (GZ5174)', 1, 1, 380, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1700000, 'images/anh_nen/67d5441d5610a-ADIDAS_BLACK_2.jpg'),
-(12, 'SAMBA OG HALO BLUE (ID2055)', 1, 1, 298, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 3000000, 'SAMBA_OG_HALO_BLUE.jpg'),
-(53, 'ADIDAS ADICANE SLIDE GREY (ID7188)\n\n', 1, 4, 493, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 700000, 'ADIDAS_ADICANE_SLIDE_GREY.jpg'),
-(54, 'ADILETTE 22 WHITE BLACK (IF3668)', 3, 4, 3996, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1000000, 'images/anh_nen/67d544f5ace39-ADIDAS_PANDA.jpg'),
-(55, 'JORDAN 1 LOW QUILTED WHITE (DB6480-100)', 1, 2, 594, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'JORDAN_1_LOW_QUILTED_WHITE.jpg'),
-(56, 'NIKE DUNK LOW INDIGO HAZE (DD1503 500)', 3, 2, 398, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2800000, 'NIKE_DUNK_LOW_INDIGO_HAZE.jpg'),
-(68, 'NIKE COURT BOROUGH WHITE PINK (DQ0492 100)', 1, 2, 1588, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1230000, 'NIKE_COURT_BOROUGH_WHITE_PINK.jpg'),
-(69, 'NIKE DUNK LOW “MICA GREEN” (DV7212 300)', 1, 2, 300, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1700000, 'NIKE_DUNK_LOW.jpg'),
-(70, 'AIR FORCE 1 LOW WHITE', 2, 2, 598, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2100000, 'images/anh_nen/67d54439349e0-ADIDAS_GREY_2.jpg'),
-(71, 'DUNK LOW UNIVERSITY RED (CU1727-100)', 1, 2, 295, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'DUNK_LOW_UNIVERSITY_RED.jpg'),
-(72, 'JORDAN 1 LOW AQUATONE (553558-174)', 1, 2, 899, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2250000, 'JORDAN_1_LOW_AQUATONE.jpg'),
-(73, 'JORDAN 1 LOW WOLF GREY (DC0774-105)', 2, 2, 800, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2500000, 'images/anh_nen/67d5444f97954-ADIDAS_GREY_4.jpg'),
-(74, 'PUMA REBOUND HAZE CORAL (369866 19)', 1, 3, 400, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2200000, 'PUMA_REBOUND_HAZE_CORAL.jpg'),
-(75, 'PUMA REBOUND BLUE (369866 19)', 2, 3, 945, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/67d5446bde1eb-ADIDAS_BLACK_2.jpg'),
-(76, 'PUMA MULE WHITE PINK (371318 04)', 1, 3, 694, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1500000, 'PUMA_MULE_WHITE_PINK.jpg'),
-(77, 'PUMA RS-X3 PUZZLE WHITE (371570 05)', 2, 3, 1500, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/67d544cf491f2-ADIDAS_BE_3.jpg'),
-(94, 'PUMA RS-X3 PUZZLE PINK (371570 06)', 2, 3, 200, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'PUMA_RS-X3_PUZZLE_PINK.jpg'),
-(95, 'PUMA RS-X3 WHITE RED (372884 01)', 2, 3, 0, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'PUMA_RS-X3_WHITE_RED.jpg'),
-(96, 'PUMA RS-X3 PUZZLE LIMESTONE (371570 01)', 3, 3, 0, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'PUMA_RS-X3_PUZZLE_LIMESTONE.jpg'),
+(4, 'ADIDAS_D_BLACK', 3, 1, 2399, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2200000, 'images/anh_nen/ADIDAS_D_BLACK_2.jpg'),
+(5, 'ADIDAS CAMPUS 00S BE (GY0042)', 3, 1, 396, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1800000, 'images/anh_nen/ADIDAS_BE_2.jpg'),
+(6, 'ADIDAS CAMPUS 00S GREEN (HO3472)', 3, 1, 196, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2150000, 'images/anh_nen/ADIDAS_GREEN_2.jpg'),
+(7, 'ADIDAS FORUM PANDA (IF2649)', 1, 1, 195, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1800000, 'images/anh_nen/ADIDAS_PANDA_3.jpg'),
+(9, 'ADIDAS GAZELLE BOLD BLACK (HQ6912)', 1, 1, 199, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2650000, 'images/anh_nen/ADIDAS_BLACK_2.jpg'),
+(10, 'ADIDAS SAMBA OG WHITE GREEN (IG1024)', 1, 1, 382, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'images/anh_nen/ADIDAS_S_GREEN_2.jpg'),
+(11, 'PUREBOOST 22 BLACK WHITE (GZ5174)', 1, 1, 380, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1700000, 'images/anh_nen/PUREBOOST_BLACK.jpg'),
+(12, 'SAMBA OG HALO BLUE (ID2055)', 1, 1, 298, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 3000000, 'images/anh_nen/SAMBA_OG_HALO_BLUE.jpg'),
+(53, 'ADIDAS ADICANE SLIDE GREY (ID7188)\n\n', 1, 4, 493, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 700000, 'images/anh_nen/ADIDAS_GREY_2.jpg'),
+(54, 'ADILETTE 22 WHITE BLACK (IF3668)', 3, 4, 3996, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1000000, 'images/anh_nen/ADILETTE_BLACK_2.jpg'),
+(55, 'JORDAN 1 LOW QUILTED WHITE (DB6480-100)', 1, 2, 594, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'images/anh_nen/JORDAN_WHITE_2.jpg'),
+(56, 'NIKE DUNK LOW INDIGO HAZE (DD1503 500)', 3, 2, 398, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2800000, 'images/anh_nen/NIKE_DUNK_LOW_HAZE_2.jpg'),
+(68, 'NIKE COURT BOROUGH WHITE PINK (DQ0492 100)', 1, 2, 1588, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1230000, 'images/anh_nen/NIKE_PINK_2.jpg'),
+(69, 'NIKE DUNK LOW “MICA GREEN” (DV7212 300)', 1, 2, 300, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1700000, 'images/anh_nen/NIKE_DUNK_LOW.jpg'),
+(70, 'AIR FORCE 1 LOW WHITE', 2, 2, 598, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2100000, 'images/anh_nen/AIR_WHITE_2.jpg'),
+(71, 'DUNK LOW UNIVERSITY RED (CU1727-100)', 1, 2, 295, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2600000, 'images/anh_nen/DUNK_RED_2.jpg'),
+(72, 'JORDAN 1 LOW AQUATONE (553558-174)', 1, 2, 899, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2250000, 'images/anh_nen/JORDAN_2.jpg'),
+(73, 'JORDAN 1 LOW WOLF GREY (DC0774-105)', 2, 2, 800, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2500000, 'images/anh_nen/JORDAN_GREY_2.jpg'),
+(74, 'PUMA REBOUND HAZE CORAL (369866 19)', 1, 3, 400, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 2200000, 'images/anh_nen/PUMA_CORAL_2.jpg'),
+(75, 'PUMA REBOUND BLUE (369866 19)', 2, 3, 945, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/PUMA_BLUE_2.jpg'),
+(76, 'PUMA MULE WHITE PINK (371318 04)', 1, 3, 694, 'Sản phẩm Full box tag chính hãng\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1500000, 'images/anh_nen/PUMA_PINK_2.jpg'),
+(77, 'PUMA RS-X3 PUZZLE WHITE (371570 05)', 2, 3, 1500, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_WHITE.jpg'),
+(94, 'PUMA RS-X3 PUZZLE PINK (371570 06)', 2, 3, 200, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_PINK.jpg'),
+(95, 'PUMA RS-X3 WHITE RED (372884 01)', 2, 3, 0, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_WHITE_RED.jpg'),
+(96, 'PUMA RS-X3 PUZZLE LIMESTONE (371570 01)', 3, 3, 0, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_LIMESTONE.jpg'),
 (97, 'PUMA RS-X3 PUZZLE BLACK WHITE (371570 13)', 2, 3, NULL, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'PUMA_RS-X3_PUZZLE_BLACK_WHITE.jpg'),
 (98, 'NIKE CALM SLIDE BLACK', 2, 4, NULL, 'Sản phẩm Full box tag chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'NIKE_CALM_SLIDE_BLACK.jpg'),
 (99, 'ADILETTE 22 GREY SILVER GREEN (IG8264)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'ADILETTE_22_GREY_SILVER_GREEN.jpg'),
@@ -1086,14 +939,12 @@ INSERT INTO `sanpham` (`MaSP`, `TenSP`, `MaDM`, `MaNCC`, `SoLuong`, `MoTa`, `Don
 (109, 'oop', 2, 2, NULL, 'ádasdas', 1223, 'images/anh_nen/67d3e00017348-mb_bank.jpg'),
 (110, 'khùng điên', NULL, 1, NULL, 'sá', 1234, ''),
 (111, 'sản phẩm test1', NULL, 1, 0, 'ưq', 1212, 'images/anh_nen/67d3e1e29531f-mb_bank.jpg'),
-(113, 'con gà con', 1, 1, 6, 'ads165as1d65as1d65as1d', 111111111, 'images/anh_nen/67d451c7c37e5-con_ga_con.png'),
-(114, 'sản phầm b', 1, 1, 182, 'ádasdasdasd', 1500000, 'images/anh_nen/67d7a615d2713-ADIDAS_BE_2.jpg'),
-(115, 'nguyen dinh hung', 3, 1, 90, 'dep vai ca lon', 99999999, '');
+(113, 'con gà con', 1, 1, 6, 'ads165as1d65as1d65as1d', 111111111, 'images/anh_nen/67d451c7c37e5-con_ga_con.png');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sanphamkhuyenmai`
+-- Table structure for table `sanphamkhuyenmai`
 --
 
 CREATE TABLE `sanphamkhuyenmai` (
@@ -1102,18 +953,51 @@ CREATE TABLE `sanphamkhuyenmai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `sanphamkhuyenmai`
+-- Dumping data for table `sanphamkhuyenmai`
 --
 
 INSERT INTO `sanphamkhuyenmai` (`MaSP`, `MaKM`) VALUES
-(4, 7),
-(111, 7),
-(114, 7);
+(4, 1),
+(4, 3),
+(5, 1),
+(5, 3),
+(6, 1),
+(6, 3),
+(7, 1),
+(7, 3),
+(9, 1),
+(9, 3),
+(10, 1),
+(10, 3),
+(11, 1),
+(11, 3),
+(12, 1),
+(12, 3),
+(53, 3),
+(53, 4),
+(54, 3),
+(54, 4),
+(55, 3),
+(55, 4),
+(56, 3),
+(56, 4),
+(68, 3),
+(68, 5),
+(69, 3),
+(69, 4),
+(70, 3),
+(71, 3),
+(72, 3),
+(73, 3),
+(74, 3),
+(75, 3),
+(76, 3),
+(77, 3);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `size`
+-- Table structure for table `size`
 --
 
 CREATE TABLE `size` (
@@ -1121,7 +1005,7 @@ CREATE TABLE `size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `size`
+-- Dumping data for table `size`
 --
 
 INSERT INTO `size` (`MaSize`) VALUES
@@ -1133,24 +1017,20 @@ INSERT INTO `size` (`MaSize`) VALUES
 (41),
 (42),
 (43),
-(90),
-(91),
-(92),
-(93),
-(123123);
+(90);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `anhsp`
+-- Indexes for table `anhsp`
 --
 ALTER TABLE `anhsp`
   ADD PRIMARY KEY (`Anh1`,`MaSP`);
 
 --
--- Chỉ mục cho bảng `binhluan`
+-- Indexes for table `binhluan`
 --
 ALTER TABLE `binhluan`
   ADD PRIMARY KEY (`MaBL`,`MaSP`,`MaKH`),
@@ -1158,16 +1038,7 @@ ALTER TABLE `binhluan`
   ADD KEY `MaSP` (`MaSP`);
 
 --
--- Chỉ mục cho bảng `chitietgiohang`
---
-ALTER TABLE `chitietgiohang`
-  ADD PRIMARY KEY (`MaGH`,`MaSP`,`Size`,`MaMau`),
-  ADD KEY `MaSP` (`MaSP`),
-  ADD KEY `Size` (`Size`),
-  ADD KEY `MaMau` (`MaMau`);
-
---
--- Chỉ mục cho bảng `chitiethoadon`
+-- Indexes for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD PRIMARY KEY (`MaHD`,`MaSP`,`Size`,`MaMau`),
@@ -1176,14 +1047,14 @@ ALTER TABLE `chitiethoadon`
   ADD KEY `MaMau` (`MaMau`);
 
 --
--- Chỉ mục cho bảng `chitietquyen`
+-- Indexes for table `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
   ADD PRIMARY KEY (`manhomquyen`,`chucnang`,`hanhdong`),
   ADD KEY `fk_chucnang` (`chucnang`);
 
 --
--- Chỉ mục cho bảng `chitietsanpham`
+-- Indexes for table `chitietsanpham`
 --
 ALTER TABLE `chitietsanpham`
   ADD PRIMARY KEY (`MaSP`,`MaSize`,`MaMau`),
@@ -1191,26 +1062,19 @@ ALTER TABLE `chitietsanpham`
   ADD KEY `MaMau` (`MaMau`);
 
 --
--- Chỉ mục cho bảng `danhmuc`
+-- Indexes for table `danhmuc`
 --
 ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`MaDM`);
 
 --
--- Chỉ mục cho bảng `danhmucchucnang`
+-- Indexes for table `danhmucchucnang`
 --
 ALTER TABLE `danhmucchucnang`
   ADD PRIMARY KEY (`chucnang`);
 
 --
--- Chỉ mục cho bảng `giohang`
---
-ALTER TABLE `giohang`
-  ADD PRIMARY KEY (`MaGH`),
-  ADD KEY `MaKH` (`MaKH`);
-
---
--- Chỉ mục cho bảng `hoadon`
+-- Indexes for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`MaHD`),
@@ -1218,38 +1082,38 @@ ALTER TABLE `hoadon`
   ADD KEY `MaNV` (`MaNV`);
 
 --
--- Chỉ mục cho bảng `khachhang`
+-- Indexes for table `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`Email`),
   ADD UNIQUE KEY `MaKH` (`MaKH`);
 
 --
--- Chỉ mục cho bảng `khuyenmai`
+-- Indexes for table `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
   ADD PRIMARY KEY (`MaKM`);
 
 --
--- Chỉ mục cho bảng `mau`
+-- Indexes for table `mau`
 --
 ALTER TABLE `mau`
   ADD PRIMARY KEY (`MaMau`);
 
 --
--- Chỉ mục cho bảng `nguoinhan`
+-- Indexes for table `nguoinhan`
 --
 ALTER TABLE `nguoinhan`
   ADD PRIMARY KEY (`MaHD`);
 
 --
--- Chỉ mục cho bảng `nhacc`
+-- Indexes for table `nhacc`
 --
 ALTER TABLE `nhacc`
   ADD PRIMARY KEY (`MaNCC`);
 
 --
--- Chỉ mục cho bảng `nhanvien`
+-- Indexes for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`Email`),
@@ -1257,13 +1121,13 @@ ALTER TABLE `nhanvien`
   ADD KEY `Quyen` (`Quyen`);
 
 --
--- Chỉ mục cho bảng `phieugiamgia`
+-- Indexes for table `phieugiamgia`
 --
 ALTER TABLE `phieugiamgia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `phieunhap`
+-- Indexes for table `phieunhap`
 --
 ALTER TABLE `phieunhap`
   ADD PRIMARY KEY (`MaPN`),
@@ -1271,7 +1135,7 @@ ALTER TABLE `phieunhap`
   ADD KEY `MaSP` (`MaSP`);
 
 --
--- Chỉ mục cho bảng `phieuxuat`
+-- Indexes for table `phieuxuat`
 --
 ALTER TABLE `phieuxuat`
   ADD PRIMARY KEY (`MaPX`),
@@ -1281,13 +1145,13 @@ ALTER TABLE `phieuxuat`
   ADD KEY `Size` (`Size`);
 
 --
--- Chỉ mục cho bảng `quyen`
+-- Indexes for table `quyen`
 --
 ALTER TABLE `quyen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `sanpham`
+-- Indexes for table `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD PRIMARY KEY (`MaSP`),
@@ -1295,110 +1159,95 @@ ALTER TABLE `sanpham`
   ADD KEY `MaDM` (`MaDM`);
 
 --
--- Chỉ mục cho bảng `sanphamkhuyenmai`
+-- Indexes for table `sanphamkhuyenmai`
 --
 ALTER TABLE `sanphamkhuyenmai`
   ADD PRIMARY KEY (`MaSP`,`MaKM`),
   ADD KEY `MaKH` (`MaKM`);
 
 --
--- Chỉ mục cho bảng `size`
+-- Indexes for table `size`
 --
 ALTER TABLE `size`
   ADD PRIMARY KEY (`MaSize`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `binhluan`
+-- AUTO_INCREMENT for table `binhluan`
 --
 ALTER TABLE `binhluan`
-  MODIFY `MaBL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `MaBL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `danhmuc`
+-- AUTO_INCREMENT for table `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `MaDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `MaDM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
--- AUTO_INCREMENT cho bảng `giohang`
---
-ALTER TABLE `giohang`
-  MODIFY `MaGH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT cho bảng `hoadon`
+-- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
--- AUTO_INCREMENT cho bảng `khachhang`
+-- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `MaKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `MaKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT cho bảng `khuyenmai`
+-- AUTO_INCREMENT for table `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
-  MODIFY `MaKM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `MaKM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `nhacc`
+-- AUTO_INCREMENT for table `nhacc`
 --
 ALTER TABLE `nhacc`
-  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `MaNCC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT cho bảng `nhanvien`
+-- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `phieunhap`
+-- AUTO_INCREMENT for table `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  MODIFY `MaPN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
+  MODIFY `MaPN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
--- AUTO_INCREMENT cho bảng `phieuxuat`
+-- AUTO_INCREMENT for table `phieuxuat`
 --
 ALTER TABLE `phieuxuat`
   MODIFY `MaPX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `sanpham`
+-- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `binhluan`
+-- Constraints for table `binhluan`
 --
 ALTER TABLE `binhluan`
   ADD CONSTRAINT `binhluan_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`),
   ADD CONSTRAINT `binhluan_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`);
 
 --
--- Các ràng buộc cho bảng `chitietgiohang`
---
-ALTER TABLE `chitietgiohang`
-  ADD CONSTRAINT `chitietgiohang_ibfk_1` FOREIGN KEY (`MaGH`) REFERENCES `giohang` (`MaGH`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_3` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`),
-  ADD CONSTRAINT `chitietgiohang_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
-
---
--- Các ràng buộc cho bảng `chitiethoadon`
+-- Constraints for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`),
@@ -1407,14 +1256,14 @@ ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_4` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
 
 --
--- Các ràng buộc cho bảng `chitietquyen`
+-- Constraints for table `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
   ADD CONSTRAINT `fk_chucnang` FOREIGN KEY (`chucnang`) REFERENCES `danhmucchucnang` (`chucnang`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_manhomquyen` FOREIGN KEY (`manhomquyen`) REFERENCES `quyen` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `chitietsanpham`
+-- Constraints for table `chitietsanpham`
 --
 ALTER TABLE `chitietsanpham`
   ADD CONSTRAINT `chitietsanpham_ibfk_1` FOREIGN KEY (`MaSize`) REFERENCES `size` (`MaSize`),
@@ -1422,39 +1271,33 @@ ALTER TABLE `chitietsanpham`
   ADD CONSTRAINT `chitietsanpham_ibfk_3` FOREIGN KEY (`MaMau`) REFERENCES `mau` (`MaMau`);
 
 --
--- Các ràng buộc cho bảng `giohang`
---
-ALTER TABLE `giohang`
-  ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`);
-
---
--- Các ràng buộc cho bảng `hoadon`
+-- Constraints for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`),
   ADD CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`);
 
 --
--- Các ràng buộc cho bảng `nguoinhan`
+-- Constraints for table `nguoinhan`
 --
 ALTER TABLE `nguoinhan`
   ADD CONSTRAINT `nguoinhan_ibfk_1` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`);
 
 --
--- Các ràng buộc cho bảng `nhanvien`
+-- Constraints for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
   ADD CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`Quyen`) REFERENCES `quyen` (`id`);
 
 --
--- Các ràng buộc cho bảng `phieunhap`
+-- Constraints for table `phieunhap`
 --
 ALTER TABLE `phieunhap`
   ADD CONSTRAINT `phieunhap_ibfk_1` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`),
   ADD CONSTRAINT `phieunhap_ibfk_2` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`);
 
 --
--- Các ràng buộc cho bảng `phieuxuat`
+-- Constraints for table `phieuxuat`
 --
 ALTER TABLE `phieuxuat`
   ADD CONSTRAINT `phieuxuat_ibfk_1` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`),
@@ -1463,14 +1306,14 @@ ALTER TABLE `phieuxuat`
   ADD CONSTRAINT `phieuxuat_ibfk_4` FOREIGN KEY (`Size`) REFERENCES `size` (`MaSize`);
 
 --
--- Các ràng buộc cho bảng `sanpham`
+-- Constraints for table `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`MaNCC`) REFERENCES `nhacc` (`MaNCC`),
   ADD CONSTRAINT `sanpham_ibfk_2` FOREIGN KEY (`MaDM`) REFERENCES `danhmuc` (`MaDM`);
 
 --
--- Các ràng buộc cho bảng `sanphamkhuyenmai`
+-- Constraints for table `sanphamkhuyenmai`
 --
 ALTER TABLE `sanphamkhuyenmai`
   ADD CONSTRAINT `sanphamkhuyenmai_ibfk_1` FOREIGN KEY (`MaKM`) REFERENCES `khuyenmai` (`MaKM`),
@@ -1480,3 +1323,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

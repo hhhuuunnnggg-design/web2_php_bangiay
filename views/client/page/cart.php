@@ -1,6 +1,9 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container mt-5">
-    <h2>Giỏ hàng của bạn</h2>
+    <h2 style="margin-right: 20px;">Giỏ hàng của bạn</h2>
+    <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=index" class="position-relative me-4 my-auto" id="order-history-icon">Lịch sử mua hàng </a></h2>
+    <!-- end gio hang -->
+
     <?php if (!empty($cartItems)): ?>
         <table class="table table-striped">
             <thead>

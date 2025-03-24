@@ -101,6 +101,7 @@ $brands = $supplierModel->getAllBrands();
                                 ?>
                             </span>
                         </a>
+
                         <!-- end gio hang -->
 
                         <!-- Modal chi tiết giỏ hàng -->

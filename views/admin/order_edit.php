@@ -16,6 +16,7 @@
     <select name="TinhTrang" required>
         <option value="hoàn thành" <?php echo $order['TinhTrang'] === 'hoàn thành' ? 'selected' : ''; ?>>Hoàn thành</option>
         <option value="Hủy Bỏ" <?php echo $order['TinhTrang'] === 'Hủy Bỏ' ? 'selected' : ''; ?>>Hủy Bỏ</option>
+
     </select><br>
 
     <button type="submit">Cập nhật</button>

@@ -53,7 +53,11 @@ switch ($controller) {
     case 'shop':
         require_once __DIR__ . '/controllers/client/ShopController.php';
         $controllerInstance = new ShopController($db);
-        break;    
+        break;
+    case 'orderhistory': // Thêm case cho OrderHistoryController
+        require_once __DIR__ . '/controllers/client/OrderHistoryController.php';
+        $controllerInstance = new OrderHistoryController($db);
+        break;
     default:
         header('Content-Type: application/json');
         header("HTTP/1.0 404 Not Found");
@@ -65,9 +69,13 @@ try {
     if (method_exists($controllerInstance, $action)) {
         switch ($action) {
             case 'addToCart':
-            case 'removeFromCart': // Thêm case cho removeFromCart
+            case 'removeFromCart':
                 $controllerInstance->$action();
                 exit; // Dừng sau khi xử lý AJAX
+            case 'index':
+            case 'detail': // Thêm case cho detail
+                $controllerInstance->$action();
+                break;
             default:
                 $controllerInstance->$action();
         }

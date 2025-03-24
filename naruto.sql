@@ -69,12 +69,7 @@ INSERT INTO `anhsp` (`MaSP`, `Anh1`, `Anh2`, `Anh3`, `Anh4`) VALUES
 (77, 'PUMA_RS-X3_PUZZLE_WHITE_2.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_3.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_4.jpg', 'PUMA_RS-X3_PUZZLE_WHITE_5.jpg'),
 (95, 'PUMA_RS-X3_WHITE_RED_2.jpg', 'PUMA_RS-X3_WHITE_RED_3.jpg', 'PUMA_RS-X3_WHITE_RED_4.jpg', 'PUMA_RS-X3_WHITE_RED_5.jpg'),
 (11, 'PUREBOOST_22_BLACK_WHITE_2.jpg', 'PUREBOOST_22_BLACK_WHITE_3.jpg', 'PUREBOOST_22_BLACK_WHITE_4.jpg', 'PUREBOOST_22_BLACK_WHITE_5.jpg'),
-(11, 'PUREBOOST_BLACK', 'PUREBOOST_BLACK_2', 'PUREBOOST_BLACK_3', NULL),
-(11, 'PUREBOOST_BLACK.jpg', 'PUREBOOST_BLACK_2.jpg', 'PUREBOOST_BLACK_3.jpg', NULL),
-(11, 'PUREBOOST_BLACK.jpg.jpg', 'PUREBOOST_BLACK.jpg', 'PUREBOOST_BLACK.jpg', 'DEP_WHITE_5.jpg'),
-(11, 'PUREBOOST_BLACKjpg', 'PUREBOOST_BLACK2.jpg', 'PUREBOOST_BLACK3.jpg', ''),
-(12, 'SAMBA_OG_HALO_BLUE_2.jpg', 'SAMBA_OG_HALO_BLUE_3.jpg', 'SAMBA_OG_HALO_BLUE_4.jpg', 'SAMBA_OG_HALO_BLUE_5.jpg'),
-(0, '[value-2]', '[value-3]', '[value-4]', '[value-5]');
+
 
 -- --------------------------------------------------------
 
@@ -924,22 +919,13 @@ INSERT INTO `sanpham` (`MaSP`, `TenSP`, `MaDM`, `MaNCC`, `SoLuong`, `MoTa`, `Don
 (94, 'PUMA RS-X3 PUZZLE PINK (371570 06)', 2, 3, 200, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_PINK.jpg'),
 (95, 'PUMA RS-X3 WHITE RED (372884 01)', 2, 3, 0, 'Sản phẩm Full box chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_WHITE_RED.jpg'),
 (96, 'PUMA RS-X3 PUZZLE LIMESTONE (371570 01)', 3, 3, 0, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_LIMESTONE.jpg'),
-(97, 'PUMA RS-X3 PUZZLE BLACK WHITE (371570 13)', 2, 3, NULL, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'PUMA_RS-X3_PUZZLE_BLACK_WHITE.jpg'),
-(98, 'NIKE CALM SLIDE BLACK', 2, 4, NULL, 'Sản phẩm Full box tag chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'NIKE_CALM_SLIDE_BLACK.jpg'),
-(99, 'ADILETTE 22 GREY SILVER GREEN (IG8264)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'ADILETTE_22_GREY_SILVER_GREEN.jpg'),
-(100, 'NIKE CALM SLIDE WHITE', 2, 4, NULL, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'NIKE_CALM_SLIDE_WHITE.jpg'),
-(101, 'DÉP ADIFOM ADILETTE WHITE (HQ8748)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'DEP_ADIFOM_ADILETTE_WHITE.jpg'),
-(102, 'NIKE CALM MULE BE (FB2185 200)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'NIKE_CALM_MULE_BE.jpg'),
-(103, 'ADIDAS ADICANE CLOGS BEGIE (HQ9916)', 2, 4, NULL, 'Adicane là dòng sản phẩm sử dụng ít nhất 50% vật liệu tái chế góp phần bảo vệ môi trường\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'ADIDAS_ADICANE_CLOGS_BEGIE.jpg'),
-(104, 'abbbbbb', 1, 1, 0, 'ádasdasd', 999999, 'images/anh_nen/67d3be60e7605-mb_bank.jpg'),
-(105, 'sadasdasd', 2, 3, 0, 'ádasdasd', 12123, 'PUMA_REBOUND_HAZE_CORAL_3.jpg'),
-(106, 'ád', NULL, 1, 0, 'ád', 123123, 'PUMA_MULE_WHITE_PINK.jpg'),
-(107, 'ádsda', NULL, 1, 0, 'ád', 123123, 'images/anh_nen/67d3c394a860f-ADIDAS_BLACK_4.jpg'),
-(108, 'hùng đẹp trai', 1, 3, NULL, 'tâttatatatta', 9000, 'images/anh_nen/67d3dec88dee7-mb_bank.jpg'),
-(109, 'oop', 2, 2, NULL, 'ádasdas', 1223, 'images/anh_nen/67d3e00017348-mb_bank.jpg'),
-(110, 'khùng điên', NULL, 1, NULL, 'sá', 1234, ''),
-(111, 'sản phẩm test1', NULL, 1, 0, 'ưq', 1212, 'images/anh_nen/67d3e1e29531f-mb_bank.jpg'),
-(113, 'con gà con', 1, 1, 6, 'ads165as1d65as1d65as1d', 111111111, 'images/anh_nen/67d451c7c37e5-con_ga_con.png');
+(97, 'PUMA RS-X3 PUZZLE BLACK WHITE (371570 13)', 2, 3, NULL, 'Sản phẩm Full box chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'images/anh_nen/PUMA_RS-X3_PUZZLE_BLACK_WHITE.jpg'),
+(98, 'NIKE CALM SLIDE BLACK', 2, 4, NULL, 'Sản phẩm Full box tag chính hãng 1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác Hỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/NIKE_CALM_SLIDE_BLACK.jpg'),
+(99, 'ADILETTE 22 GREY SILVER GREEN (IG8264)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1600000, 'images/anh_nen/ADIDAS_S_GREEN.jpg'),
+(100, 'NIKE CALM SLIDE WHITE', 2, 4, NULL, 'Sản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/NIKE_WHITE_2.jpg'),
+(101, 'DÉP ADIFOM ADILETTE WHITE (HQ8748)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/DEP_WHITE.jpg'),
+(102, 'NIKE CALM MULE BE (FB2185 200)', 1, 4, NULL, 'Sản phẩm không thấm nước\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1400000, 'images/anh_nen/NIKE_BE.jpg'),
+(103, 'ADIDAS ADICANE CLOGS BEGIE (HQ9916)', 2, 4, NULL, 'Adicane là dòng sản phẩm sử dụng ít nhất 50% vật liệu tái chế góp phần bảo vệ môi trường\r\nSản phẩm Full box tag chính hãng\r\n1 số sản phẩm giá sẽ thay đổi theo size vui lòng click vào size để xem giá chính xác\r\nHỗ trợ thanh toán trả góp 0% qua thẻ tín dụng', 1550000, 'images/anh_nen/ADIDAS_2.jpg'),
 
 -- --------------------------------------------------------
 

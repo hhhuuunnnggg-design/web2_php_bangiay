@@ -36,7 +36,7 @@
     <?php else: ?>
         <p class="text-center">Bạn chưa có đơn hàng nào.</p>
     <?php endif; ?>
-    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="btn btn-secondary mt-3">Quay lại trang chủ</a>
+    <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="btn btn-secondary mt-3">Quay lại </a>
 </div>
 
 <?php include __DIR__ . '/../layout/footer.php'; ?>

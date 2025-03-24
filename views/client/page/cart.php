@@ -1,8 +1,11 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container mt-5">
     <h2 style="margin-right: 20px;">Giỏ hàng của bạn</h2>
-    <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=index" class="position-relative me-4 my-auto" id="order-history-icon">Lịch sử mua hàng </a></h2>
-    <!-- end gio hang -->
+    <div style="display: flex; gap: 20px;">
+        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=index" class="position-relative me-4 my-auto" id="order-history-icon">Lịch sử mua hàng</a></h2>
+        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=canceled" class="position-relative me-4 my-auto" id="canceled-orders-icon">Đơn hàng đã hủy</a></h2>
+        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=shipping" class="position-relative me-4 my-auto" id="shipping-orders-icon">Đơn đang vận chuyển</a></h2>
+    </div>
 
     <?php if (!empty($cartItems)): ?>
         <table class="table table-striped">

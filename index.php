@@ -73,7 +73,9 @@ try {
                 $controllerInstance->$action();
                 exit; // Dừng sau khi xử lý AJAX
             case 'index':
-            case 'detail': // Thêm case cho detail
+            case 'detail':
+            case 'canceled': // Thêm case cho canceled
+            case 'shipping': // Thêm case cho shipping
                 $controllerInstance->$action();
                 break;
             default:

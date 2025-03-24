@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../../core/db_connect.php';
-
 class OrderModel
 {
     private $db;
@@ -10,15 +8,24 @@ class OrderModel
         $this->db = $db;
     }
 
-    public function getOrdersByCustomer($maKH)
+    public function getOrdersByCustomer($maKH, $tinhTrang = null)
     {
         $sql = "SELECT h.*, nn.TenNN, nn.DiaChiNN, nn.SDTNN
                 FROM hoadon h 
                 LEFT JOIN nguoinhan nn ON h.MaHD = nn.MaHD
-                WHERE h.MaKH = ?
-                ORDER BY h.NgayDat DESC";
+                WHERE h.MaKH = ?";
+        if ($tinhTrang !== null) {
+            $sql .= " AND h.TinhTrang = ?";
+        }
+        $sql .= " ORDER BY h.NgayDat DESC";
+
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $maKH, PDO::PARAM_INT);
+        if ($tinhTrang !== null) {
+            $stmt->bindParam(1, $maKH, PDO::PARAM_INT);
+            $stmt->bindParam(2, $tinhTrang, PDO::PARAM_STR);
+        } else {
+            $stmt->bindParam(1, $maKH, PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

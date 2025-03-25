@@ -5,23 +5,9 @@
         <div class="mb-4 pb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
             <div class="g-4 row">
                 <div class="col-lg-3">
-                    <a href="#">
-                        <h1 class="text-primary mb-0">Fruitables</h1>
-                        <p class="text-secondary mb-0">Fresh products</p>
-                    </a>
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-0 rounded-pill w-100 px-4 py-3" type="number" placeholder="Your Email">
-                        <button type="submit" class="btn btn-primary border-0 border-secondary position-absolute rounded-pill text-white px-4 py-3" style="top: 0; right: 0;">Subscribe Now</button>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="d-flex justify-content-end pt-3">
-                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-twitter fab"></i></a>
-                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-facebook-f fab"></i></a>
-                        <a class="btn btn-md-square btn-outline-secondary rounded-circle me-2" href=""><i class="fa-youtube fab"></i></a>
-                        <a class="btn btn-md-square btn-outline-secondary rounded-circle" href=""><i class="fa-linkedin-in fab"></i></a>
                     </div>
                 </div>
             </div>
@@ -29,10 +15,9 @@
         <div class="g-5 row">
             <div class="col-lg-3 col-md-6">
                 <div class="footer-item">
-                    <h4 class="text-light mb-3">Why People Like us!</h4>
-                    <p class="mb-4">typesetting, remaining essentially unchanged. It was
-                        popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                    <a href="" class="btn border-secondary rounded-pill text-primary px-4 py-2">Read More</a>
+                    <h4 class="text-light mb-3">Myshoes.vn - Giày Chính Hãng</h4>
+                    <p class="mb-4">Myshoes.vn được định hướng trở thành hệ thống thương mại điện tử bán giày chính hãng hàng đầu Việt Nam..</p>
+                    <a href="" class="btn border-secondary rounded-pill text-primary px-4 py-2">Đọc thêm</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">

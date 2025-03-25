@@ -38,7 +38,7 @@
         <input type="hidden" name="controller" value="shop">
         <input type="hidden" name="action" value="index">
 
-        <h4>Hãng sản xuất</h4>
+        <h4>Thương hiệu</h4>
         <?php foreach ($brands as $brand): ?>
             <input type="checkbox" name="brand[]" value="<?= $brand['MaNCC'] ?>" 
                 <?= in_array($brand['MaNCC'], $_GET['brand'] ?? []) ? 'checked' : '' ?>>
@@ -72,7 +72,7 @@
                     <h4><?= htmlspecialchars($product['TenSP']) ?></h4>
                     
                     <p>Danh mục: <?php echo htmlspecialchars($product['TenDM']); ?></p>
-                    <p>Nhà cung cấp: <?php echo htmlspecialchars($product['TenNCC']); ?></p>
+                    <p>Thương hiệu: <?php echo htmlspecialchars($product['TenNCC']); ?></p>
             
                     <p class="price"><?= number_format($product['DonGia']) ?> VNĐ</p>
                 </a>

@@ -40,6 +40,7 @@ $brands = $supplierModel->getAllBrands();
 
     <!-- Navbar start -->
     <div class="container-fluid fixed-top">
+
         <div class="container d-lg-block d-none bg-primary topbar">
             <div class="d-flex justify-content-between">
                 <div class="ps-2 top-info">
@@ -49,6 +50,7 @@ $brands = $supplierModel->getAllBrands();
 
             </div>
         </div>
+
         <div class="container px-0">
             <nav class="navbar navbar-expand-xl navbar-light bg-white">
                 <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
@@ -139,10 +141,13 @@ $brands = $supplierModel->getAllBrands();
                             <?php endif; ?>
                         </div>
 
+
                     </div>
+
                 </div>
             </nav>
         </div>
+
     </div>
     <!-- Navbar End -->
 

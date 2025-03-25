@@ -17,7 +17,9 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 <div class="container mt-5">
+    <div id="liveAlertPlaceholder" style="float: left;"></div>
     <div class="breadcrumb">
+
         <a href="/shoeimportsystem/index.php?controller=home&action=index">Trang chủ</a> » Chi tiết sản phẩm
     </div>
     <div class="row">
@@ -88,6 +90,7 @@ include __DIR__ . '/layout/header.php';
 
 <div class="product-details">
     <div class="description-reviews">
+        <div id="liveAlertPlaceholder"></div>
         <div class="tabs">
             <button class="active tab-button" data-tab="description">MÔ TẢ</button>
             <button class="tab-button" data-tab="reviews">ĐÁNH GIÁ</button>
@@ -136,8 +139,22 @@ include __DIR__ . '/layout/header.php';
         let color = document.querySelector('input[name="color"]:checked')?.value;
         let quantity = document.getElementById('quantity').value;
 
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
         if (!size || !color) {
-            alert('Vui lòng chọn kích thước và màu sắc!');
+            alertPlaceholder.innerHTML = `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Vui lòng chọn kích thước và màu sắc!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+            setTimeout(() => {
+                const alert = alertPlaceholder.querySelector('.alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
+                }
+            }, 2000000); // Biến mất sau 1 giây
             return;
         }
 
@@ -163,20 +180,48 @@ include __DIR__ . '/layout/header.php';
             .then(data => {
                 console.log('Parsed JSON:', data);
                 if (data.success) {
-                    alert('Đã thêm vào giỏ hàng!');
+                    alertPlaceholder.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Đã thêm vào giỏ hàng!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
                     const cartCountElement = document.querySelector('#cart-count');
                     if (cartCountElement) {
                         cartCountElement.textContent = data.cartCount;
                     }
-                    // Nếu muốn hiển thị tổng tiền, thêm logic ở đây
-                    // Ví dụ: document.querySelector('#cart-total').textContent = data.cartTotal;
                 } else {
-                    alert(data.message || 'Không thể thêm vào giỏ hàng!!!');
+                    alertPlaceholder.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${data.message || 'Không thể thêm vào giỏ hàng!!!'}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
                 }
+                // Thêm setTimeout để tự động tắt thông báo sau 1 giây
+                setTimeout(() => {
+                    const alert = alertPlaceholder.querySelector('.alert');
+                    if (alert) {
+                        alert.classList.remove('show');
+                        setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
+                    }
+                }, 1000); // Biến mất sau 1 giây
             })
             .catch(error => {
                 console.error('Lỗi:', error);
-                alert('Có lỗi xảy ra khi thêm vào giỏ hàng: ' + error.message);
+                alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Có lỗi xảy ra khi thêm vào giỏ hàng: ${error.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+                setTimeout(() => {
+                    const alert = alertPlaceholder.querySelector('.alert');
+                    if (alert) {
+                        alert.classList.remove('show');
+                        setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
+                    }
+                }, 1000); // Biến mất sau 1 giây
             });
     }
 
@@ -302,6 +347,7 @@ include __DIR__ . '/layout/header.php';
                 });
         <?php endif; ?>
     }
+    // 
 </script>
 
 <style>

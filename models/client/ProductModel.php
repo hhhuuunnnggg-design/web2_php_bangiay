@@ -129,7 +129,7 @@ class ProductModel
 
         return $products;
     }
-    public function filterProducts($categoryIds = null, $brandIds = null, $minPrice = null, $maxPrice = null)
+    public function filterProducts($categoryIds = null, $brandIds = null, $minPrice = null, $maxPrice = null, $limit = 30, $offset = 0)
     {
         $conditions = [];
         $params = [];
@@ -177,7 +177,12 @@ class ProductModel
                 FROM sanpham sp
                 LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
                 LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
-                $whereClause";
+                $whereClause
+                LIMIT ? OFFSET ?";
+    
+        $params[] = $limit;
+        $params[] = $offset;
+        $types .= 'ii';
 
 
 

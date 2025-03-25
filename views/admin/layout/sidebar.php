@@ -90,12 +90,14 @@ $user = $auth->getCurrentUser();
             Quản lý nhập kho
         </a>
     <?php endif; ?>
-    <?php if ($auth->checkPermission(12, 'view')): ?> <!-- Quyền mới cho thống kê -->
-        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=stats&action=index">
+
+    <?php if ($auth->checkPermission(13, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=statistics&action=topCustomers">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
-            Quản lý thống kê
+            Thống kê khách hàng
         </a>
     <?php endif; ?>
+
     <?php if ($auth->checkPermission(13, 'view')): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=order&action=index">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-file-invoice"></i></div>

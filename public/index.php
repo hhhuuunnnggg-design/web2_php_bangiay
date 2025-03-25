@@ -61,13 +61,14 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/AuthController.php';
         $controller = new AuthController();
         break;
-    case 'stats':
-        require_once __DIR__ . '/../controllers/StatsController.php';
-        $controller = new StatsController();
-        break;
-    case 'order': // Thêm case mới cho hóa đơn
+    case 'order':
         require_once __DIR__ . '/../controllers/OrderController.php';
         $controller = new OrderController();
+        break;
+
+    case 'statistics':
+        require_once __DIR__ . '/../controllers/StatisticsController.php';
+        $controller = new StatisticsController();
         break;
     default:
         die("Controller không tồn tại");
@@ -83,7 +84,6 @@ switch ($action) {
     case 'edit':
         $controller->edit();
         break;
-
     case 'delete':
         $controller->delete();
         break;
@@ -99,12 +99,27 @@ switch ($action) {
     case 'export':
         $controller->export();
         break;
-    case 'detail': // Thêm action cho xem chi tiết
+    case 'detail':
         $controller->detail();
         break;
-    case 'assignShipper': // Thêm action mới
+    case 'assignShipper':
         if ($controller instanceof OrderController) {
             $controller->assignShipper();
+        } else {
+            die("Action không hợp lệ cho controller này");
+        }
+        break;
+
+    case 'topCustomers':
+        if ($controller instanceof StatisticsController) {
+            $controller->topCustomers();
+        } else {
+            die("Action không hợp lệ cho controller này");
+        }
+        break;
+    case 'orderDetails':
+        if ($controller instanceof StatisticsController) {
+            $controller->orderDetails();
         } else {
             die("Action không hợp lệ cho controller này");
         }

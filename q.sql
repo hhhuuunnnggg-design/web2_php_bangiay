@@ -54,3 +54,22 @@ ALTER TABLE `chitiethoadon`
   ADD KEY `MaSP` (`MaSP`),
   ADD KEY `Size` (`Size`),
   ADD KEY `MaMau` (`MaMau`);
+
+
+  CREATE TABLE `khachhang` (
+  `MaKH` int(11) NOT NULL,
+  `TenKH` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `SDT` bigint(12) NOT NULL,
+  `DiaChi` text NOT NULL,
+  `MatKhau` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+
+ALTER TABLE `khachhang`
+  ADD PRIMARY KEY (`Email`),
+  ADD UNIQUE KEY `MaKH` (`MaKH`);
+
+
+ALTER TABLE `khachhang`
+  MODIFY `MaKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;

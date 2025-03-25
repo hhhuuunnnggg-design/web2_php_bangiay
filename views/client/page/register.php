@@ -34,8 +34,17 @@
 
 
 <style>
+    body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
     .form-container {
-        max-width: 450px;
+        width: 450px;
         background: #fff;
         padding: 30px;
         border-radius: 10px;

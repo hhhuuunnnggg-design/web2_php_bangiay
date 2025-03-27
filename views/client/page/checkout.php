@@ -53,6 +53,7 @@
     function confirmCheckout() {
         const form = document.getElementById('checkout-form');
         const formData = new FormData(form);
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
         fetch('/shoeimportsystem/index.php?controller=cart&action=confirmCheckout', {
                 method: 'POST',
@@ -61,16 +62,57 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Thanh toán thành công!');
+                    alertPlaceholder.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        Thanh toán thành công!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
                     document.querySelector('#cart-count').textContent = 0;
-                    window.location.href = '/shoeimportsystem/index.php?controller=home&action=index';
+                    setTimeout(() => {
+                        const alert = alertPlaceholder.querySelector('.alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            setTimeout(() => {
+                                alert.remove();
+                                window.location.href = '/shoeimportsystem/index.php?controller=home&action=index';
+                            }, 150);
+                        } else {
+                            window.location.href = '/shoeimportsystem/index.php?controller=home&action=index';
+                        }
+                    }, 500); // Chuyển hướng sau 2 giây
                 } else {
-                    alert(data.message || 'Không thể thanh toán!');
+                    alertPlaceholder.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${data.message || 'Không thể thanh toán!'}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                    setTimeout(() => {
+                        const alert = alertPlaceholder.querySelector('.alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            setTimeout(() => alert.remove(), 150);
+                        }
+                    }, 2000);
                 }
             })
             .catch(error => {
                 console.error('Lỗi:', error);
-                alert('Có lỗi xảy ra khi thanh toán!');
+                alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Có lỗi xảy ra khi thanh toán!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+                setTimeout(() => {
+                    const alert = alertPlaceholder.querySelector('.alert');
+                    if (alert) {
+                        alert.classList.remove('show');
+                        setTimeout(() => alert.remove(), 150);
+                    }
+                }, 2000);
             });
     }
 </script>

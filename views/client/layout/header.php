@@ -94,34 +94,35 @@ $brands = $supplierModel->getAllBrands();
                         <div class="d-flex m-3 me-0">
                             <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
                             <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
-                                <i class="fa fa-2x fa-shopping-bag"></i>
-                                <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
-                                    <?php
-                                    if (isset($_SESSION['user'])) {
-                                        echo $_SESSION['cart_count'] ?? 0;
-                                    } else {
-                                        echo 0;
-                                    }
-                                    ?>
-                                </span>
-                            </a>
-                            <!-- User menu -->
-                            <div class="user-menu">
-                                <?php if (isset($_SESSION['user'])): ?>
-                                    <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
-                                    <div class="dropdown">
-                                        <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
-                                        <a href="/shoeimportsystem/index.php?controller=auth&action=profile">Thông tin cá nhân</a>
-                                        <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
-                                    </div>
-                                <?php else: ?>
-                                    <a href="/shoeimportsystem/index.php?controller=auth&action=login" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
-                                    <div class="dropdown">
-                                        <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a>
-                                        <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                                <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
+                                    <i class="fa fa-2x fa-shopping-bag"></i>
+                                    <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                        <?php
+                                        if (isset($_SESSION['user'])) {
+                                            echo $_SESSION['cart_count'] ?? 0;
+                                        } else {
+                                            echo 0;
+                                        }
+                                        ?>
+                                    </span>
+                                </a>
+                                <!-- User menu -->
+                                <div class="user-menu">
+                                    <?php if (isset($_SESSION['user'])): ?>
+                                        <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                        <div class="dropdown">
+                                            <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
+                                            <a href="/shoeimportsystem/index.php?controller=auth&action=profile">Thông tin cá nhân</a>
+                                            <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
+                                        </div>
+                                    <?php else: ?>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=login" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                        <div class="dropdown">
+                                            <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a>
+                                            <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                         </div>
                     </div>
                 </nav>

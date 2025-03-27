@@ -37,203 +37,146 @@ $brands = $supplierModel->getAllBrands();
 
 <body>
 
-
-    <!-- Navbar start -->
-    <div class="container-fluid fixed-top">
-        <div id="liveAlertPlaceholder"></div>
-
-
-
-        <!-- this is a warning -->
-
-
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-            <symbol id="check-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-            </symbol>
-            <symbol id="info-fill" viewBox="0 0 16 16">
-                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-            </symbol>
-            <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </symbol>
-        </svg>
+    <head>
+        <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div id="liveAlertPlaceholder"></div>
 
 
 
+            <!-- this is a warning -->
 
 
-        <!-- end test start -->
-        <div class="container d-lg-block d-none bg-primary topbar">
-            <div class="d-flex justify-content-between">
-                <div class="ps-2 top-info">
-                    <small class="me-3"><i class="text-secondary fa-map-marker-alt fas me-2"></i> <a href="#" class="text-white">Đại học Sài Gòn</a></small>
-                    <small class="me-3"><i class="text-secondary fa-envelope fas me-2"></i><a href="#" class="text-white">nguyendinhhungtc2020@gmail.com</a></small>
+            <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+                <symbol id="check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                </symbol>
+                <symbol id="info-fill" viewBox="0 0 16 16">
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </symbol>
+                <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </symbol>
+            </svg>
+
+
+
+
+
+            <!-- end test start -->
+            <div class="container d-lg-block d-none bg-primary topbar">
+                <div class="d-flex justify-content-between">
+                    <div class="ps-2 top-info">
+                        <small class="me-3"><i class="text-secondary fa-map-marker-alt fas me-2"></i> <a href="#" class="text-white">Đại học Sài Gòn</a></small>
+                        <small class="me-3"><i class="text-secondary fa-envelope fas me-2"></i><a href="#" class="text-white">nguyendinhhungtc2020@gmail.com</a></small>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
 
-        <div class="container px-0">
-            <nav class="navbar navbar-expand-xl navbar-light bg-white">
-                <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
-                    <h1 class="display-6 text-primary"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
-                    </h1>
-                </a>
-                <button class="navbar-toggler px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="text-primary fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                    <div class="navbar-nav mx-auto">
-                        <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chủ</a>
-                        <a href="/shoeimportsystem/index.php?controller=shop&action=index" class="nav-item nav-link">Shop</a>
-                        <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thông tin shop</a>
-                        <div class="dropdown nav-item">
-                            <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>
-                            <div class="dropdown-menu bg-secondary m-0 rounded-0">
-                                <?php foreach ($brands as $brand): ?>
-                                    <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brand['MaNCC']; ?>" class="dropdown-item">
-                                        <?php echo htmlspecialchars($brand['TenNCC']); ?>
-                                    </a>
-                                <?php endforeach; ?>
+            <div class="container px-0">
+                <nav class="navbar navbar-expand-xl navbar-light bg-white">
+                    <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
+                        <h1 class="display-6 text-primary"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
+                        </h1>
+                    </a>
+                    <button class="navbar-toggler px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="text-primary fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chủ</a>
+                            <a href="/shoeimportsystem/index.php?controller=shop&action=index" class="nav-item nav-link">Shop</a>
+                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thông tin shop</a>
+                            <div class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>
+                                <div class="dropdown-menu bg-secondary m-0 rounded-0">
+                                    <?php foreach ($brands as $brand): ?>
+                                        <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brand['MaNCC']; ?>" class="dropdown-item">
+                                            <?php echo htmlspecialchars($brand['TenNCC']); ?>
+                                        </a>
+                                    <?php endforeach; ?>
 
-                            </div>
-                        </div>
-                        <div id="productList">
-                            <!-- Sản phẩm load vào đây -->
-                        </div>
-                        <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
-                    </div>
-                    <div class="d-flex m-3 me-0">
-                        <!-- start test -->
-                        <div class="searchBox">
-                            <input class="searchInput" type="text" name="" placeholder="Search ten san pham">
-                            <button class="btn btn-md-square btn-search" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <!-- edn test -->
-
-                        <!-- day chinh la gio hang -->
-                        <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
-
-
-                        </a>
-                        <!-- 1 -->
-                        <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
-                            <i class="fa fa-2x fa-shopping-bag"></i>
-                            <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
-                                <?php
-                                session_start();
-                                if (isset($_SESSION['user'])) {
-                                    echo $_SESSION['cart_count'] ?? 0; // Tổng số lượng từ session
-                                } else {
-                                    echo 0;
-                                }
-                                ?>
-                            </span>
-                        </a>
-
-                        <!-- end gio hang -->
-
-                        <!-- Modal chi tiết giỏ hàng -->
-                        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" id="cart-details">
-                                        <!-- Chi tiết giỏ hàng sẽ được tải động bằng AJAX -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="btn btn-primary">Thanh toán</a>
-                                    </div>
                                 </div>
                             </div>
+                            <div id="productList">
+                                <!-- Sản phẩm load vào đây -->
+                            </div>
+                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
                         </div>
-                        <div class="user-menu">
-                            <?php if (isset($_SESSION['user'])): ?>
-                                <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
-                                <div class="dropdown">
-                                    <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
-                                    <a href="/shoeimportsystem/index.php?controller=auth&action=profile">Thông tin cá nhân</a>
-                                    <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
-                                </div>
-                            <?php else: ?>
-                                <a href="/shoeimportsystem/index.php?controller=auth&action=login" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
-                                <div class="dropdown">
-                                    <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a>
-                                    <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <div class="d-flex m-3 me-0">
+                            <!-- start test -->
+                            <div class="searchBox">
+                                <input class="searchInput" type="text" name="" placeholder="Search ten san pham">
+                                <button class="btn btn-md-square btn-search" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- edn test -->
+
+                            <!-- day chinh la gio hang -->
+                            <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
 
 
-                    </div>
+                            </a>
+                            <!-- 1 -->
+                            <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
+                                <i class="fa fa-2x fa-shopping-bag"></i>
+                                <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                    <?php
+                                    session_start();
+                                    if (isset($_SESSION['user'])) {
+                                        echo $_SESSION['cart_count'] ?? 0; // Tổng số lượng từ session
+                                    } else {
+                                        echo 0;
+                                    }
+                                    ?>
+                                </span>
+                            </a>
 
-                </div>
-            </nav>
-        </div>
+                            <!-- end gio hang -->
 
-    </div>
-    <!-- Navbar End -->
-
-    <!-- Hero-Start -->
-    <?php include __DIR__ . '/Hero-Start.php'; ?>
-
-    <!-- Hero End -->
-    </header>
-
-    <main>
-        <?php if (isset($_GET['controller']) && $_GET['controller'] === 'home' && (!isset($_GET['action']) || $_GET['action'] === 'index')): ?>
-            <div class="container mt-5">
-                <h1 class="text-center mb-4">Sản phẩm theo danh mục</h1>
-                <?php if (isset($productsByCategory) && is_array($productsByCategory) && !empty($productsByCategory)): ?>
-                    <?php foreach ($productsByCategory as $categoryId => $categoryData): ?>
-                        <div class="category-section mb-5" id="category-<?php echo $categoryId; ?>">
-                            <h2 class="mb-3"><?php echo htmlspecialchars($categoryData['TenDM']); ?></h2>
-                            <div class="row">
-                                <?php foreach ($categoryData['products'] as $product): ?>
-                                    <div class="col-md-3 mb-4">
-                                        <div class="card h-100">
-                                            <?php if (!empty($product['AnhNen'])): ?>
-                                                <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                                                    <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 200px; object-fit: cover;">
-                                                </a>
-                                            <?php else: ?>
-                                                <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
-                                                    <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
-                                                </a>
-                                            <?php endif; ?>
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
-                                                <p class="card-text">
-                                                    <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
-                                                        <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                                        <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                                        <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                                    <?php else: ?>
-                                                        <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
-                                                    <?php endif; ?>
-                                                </p>
-                                            </div>
+                            <!-- Modal chi tiết giỏ hàng -->
+                            <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" id="cart-details">
+                                            <!-- Chi tiết giỏ hàng sẽ được tải động bằng AJAX -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="btn btn-primary">Thanh toán</a>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php if (!isset($_GET['category'])): ?>
-                                <div class="text-center mt-3">
-                                    <a href="/shoeimportsystem/index.php?controller=home&action=index&category=<?php echo $categoryId; ?>" class="btn btn-primary">Xem thêm</a>
                                 </div>
-                            <?php endif; ?>
+                            </div>
+                            <div class="user-menu">
+                                <?php if (isset($_SESSION['user'])): ?>
+                                    <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                    <div class="dropdown">
+                                        <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user']['TenKH']); ?></span>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=profile">Thông tin cá nhân</a>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=logout">Đăng xuất</a>
+                                    </div>
+                                <?php else: ?>
+                                    <a href="/shoeimportsystem/index.php?controller=auth&action=login" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
+                                    <div class="dropdown">
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a>
+                                        <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-center">Không có sản phẩm nào theo danh mục.</p>
-                <?php endif; ?>
+
+                    </div>
+                </nav>
             </div>
-        <?php endif; ?>
-    </main>
+        </div>
+    </head>
+    <?php include __DIR__ . '/../page/main.php'; ?>

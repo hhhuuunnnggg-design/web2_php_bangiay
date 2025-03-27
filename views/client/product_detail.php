@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($title); ?></title>
-    <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
 <?php
 include __DIR__ . '/layout/header.php';
 ?>
@@ -118,7 +104,7 @@ include __DIR__ . '/layout/header.php';
 </div>
 
 
-</div>
+
 <script>
     function increaseQuantity() {
         let quantity = document.getElementById('quantity');
@@ -525,5 +511,3 @@ include __DIR__ . '/layout/header.php';
 <?php
 include __DIR__ . '/layout/footer.php';
 ?>
-
-</html>

@@ -30,46 +30,39 @@ class HomeController
         $productsByCategory = [];
 
         if ($searchQuery) {
-            // Nếu có từ khóa tìm kiếm, tìm sản phẩm theo tên
+            // Nếu có từ khóa tìm kiếm, tìm sản phẩm theo tên và hiển thị trong giao diện riêng
             $products = $this->productModel->searchProductsByName($searchQuery);
-            if (!empty($products)) {
-                // Nhóm sản phẩm tìm được vào một danh mục giả "Kết quả tìm kiếm"
-                $productsByCategory['search'] = [
-                    'TenDM' => "Kết quả tìm kiếm cho '$searchQuery'",
-                    'products' => $products
-                ];
-            } else {
-                $productsByCategory['search'] = [
-                    'TenDM' => "Kết quả tìm kiếm cho '$searchQuery'",
-                    'products' => []
-                ];
-            }
-        } elseif ($selectedCategory) {
-            // Nếu có danh mục được chọn, chỉ lấy sản phẩm của danh mục đó
-            $products = $this->productModel->getProductsByCategory($selectedCategory, PHP_INT_MAX, 0);
-            if (!empty($products)) {
-                $category = $this->categoryModel->getCategoryById($selectedCategory);
-                $productsByCategory[$selectedCategory] = [
-                    'TenDM' => $category['TenDM'],
-                    'products' => $products
-                ];
-            }
+            $productsByCategory['search'] = [
+                'TenDM' => "Kết quả tìm kiếm cho '$searchQuery'",
+                'products' => $products
+            ];
+            $title = "Kết quả tìm kiếm - $searchQuery";
+            include __DIR__ . '/../../views/client/page/search_results.php';
         } else {
-            // Nếu không có tìm kiếm hoặc danh mục, hiển thị 4 sản phẩm cho mỗi danh mục
-            foreach ($categories as $category) {
-                $products = $this->productModel->getProductsByCategory($category['MaDM'], 4, 0);
+            // Nếu không có tìm kiếm, hiển thị sản phẩm theo danh mục như cũ
+            if ($selectedCategory) {
+                $products = $this->productModel->getProductsByCategory($selectedCategory, PHP_INT_MAX, 0);
                 if (!empty($products)) {
-                    $productsByCategory[$category['MaDM']] = [
+                    $category = $this->categoryModel->getCategoryById($selectedCategory);
+                    $productsByCategory[$selectedCategory] = [
                         'TenDM' => $category['TenDM'],
                         'products' => $products
                     ];
                 }
+            } else {
+                foreach ($categories as $category) {
+                    $products = $this->productModel->getProductsByCategory($category['MaDM'], 4, 0);
+                    if (!empty($products)) {
+                        $productsByCategory[$category['MaDM']] = [
+                            'TenDM' => $category['TenDM'],
+                            'products' => $products
+                        ];
+                    }
+                }
             }
+            $title = "Trang chủ";
+            include __DIR__ . '/../../views/client/home.php';
         }
-
-        // Gọi view
-        $title = "Trang chủ";
-        include __DIR__ . '/../../views/client/home.php';
     }
 
     public function detail()

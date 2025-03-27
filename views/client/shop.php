@@ -68,7 +68,7 @@
                 <input type="radio" name="price" value="2" <?= ($_GET['price'] ?? '') == 2 ? 'checked' : '' ?>> 1 triệu - 2 triệu<br>
                 <input type="radio" name="price" value="3" <?= ($_GET['price'] ?? '') == 3 ? 'checked' : '' ?>> Trên 2 triệu<br>
 
-                <button type="submit" class="btn btn-outline-primary">Primary</button>
+                <button type="submit" class="btn btn-outline-primary">loc san pham</button>
             </form>
         </div>
 

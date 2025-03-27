@@ -68,40 +68,109 @@
                 <input type="radio" name="price" value="2" <?= ($_GET['price'] ?? '') == 2 ? 'checked' : '' ?>> 1 triệu - 2 triệu<br>
                 <input type="radio" name="price" value="3" <?= ($_GET['price'] ?? '') == 3 ? 'checked' : '' ?>> Trên 2 triệu<br>
 
-                <button type="submit" class="btn btn-outline-primary">loc san pham</button>
+                <button type="submit" class="btn btn-outline-primary">Lọc sản phẩm</button>
             </form>
         </div>
 
         <!-- Product Section -->
-        <!-- Product Section -->
         <div class="product-section">
             <div class="products">
-                <?php foreach ($products as $product): ?>
-                    <div class="product-card">
-                        <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?= $product['MaSP'] ?>">
-                            <img src="/shoeimportsystem/public/<?= htmlspecialchars($product['AnhNen']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
-                            <h4><?= htmlspecialchars($product['TenSP']) ?></h4>
-                            <p>Danh mục: <?php echo htmlspecialchars($product['TenDM']); ?></p>
-                            <p>Thương hiệu: <?php echo htmlspecialchars($product['TenNCC']); ?></p>
-                            <p class="price">
-                                <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
-                                    <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                    <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
-                                    <span class="text-success  font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span>
-                                <?php else: ?>
-                                    <span class="text-success"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
-
-                                <?php endif; ?>
-                            </p>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+                <?php if (empty($products)): ?>
+                    <p>Không có sản phẩm nào phù hợp với bộ lọc.</p>
+                <?php else: ?>
+                    <?php foreach ($products as $product): ?>
+                        <div class="product-card">
+                            <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?= $product['MaSP'] ?>">
+                                <img src="/shoeimportsystem/public/<?= htmlspecialchars($product['AnhNen']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
+                                <h4><?= htmlspecialchars($product['TenSP']) ?></h4>
+                                <p>Danh mục: <?php echo htmlspecialchars($product['TenDM']); ?></p>
+                                <p>Thương hiệu: <?php echo htmlspecialchars($product['TenNCC']); ?></p>
+                                <p class="price">
+                                    <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                                        <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                        <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                        <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                    <?php else: ?>
+                                        <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                    <?php endif; ?>
+                                </p>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
-        </div>
 
+            <!-- Pagination -->
+            <?php if ($totalPages > 1): ?>
+                <nav aria-label="Page navigation" class="mt-4">
+                    <div style="display: flex;">
+                        <ul class="pagination justify-content-center">
+                            <!-- Previous Button -->
+                            <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= $currentPage > 1 ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage - 1])) : '#' ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                                    <a class="page-link" href="/shoeimportsystem/index.php?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Next Button -->
+                            <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= $currentPage < $totalPages ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage + 1])) : '#' ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            <?php endif; ?>
+        </div>
     </div>
 
     <?php include __DIR__ . '/layout/footer.php'; ?>
 </body>
 
 </html>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .pagination .page-item {
+        margin: 0 5px;
+    }
+
+    .pagination .page-item .page-link {
+        /* color: #007bff; */
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination .page-item .page-link:hover {
+        /* background-color: #007bff; */
+        color: white;
+    }
+
+    .pagination .page-item.active .page-link {
+        /* background-color: #007bff; */
+        color: white;
+        font-weight: bold;
+        /* border-color: #007bff; */
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #ccc;
+        pointer-events: none;
+        background-color: #f8f9fa;
+    }
+</style>

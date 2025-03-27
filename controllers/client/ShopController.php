@@ -20,6 +20,11 @@ class ShopController
         $selectedCategories = $_GET['category'] ?? [];
         $priceFilter = $_GET['price'] ?? null;
 
+        // Xử lý phân trang
+        $itemsPerPage = 6; // 9 sản phẩm mỗi trang
+        $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($currentPage - 1) * $itemsPerPage;
+
         // Chuyển đổi price filter thành min-max
         $minPrice = null;
         $maxPrice = null;
@@ -32,12 +37,25 @@ class ShopController
             $minPrice = 2000000;
         }
 
-        // Lọc sản phẩm
+        // Lấy tổng số sản phẩm để tính số trang
+        $totalProducts = count($productModel->filterProducts(
+            !empty($selectedCategories) ? $selectedCategories : null,
+            !empty($selectedBrands) ? $selectedBrands : null,
+            $minPrice,
+            $maxPrice,
+            PHP_INT_MAX, // Lấy tất cả để đếm
+            0
+        ));
+        $totalPages = ceil($totalProducts / $itemsPerPage);
+
+        // Lọc sản phẩm với phân trang
         $products = $productModel->filterProducts(
             !empty($selectedCategories) ? $selectedCategories : null,
             !empty($selectedBrands) ? $selectedBrands : null,
             $minPrice,
-            $maxPrice
+            $maxPrice,
+            $itemsPerPage, // Giới hạn 9 sản phẩm
+            $offset
         );
 
 

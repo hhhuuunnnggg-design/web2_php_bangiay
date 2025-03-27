@@ -142,6 +142,45 @@
     .user-menu .dropdown a:hover {
         background: #f0f0f0;
     }
+
+    /* start style liveAlert ::placeholder */
+    #liveAlertPlaceholder {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1050;
+        /* Đảm bảo nó nằm trên các thành phần khác */
+        width: auto;
+        max-width: 300px;
+        padding: 10px;
+        /* Màu nền cảnh báo */
+        color: #721c24;
+        /* Màu chữ cảnh báo */
+        border-radius: 5px;
+        margin-top: 70px;
+    }
+
+    /* end style live Alert ::placeholder */
+
+    /* start icon alert Warning */
+    .bi-exclamation-triangle-fill {
+        width: 16px;
+        /* Chiều rộng */
+        height: 16px;
+        /* Chiều cao */
+    }
+
+    /* end icon alert Warning */
+
+    /* start icon succsuse */
+    .flex-shrink-0 {
+        width: 16px;
+        /* Chiều rộng */
+        height: 16px;
+        /* Chiều cao */
+    }
+
+    /* end icon succsuse */
 </style>
 
 

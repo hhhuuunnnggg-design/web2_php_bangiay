@@ -17,7 +17,7 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 <div class="container mt-5">
-    <div id="liveAlertPlaceholder" style="float: left;"></div>
+    <!-- <div id="liveAlertPlaceholder"></div> -->
     <div class="breadcrumb">
 
         <a href="/shoeimportsystem/index.php?controller=home&action=index">Trang chủ</a> » Chi tiết sản phẩm
@@ -90,7 +90,6 @@ include __DIR__ . '/layout/header.php';
 
 <div class="product-details">
     <div class="description-reviews">
-        <div id="liveAlertPlaceholder"></div>
         <div class="tabs">
             <button class="active tab-button" data-tab="description">MÔ TẢ</button>
             <button class="tab-button" data-tab="reviews">ĐÁNH GIÁ</button>
@@ -144,6 +143,7 @@ include __DIR__ . '/layout/header.php';
         if (!size || !color) {
             alertPlaceholder.innerHTML = `
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                 Vui lòng chọn kích thước và màu sắc!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -154,7 +154,7 @@ include __DIR__ . '/layout/header.php';
                     alert.classList.remove('show');
                     setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
                 }
-            }, 2000000); // Biến mất sau 1 giây
+            }, 200000); // Biến mất sau 1 giây
             return;
         }
 
@@ -182,6 +182,9 @@ include __DIR__ . '/layout/header.php';
                 if (data.success) {
                     alertPlaceholder.innerHTML = `
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:">
+                            <use xlink:href="#check-circle-fill" />
+                        </svg>
                         Đã thêm vào giỏ hàng!
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -205,7 +208,7 @@ include __DIR__ . '/layout/header.php';
                         alert.classList.remove('show');
                         setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
                     }
-                }, 1000); // Biến mất sau 1 giây
+                }, 2000); // Biến mất sau 1 giây
             })
             .catch(error => {
                 console.error('Lỗi:', error);
@@ -221,7 +224,7 @@ include __DIR__ . '/layout/header.php';
                         alert.classList.remove('show');
                         setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
                     }
-                }, 1000); // Biến mất sau 1 giây
+                }, 2000); // Biến mất sau 1 giây
             });
     }
 

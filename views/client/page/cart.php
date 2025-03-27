@@ -1,53 +1,57 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
-<div class="container mt-5">
-    <h2 style="margin-right: 20px;">Giỏ hàng của bạn</h2>
-    <div style="display: flex; gap: 20px;">
-        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=index" class="position-relative me-4 my-auto" id="order-history-icon">Lịch sử mua hàng</a></h2>
-        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=canceled" class="position-relative me-4 my-auto" id="canceled-orders-icon">Đơn hàng đã hủy</a></h2>
-        <h2><a href="/shoeimportsystem/index.php?controller=orderhistory&action=shipping" class="position-relative me-4 my-auto" id="shipping-orders-icon">Đơn đang vận chuyển</a></h2>
+<!--  -->
+<div class="container mt-5" style="justify-content: center">
+    <div>
+        <?php include __DIR__ . '/../layout/navigation.php'; ?>
+
+        <?php if (!empty($cartItems)): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Size</th>
+                        <th>Màu sắc</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($cartItems as $item): ?>
+                        <tr data-ma-gh="<?php echo htmlspecialchars($item['MaGH']); ?>"
+                            data-ma-sp="<?php echo htmlspecialchars($item['MaSP']); ?>"
+                            data-size="<?php echo htmlspecialchars($item['Size']); ?>"
+                            data-ma-mau="<?php echo htmlspecialchars($item['MaMau']); ?>">
+                            <td><img src="/shoeimportsystem/public/<?php echo htmlspecialchars($item['Img']); ?>" alt="<?php echo htmlspecialchars($item['TenSanPham']); ?>" style="width: 50px; height: 50px;"></td>
+                            <td><?php echo htmlspecialchars($item['TenSanPham']); ?></td>
+                            <td><?php echo htmlspecialchars($item['Size']); ?></td>
+                            <td><?php echo htmlspecialchars($item['MaMau']); ?></td>
+                            <td><?php echo number_format($item['GiaTien'], 0, ',', '.') . ' VNĐ'; ?></td>
+                            <td><?php echo htmlspecialchars($item['SoLuong']); ?></td>
+                            <td><?php echo number_format($item['TongTien'], 0, ',', '.') . ' VNĐ'; ?></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeFromCart(<?php echo $item['MaGH']; ?>, <?php echo $item['MaSP']; ?>, <?php echo $item['Size']; ?>, '<?php echo $item['MaMau']; ?>')">Xóa</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="text-right">
+                <h4>Tổng tiền: <?php echo number_format($cartTotal, 0, ',', '.') . ' VNĐ'; ?></h4>
+                <a href="/shoeimportsystem/index.php?controller=cart&action=checkout" class="btn btn-success">Thanh toán</a>
+            </div>
     </div>
 
-    <?php if (!empty($cartItems)): ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Hình ảnh</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Size</th>
-                    <th>Màu sắc</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng tiền</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($cartItems as $item): ?>
-                    <tr data-ma-gh="<?php echo htmlspecialchars($item['MaGH']); ?>"
-                        data-ma-sp="<?php echo htmlspecialchars($item['MaSP']); ?>"
-                        data-size="<?php echo htmlspecialchars($item['Size']); ?>"
-                        data-ma-mau="<?php echo htmlspecialchars($item['MaMau']); ?>">
-                        <td><img src="/shoeimportsystem/public/<?php echo htmlspecialchars($item['Img']); ?>" alt="<?php echo htmlspecialchars($item['TenSanPham']); ?>" style="width: 50px; height: 50px;"></td>
-                        <td><?php echo htmlspecialchars($item['TenSanPham']); ?></td>
-                        <td><?php echo htmlspecialchars($item['Size']); ?></td>
-                        <td><?php echo htmlspecialchars($item['MaMau']); ?></td>
-                        <td><?php echo number_format($item['GiaTien'], 0, ',', '.') . ' VNĐ'; ?></td>
-                        <td><?php echo htmlspecialchars($item['SoLuong']); ?></td>
-                        <td><?php echo number_format($item['TongTien'], 0, ',', '.') . ' VNĐ'; ?></td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" onclick="removeFromCart(<?php echo $item['MaGH']; ?>, <?php echo $item['MaSP']; ?>, <?php echo $item['Size']; ?>, '<?php echo $item['MaMau']; ?>')">Xóa</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <div class="text-right">
-            <h4>Tổng tiền: <?php echo number_format($cartTotal, 0, ',', '.') . ' VNĐ'; ?></h4>
-            <a href="/shoeimportsystem/index.php?controller=cart&action=checkout" class="btn btn-success">Thanh toán</a>
-        </div>
+
+
+    <div>
     <?php else: ?>
         <p class="text-center">Giỏ hàng của bạn hiện đang trống.</p>
+        <div class="text-center"><img src="./views/client/page/shopping-cart-24556_640.png" alt="" style="width: auto; height: 170px;"></div>
     <?php endif; ?>
+    </div>
 </div>
 
 <script>
@@ -85,7 +89,7 @@
                     if (rows.length === 0) {
                         document.querySelector('.table').remove();
                         document.querySelector('.text-right').remove();
-                        document.querySelector('.container.mt-5').innerHTML += '<p class="text-center">Giỏ hàng của bạn hiện đang trống.</p>';
+                        document.querySelector('.container.mt-5').innerHTML += '<p class="text-center">Giỏ hàng của bạn hiện đang trống....</p>';
                     } else {
                         // Tính lại tổng tiền từ các hàng còn lại
                         let newTotal = 0;

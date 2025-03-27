@@ -30,14 +30,14 @@
     <?php include __DIR__ . '/layout/header.php'; ?>
     <script>
         // Remove the hero section if it exists in the header
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     const heroSection = document.querySelector('.hero-header');
-        //     if (heroSection) {
-        //         heroSection.remove();
-        //     }
-        // });
+        document.addEventListener("DOMContentLoaded", function() {
+            const heroSection = document.querySelector('.hero-header');
+            if (heroSection) {
+                heroSection.remove();
+            }
+        });
     </script>
-    <div class="main-container">
+    <div class="main-container" style="margin-top:220px;">
 
         <!-- Filter Section -->
         <div class="filter-section">
@@ -68,7 +68,7 @@
                 <input type="radio" name="price" value="2" <?= ($_GET['price'] ?? '') == 2 ? 'checked' : '' ?>> 1 triệu - 2 triệu<br>
                 <input type="radio" name="price" value="3" <?= ($_GET['price'] ?? '') == 3 ? 'checked' : '' ?>> Trên 2 triệu<br>
 
-                <button type="submit">Lọc sản phẩm</button>
+                <button type="submit" class="btn btn-outline-primary">Primary</button>
             </form>
         </div>
 

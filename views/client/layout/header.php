@@ -105,7 +105,14 @@ $brands = $supplierModel->getAllBrands();
                         <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
+                        <!-- start test -->
+                        <div class="searchBox">
+                            <input class="searchInput" type="text" name="" placeholder="Search ten san pham">
+                            <button class="btn btn-md-square btn-search" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <!-- edn test -->
 
                         <!-- day chinh la gio hang -->
                         <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">

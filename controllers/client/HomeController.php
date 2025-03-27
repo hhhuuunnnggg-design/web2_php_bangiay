@@ -15,39 +15,47 @@ class HomeController
         $this->db = $db;
         $this->categoryModel = new CategoryModel();
         $this->productModel = new ProductModel();
-        $this->commentModel = new CommentModel($this->db); // Khởi tạo CommentModel
+        $this->commentModel = new CommentModel($this->db);
     }
-
-
-
-    protected function model($model)
-    {
-        require_once __DIR__ . '/../../models/client/CommentModel.php';
-        return new CommentModel($this->db);
-    }
-
 
     public function index()
     {
         // Lấy tất cả danh mục
         $categories = $this->categoryModel->getAllCategories('', PHP_INT_MAX, 0);
 
-        // Lấy sản phẩm theo từng danh mục
-        $productsByCategory = [];
+        // Lấy tham số tìm kiếm từ URL (nếu có)
+        $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : null;
         $selectedCategory = isset($_GET['category']) ? $_GET['category'] : null;
 
-        if ($selectedCategory) {
-            // Nếu có danh mục được chọn, chỉ lấy sản phẩm của danh mục đó, không giới hạn
+        $productsByCategory = [];
+
+        if ($searchQuery) {
+            // Nếu có từ khóa tìm kiếm, tìm sản phẩm theo tên
+            $products = $this->productModel->searchProductsByName($searchQuery);
+            if (!empty($products)) {
+                // Nhóm sản phẩm tìm được vào một danh mục giả "Kết quả tìm kiếm"
+                $productsByCategory['search'] = [
+                    'TenDM' => "Kết quả tìm kiếm cho '$searchQuery'",
+                    'products' => $products
+                ];
+            } else {
+                $productsByCategory['search'] = [
+                    'TenDM' => "Kết quả tìm kiếm cho '$searchQuery'",
+                    'products' => []
+                ];
+            }
+        } elseif ($selectedCategory) {
+            // Nếu có danh mục được chọn, chỉ lấy sản phẩm của danh mục đó
             $products = $this->productModel->getProductsByCategory($selectedCategory, PHP_INT_MAX, 0);
             if (!empty($products)) {
-                $category = $this->categoryModel->getCategoryById($selectedCategory); // Hàm này cần được thêm vào CategoryModel nếu chưa có
+                $category = $this->categoryModel->getCategoryById($selectedCategory);
                 $productsByCategory[$selectedCategory] = [
                     'TenDM' => $category['TenDM'],
                     'products' => $products
                 ];
             }
         } else {
-            // Nếu không có danh mục được chọn, hiển thị 4 sản phẩm cho mỗi danh mục
+            // Nếu không có tìm kiếm hoặc danh mục, hiển thị 4 sản phẩm cho mỗi danh mục
             foreach ($categories as $category) {
                 $products = $this->productModel->getProductsByCategory($category['MaDM'], 4, 0);
                 if (!empty($products)) {
@@ -63,6 +71,7 @@ class HomeController
         $title = "Trang chủ";
         include __DIR__ . '/../../views/client/home.php';
     }
+
     public function detail()
     {
         $productId = isset($_GET['id']) ? $_GET['id'] : null;
@@ -78,7 +87,7 @@ class HomeController
         }
 
         $productDetails = $this->productModel->getProductDetails($productId);
-        $reviews = $this->commentModel->getReviewsByProductId($productId); // Lấy danh sách đánh giá
+        $reviews = $this->commentModel->getReviewsByProductId($productId);
 
         $title = "Chi tiết sản phẩm - " . $product['TenSP'];
         include __DIR__ . '/../../views/client/product_detail.php';

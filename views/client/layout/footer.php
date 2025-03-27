@@ -225,7 +225,7 @@
         width: 42px;
         height: 42px;
         border-radius: 50%;
-        background: #81c408 !important;
+
         border: none;
         transition: all 0.3s ease-in-out;
     }

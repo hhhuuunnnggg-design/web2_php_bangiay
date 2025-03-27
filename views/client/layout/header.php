@@ -41,7 +41,8 @@ $brands = $supplierModel->getAllBrands();
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
             <div id="liveAlertPlaceholder"></div>
-            <!-- this is a warning -->
+
+            <!-- SVG icons -->
             <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
                 <symbol id="check-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -53,7 +54,8 @@ $brands = $supplierModel->getAllBrands();
                     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                 </symbol>
             </svg>
-            <!-- end test start -->
+
+            <!-- Topbar -->
             <div class="container d-lg-block d-none bg-primary topbar">
                 <div class="d-flex justify-content-between">
                     <div class="ps-2 top-info">
@@ -62,11 +64,12 @@ $brands = $supplierModel->getAllBrands();
                     </div>
                 </div>
             </div>
+
+            <!-- Navbar -->
             <div class="container px-0">
                 <nav class="navbar navbar-expand-xl navbar-light bg-white">
                     <a href="/shoeimportsystem/index.php?controller=home&action=index" class="navbar-brand">
-                        <h1 class="display-6 text-primary"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;">
-                        </h1>
+                        <h1 class="display-6 text-primary"><img src="/shoeimportsystem/views/client/layout/img/logo.jpg" alt="" style="width: 100px;height: 77px;margin-top: 9px;"></h1>
                     </a>
                     <button class="navbar-toggler px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="text-primary fa fa-bars"></span>
@@ -86,57 +89,23 @@ $brands = $supplierModel->getAllBrands();
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            <div id="productList">
-                                <!-- Sản phẩm load vào đây -->
-                            </div>
                             <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <!-- start test -->
-                            <div class="searchBox">
-                                <input class="searchInput" type="text" name="" placeholder="Search ten san pham">
-                                <button class="btn btn-md-square btn-search" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                            <!-- edn test -->
-                            <!-- day chinh la gio hang -->
-                            <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
-                            </a>
-                            <!-- 1 -->
+                            <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>
                             <a href="/shoeimportsystem/index.php?controller=cart&action=index" class="position-relative me-4 my-auto" id="cart-icon">
                                 <i class="fa fa-2x fa-shopping-bag"></i>
                                 <span id="cart-count" class="d-flex align-items-center bg-secondary justify-content-center position-absolute rounded-circle text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
                                     <?php
-                                    session_start();
                                     if (isset($_SESSION['user'])) {
-                                        echo $_SESSION['cart_count'] ?? 0; // Tổng số lượng từ session
+                                        echo $_SESSION['cart_count'] ?? 0;
                                     } else {
                                         echo 0;
                                     }
                                     ?>
                                 </span>
                             </a>
-                            <!-- end gio hang -->
-
-                            <!-- Modal chi tiết giỏ hàng -->
-                            <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" id="cart-details">
-                                            <!-- Chi tiết giỏ hàng sẽ được tải động bằng AJAX -->
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                            <a href="/shoeimportsystem/index.php?controller=checkout&action=index" class="btn btn-primary">Thanh toán</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- User menu -->
                             <div class="user-menu">
                                 <?php if (isset($_SESSION['user'])): ?>
                                     <a href="#" class="my-auto"><i class="fa-2x fa-user fas"></i></a>
@@ -153,12 +122,31 @@ $brands = $supplierModel->getAllBrands();
                                     </div>
                                 <?php endif; ?>
                             </div>
-
-
                         </div>
-
                     </div>
                 </nav>
+            </div>
+        </div>
+
+        <!-- Search Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Tìm kiếm sản phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="searchForm" method="GET" action="/shoeimportsystem/index.php">
+                            <input type="hidden" name="controller" value="home">
+                            <input type="hidden" name="action" value="index">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Nhập tên sản phẩm..." required>
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </head>

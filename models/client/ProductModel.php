@@ -12,6 +12,8 @@ class ProductModel
         $this->conn = $this->db->getConnection();
     }
 
+
+
     // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
     // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
     public function getProductsByCategory($categoryId, $limit = 5, $offset = 0)
@@ -31,6 +33,40 @@ class ProductModel
         $stmt->execute();
         $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+        foreach ($products as &$product) {
+            $promotion = $this->calculatePromotionPrice(
+                $product['DonGia'],
+                $product['KM_PT'],
+                $product['TienKM'],
+                $product['NgayBD'],
+                $product['NgayKT']
+            );
+            $product['GiaKhuyenMai'] = $promotion['price'];
+            $product['GiamGia'] = $promotion['discount'];
+        }
+        unset($product);
+
+        return $products;
+    }
+
+    public function searchProductsByName($searchQuery)
+    {
+        $searchQuery = $this->conn->real_escape_string($searchQuery);
+        $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC, 
+                       km.KM_PT, km.TienKM, km.NgayBD, km.NgayKT
+                FROM sanpham sp 
+                LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM 
+                LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC 
+                LEFT JOIN sanphamkhuyenmai spkm ON sp.MaSP = spkm.MaSP
+                LEFT JOIN khuyenmai km ON spkm.MaKM = km.MaKM
+                WHERE sp.TenSP LIKE ? AND sp.SoLuong > 1";
+        $stmt = $this->conn->prepare($sql);
+        $searchParam = "%$searchQuery%"; // Thêm % để tìm kiếm gần đúng
+        $stmt->bind_param("s", $searchParam);
+        $stmt->execute();
+        $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // Tính giá khuyến mãi cho từng sản phẩm
         foreach ($products as &$product) {
             $promotion = $this->calculatePromotionPrice(
                 $product['DonGia'],
@@ -179,7 +215,7 @@ class ProductModel
                 LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
                 $whereClause
                 LIMIT ? OFFSET ?";
-    
+
         $params[] = $limit;
         $params[] = $offset;
         $types .= 'ii';

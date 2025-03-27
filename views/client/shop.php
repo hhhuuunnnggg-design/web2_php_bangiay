@@ -73,24 +73,30 @@
         </div>
 
         <!-- Product Section -->
+        <!-- Product Section -->
         <div class="product-section">
-
             <div class="products">
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
                         <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?= $product['MaSP'] ?>">
                             <img src="/shoeimportsystem/public/<?= htmlspecialchars($product['AnhNen']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
                             <h4><?= htmlspecialchars($product['TenSP']) ?></h4>
-
                             <p>Danh mục: <?php echo htmlspecialchars($product['TenDM']); ?></p>
                             <p>Thương hiệu: <?php echo htmlspecialchars($product['TenNCC']); ?></p>
+                            <p class="price">
+                                <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                                    <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                    <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                    <span class="text-success  font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                <?php else: ?>
+                                    <span class="text-success"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
 
-                            <p class="price"><?= number_format($product['DonGia']) ?> VNĐ</p>
+                                <?php endif; ?>
+                            </p>
                         </a>
                     </div>
                 <?php endforeach; ?>
             </div>
-
         </div>
 
     </div>

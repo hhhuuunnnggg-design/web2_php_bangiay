@@ -15,7 +15,7 @@ class ProductModel
 
 
     // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
-    // Lấy sản phẩm theo danh mục với thông tin khuyến mãi
+    // (giao dien ma co gia khuyen mai la nho cai nay)
     public function getProductsByCategory($categoryId, $limit = 5, $offset = 0)
     {
         $categoryId = $this->conn->real_escape_string($categoryId);
@@ -171,6 +171,15 @@ class ProductModel
         $params = [];
         $types = '';
 
+        // Lấy thông tin khuyến mãi trong truy vấn
+        $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC, 
+                   km.KM_PT, km.TienKM, km.NgayBD, km.NgayKT
+            FROM sanpham sp
+            LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
+            LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
+            LEFT JOIN sanphamkhuyenmai spkm ON sp.MaSP = spkm.MaSP
+            LEFT JOIN khuyenmai km ON spkm.MaKM = km.MaKM";
+
         // Lọc theo danh mục
         if (!empty($categoryIds)) {
             $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
@@ -191,42 +200,56 @@ class ProductModel
             }
         }
 
-        // Lọc theo khoảng giá
-        if (!empty($minPrice)) {
-            $conditions[] = "sp.DonGia >= ?";
-            $params[] = $minPrice;
-            $types .= 'i';
-        }
-        if (!empty($maxPrice)) {
-            $conditions[] = "sp.DonGia <= ?";
-            $params[] = $maxPrice;
-            $types .= 'i';
+        // Xây dựng giá thực tế để lọc (giá khuyến mãi nếu có, nếu không thì dùng DonGia)
+        if ($minPrice !== null || $maxPrice !== null) {
+            $conditions[] = "(
+            CASE 
+                WHEN km.NgayBD <= CURDATE() AND km.NgayKT >= CURDATE() 
+                     AND (km.KM_PT > 0 OR km.TienKM > 0)
+                THEN 
+                    CASE 
+                        WHEN km.KM_PT > 0 THEN sp.DonGia * (1 - km.KM_PT / 100)
+                        WHEN km.TienKM > 0 THEN sp.DonGia - km.TienKM
+                        ELSE sp.DonGia
+                    END
+                ELSE sp.DonGia
+            END
+            BETWEEN ? AND ?
+        )";
+            $params[] = $minPrice ?? 0;
+            $params[] = $maxPrice ?? PHP_INT_MAX;
+            $types .= 'ii';
         }
 
         // Xây dựng query
         $whereClause = '';
         if (!empty($conditions)) {
-            $whereClause = "WHERE " . implode(' AND ', $conditions);
+            $whereClause = " WHERE " . implode(' AND ', $conditions);
         }
 
-        $sql = "SELECT sp.*, dm.TenDM, ncc.TenNCC 
-                FROM sanpham sp
-                LEFT JOIN danhmuc dm ON sp.MaDM = dm.MaDM
-                LEFT JOIN nhacc ncc ON sp.MaNCC = ncc.MaNCC
-                $whereClause
-                LIMIT ? OFFSET ?";
-
+        $sql .= "$whereClause LIMIT ? OFFSET ?";
         $params[] = $limit;
         $params[] = $offset;
         $types .= 'ii';
-
-
-
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // Tính giá khuyến mãi cho từng sản phẩm để hiển thị
+        foreach ($products as &$product) {
+            $promotion = $this->calculatePromotionPrice(
+                $product['DonGia'],
+                $product['KM_PT'],
+                $product['TienKM'],
+                $product['NgayBD'],
+                $product['NgayKT']
+            );
+            $product['GiaKhuyenMai'] = $promotion['price'];
+            $product['GiamGia'] = $promotion['discount'];
+        }
+        unset($product);
 
         return $products;
     }

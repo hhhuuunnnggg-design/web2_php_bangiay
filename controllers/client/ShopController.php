@@ -3,8 +3,10 @@ require_once __DIR__ . '/../../models/client/ProductModel.php';
 require_once __DIR__ . '/../../models/CategoryModel.php';
 require_once __DIR__ . '/../../models/SupplierModel.php';
 
-class ShopController {
-    public function index() {
+class ShopController
+{
+    public function index()
+    {
         $productModel = new ProductModel();
         $categoryModel = new CategoryModel();
         $supplierModel = new SupplierModel();
@@ -37,10 +39,9 @@ class ShopController {
             $minPrice,
             $maxPrice
         );
-       
+
 
         // Truyền dữ liệu sang view
         include __DIR__ . '/../../views/client/shop.php';
     }
 }
-?>

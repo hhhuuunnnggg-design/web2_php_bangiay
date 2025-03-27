@@ -14,7 +14,7 @@ class CommentModel
     public function getCommentsByProductId($productId)
     {
         try {
-            $sql = "SELECT * FROM binhluan WHERE MaSP = ?";
+            $sql = "SELECT * FROM binhluan WHERE MaSP = ? ORDER BY ThoiGian DESC";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([(int)$productId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

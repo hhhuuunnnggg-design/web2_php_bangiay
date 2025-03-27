@@ -17,7 +17,6 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 <div class="container mt-5">
-    <!-- <div id="liveAlertPlaceholder"></div> -->
     <div class="breadcrumb">
 
         <a href="/shoeimportsystem/index.php?controller=home&action=index">Trang chủ</a> » Chi tiết sản phẩm
@@ -154,7 +153,7 @@ include __DIR__ . '/layout/header.php';
                     alert.classList.remove('show');
                     setTimeout(() => alert.remove(), 150); // Xóa sau khi animation hoàn tất
                 }
-            }, 200000); // Biến mất sau 1 giây
+            }, 2000); // Biến mất sau 1 giây
             return;
         }
 
@@ -233,11 +232,37 @@ include __DIR__ . '/layout/header.php';
         let color = document.querySelector('input[name="color"]:checked')?.value;
         let quantity = document.getElementById('quantity').value;
         if (!size || !color) {
-            alert('Vui lòng chọn kích thước và màu sắc!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng chọn kích thước và màu sắc!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             return;
         }
         <?php if (!isset($_SESSION['user'])): ?>
-            alert('Vui lòng đăng nhập để mua hàng!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng đăng nhập để mua hàng!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
         <?php else: ?>
             window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
@@ -270,7 +295,20 @@ include __DIR__ . '/layout/header.php';
 
     document.getElementById('submit-review').addEventListener('click', function() {
         <?php if (!isset($_SESSION['user'])): ?>
-            alert('Vui lòng đăng nhập để gửi đánh giá!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng đăng nhập để gửi đánh giá!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
             return;
         <?php endif; ?>
@@ -279,7 +317,20 @@ include __DIR__ . '/layout/header.php';
         const productId = <?php echo $product['MaSP']; ?>;
 
         if (!comment) {
-            alert('Vui lòng nhập nội dung đánh giá!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng nhập nội dung đánh giá!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             return;
         }
 
@@ -298,19 +349,51 @@ include __DIR__ . '/layout/header.php';
             })
             .then(data => {
                 if (data.success) {
-                    alert('Đánh giá của bạn đã được thêm thành công!');
+                    document.getElementById('liveAlertPlaceholder').innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        Đánh giá thành công!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                    setTimeout(() => {
+                        const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            setTimeout(() => alert.remove(), 150);
+                        }
+                    }, 2000);
                     const reviewDiv = document.createElement('div');
                     reviewDiv.classList.add('review');
                     reviewDiv.innerHTML = `<p><strong>Khách hàng:</strong> <?php echo $_SESSION['user']['MaKH']; ?></p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
                     document.querySelector('#reviews').appendChild(reviewDiv);
                     form.comment.value = '';
                 } else {
-                    alert(data.message || 'Có lỗi xảy ra khi thêm đánh giá.');
+
+                    document.getElementById('liveAlertPlaceholder').innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${data.message || 'Có lỗi xảy ra khi thêm đánh giá.'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            setTimeout(() => alert.remove(), 150);
+                        }
+                    }, 2000);
                 }
             })
             .catch(error => {
                 console.error('Lỗi chi tiết:', error);
-                alert('Có lỗi xảy ra khi gửi đánh giá: ' + error.message);
+
+                document.getElementById('liveAlertPlaceholder').innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${error.message || 'ó lỗi xảy ra khi gửi đánh giá:'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
             });
     });
 
@@ -320,12 +403,37 @@ include __DIR__ . '/layout/header.php';
         let quantity = document.getElementById('quantity').value;
 
         if (!size || !color) {
-            alert('Vui lòng chọn kích thước và màu sắc!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng chọn kích thước và màu sắc!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             return;
         }
-
         <?php if (!isset($_SESSION['user'])): ?>
-            alert('Vui lòng đăng nhập để mua hàng!');
+            document.getElementById('liveAlertPlaceholder').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            Vui lòng đăng nhập để mua hàng!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+            setTimeout(() => {
+                const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
         <?php else: ?>
             fetch('/shoeimportsystem/index.php?controller=cart&action=addToCart', {
@@ -341,12 +449,36 @@ include __DIR__ . '/layout/header.php';
                         document.querySelector('#cart-count').textContent = data.cartCount;
                         window.location.href = '/shoeimportsystem/index.php?controller=cart&action=checkout';
                     } else {
-                        alert(data.message || 'Không thể thêm vào giỏ hàng để mua ngay!');
+                        document.getElementById('liveAlertPlaceholder').innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${data.message || 'Không thể thêm vào giỏ hàng để mua ngay!'}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                        setTimeout(() => {
+                            const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                            if (alert) {
+                                alert.classList.remove('show');
+                                setTimeout(() => alert.remove(), 150);
+                            }
+                        }, 2000);
                     }
                 })
                 .catch(error => {
                     console.error('Lỗi:', error);
-                    alert('Có lỗi xảy ra khi mua ngay!');
+                    document.getElementById('liveAlertPlaceholder').innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Có lỗi xảy ra khi mua ngay!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            setTimeout(() => alert.remove(), 150);
+                        }
+                    }, 2000);
                 });
         <?php endif; ?>
     }

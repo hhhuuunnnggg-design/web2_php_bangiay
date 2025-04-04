@@ -206,8 +206,7 @@ body {
   font-weight: 400;
 }
 .sub-main-w3 input[type="email"],
-.sub-main-w3 input[type="password"],
-.sub-main-w3 input[type="text"] {
+.sub-main-w3 input[type="password"] {
   outline: none;
   font-size: 1em;
   padding: 1em 3em 1em 1em;
@@ -615,24 +614,5 @@ span.icon2 {
   .footer {
     padding: 2.2em 0 1.4em;
   }
-
-  /* Trong phần main */
-  /* .sub-main-w3 input[type="email"],
-  .sub-main-w3 input[type="password"],
-  .sub-main-w3 input[type="text"] {
-    outline: none;
-    font-size: 1em;
-    padding: 1em 3em 1em 1em;
-    border: none;
-    margin-bottom: 0.3em;
-    background: none;
-    border: 1px solid #eee;
-    width: 82%;
-    color: #fff;
-    font-weight: 400;
-    font-family: "Oleo Script", cursive;
-    letter-spacing: 1px;
-  } */
-  /* Trong phần main */
 }
 /*--//responsive--*/

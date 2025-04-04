@@ -1,15 +1,15 @@
 <h1>Quản lý chi tiết quyền</h1>
 <div style="display: flex;justify-content: space-between;">
-    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm" style="display: flex;">
         <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm theo vai trò hoặc chức năng">
         <input type="hidden" name="controller" value="role_detail">
         <input type="hidden" name="action" value="index">
-        <button type="submit">Tìm</button>
+        <button type="submit" style="margin-left: 18px;border-radius: 18px;height: 53px;">Tìm</button>
     </form>
 
     <?php if ($auth->checkPermission(7, 'add')): ?>
         <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
-            <button type="button" class="btn btn-primary"  style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
+            <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
         </a>
     <?php endif; ?>
 
@@ -27,37 +27,39 @@
         </tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
         require_once __DIR__ . '/../../core/Auth.php';
         $auth = new Auth();
-        if (!empty($roleDetails)): 
+        if (!empty($roleDetails)):
             $stt = ($page - 1) * $limit + 1;
-            foreach ($roleDetails as $row): 
+            foreach ($roleDetails as $row):
         ?>
-        <tr data-manhomquyen="<?php echo $row['manhomquyen']; ?>" data-chucnang="<?php echo $row['chucnang']; ?>" data-hanhdong="<?php echo $row['hanhdong']; ?>">
-            <td><?php echo $stt++; ?></td>
-            <td><?php echo $row['TenQuyen']; ?></td>
-            <td><?php echo $row['TenChucNang']; ?></td>
-            <td><?php echo $row['hanhdong']; ?></td>
-            <td>
-                
-                <?php if ($auth->checkPermission(7, 'edit')): ?>
-                    <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
-                        <button type="button" class="btn btn-warning">Sửa</button>
-                    </a>
-                <?php endif; ?>
-                <?php if ($auth->checkPermission(7, 'delete')): ?>
-                    <a class="delete-btn" data-manhomquyen="<?php echo $row['manhomquyen']; ?>" data-chucnang="<?php echo $row['chucnang']; ?>" data-hanhdong="<?php echo urlencode($row['hanhdong']); ?>">
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                    </a>
-                <?php endif; ?>
-            </td>
-        </tr>
-        <?php 
+                <tr data-manhomquyen="<?php echo $row['manhomquyen']; ?>" data-chucnang="<?php echo $row['chucnang']; ?>" data-hanhdong="<?php echo $row['hanhdong']; ?>">
+                    <td><?php echo $stt++; ?></td>
+                    <td><?php echo $row['TenQuyen']; ?></td>
+                    <td><?php echo $row['TenChucNang']; ?></td>
+                    <td><?php echo $row['hanhdong']; ?></td>
+                    <td>
+
+                        <?php if ($auth->checkPermission(7, 'edit')): ?>
+                            <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
+                                <button type="button" class="btn btn-warning">Sửa</button>
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($auth->checkPermission(7, 'delete')): ?>
+                            <a class="delete-btn" data-manhomquyen="<?php echo $row['manhomquyen']; ?>" data-chucnang="<?php echo $row['chucnang']; ?>" data-hanhdong="<?php echo urlencode($row['hanhdong']); ?>">
+                                <button type="button" class="btn btn-danger">Xóa</button>
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php
             endforeach;
-        else: 
-        ?>
-            <tr><td colspan="5">Không có chi tiết quyền nào.</td></tr>
+        else:
+            ?>
+            <tr>
+                <td colspan="5">Không có chi tiết quyền nào.</td>
+            </tr>
         <?php endif; ?>
     </tbody>
 </table>
@@ -160,35 +162,44 @@
 
 
 <style>
-    .pagination { margin-top: 20px; }
-    .pagination a { margin: 0 5px; text-decoration: none; }
-    .pagination a:hover { text-decoration: underline; }
+    .pagination {
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        text-decoration: none;
+    }
+
+    .pagination a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <script>
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const manhomquyen = this.getAttribute('data-manhomquyen');
-        const chucnang = this.getAttribute('data-chucnang');
-        const hanhdong = this.getAttribute('data-hanhdong');
-        if (confirm('Xóa chi tiết quyền này?')) {
-            fetch(`/shoeimportsystem/public/index.php?controller=role_detail&action=delete&manhomquyen=${manhomquyen}&chucnang=${chucnang}&hanhdong=${hanhdong}`, {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelector(`tr[data-manhomquyen="${manhomquyen}"][data-chucnang="${chucnang}"][data-hanhdong="${hanhdong}"]`).remove();
-                    document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
-                } else {
-                    document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
-            });
-        }
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const manhomquyen = this.getAttribute('data-manhomquyen');
+            const chucnang = this.getAttribute('data-chucnang');
+            const hanhdong = this.getAttribute('data-hanhdong');
+            if (confirm('Xóa chi tiết quyền này?')) {
+                fetch(`/shoeimportsystem/public/index.php?controller=role_detail&action=delete&manhomquyen=${manhomquyen}&chucnang=${chucnang}&hanhdong=${hanhdong}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.querySelector(`tr[data-manhomquyen="${manhomquyen}"][data-chucnang="${chucnang}"][data-hanhdong="${hanhdong}"]`).remove();
+                            document.getElementById('message').innerHTML = '<p style="color:green;">Xóa thành công!</p>';
+                        } else {
+                            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: ' + data.message + '</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('message').innerHTML = '<p style="color:red;">Có lỗi xảy ra!</p>';
+                    });
+            }
+        });
     });
-});
 </script>

@@ -1,10 +1,10 @@
 <h1>Quản lý kích thước</h1>
 <div style="display: flex;justify-content: space-between;">
-    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm" style="display: flex;">
         <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm kích thước">
         <input type="hidden" name="controller" value="size">
         <input type="hidden" name="action" value="index">
-        <button type="submit">Tìm</button>
+        <button type="submit" style="margin-left: 18px;border-radius: 18px;height: 53px;">Tìm</button>
     </form>
 
     <div>

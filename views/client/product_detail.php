@@ -91,9 +91,13 @@ include __DIR__ . '/layout/header.php';
             <?php if (!empty($reviews)): ?>
                 <?php foreach ($reviews as $review): ?>
                     <div class="review">
-                        <p><strong>Khách hàng:</strong> <?php echo htmlspecialchars($review['TenKH']); ?></p>
-                        <p><strong>Thời gian:</strong> <?php echo htmlspecialchars($review['ThoiGian']); ?></p>
+
+
+
+                        <p> <img src="/shoeimportsystem/views/client/acount.png" alt="" style=" height: 30px; margin-top: 16px;"> <?php echo htmlspecialchars($review['TenKH']); ?></p>
+
                         <p><?php echo htmlspecialchars($review['NoiDung']); ?></p>
+                        <p><strong>Thời gian:</strong> <?php echo htmlspecialchars($review['ThoiGian']); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -351,7 +355,7 @@ include __DIR__ . '/layout/header.php';
                     }, 2000);
                     const reviewDiv = document.createElement('div');
                     reviewDiv.classList.add('review');
-                    reviewDiv.innerHTML = `<p><strong>Khách hàng:</strong> <?php echo $_SESSION['user']['MaKH']; ?></p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
+                    reviewDiv.innerHTML = `<p><img src="/shoeimportsystem/views/client/acount.png" alt="" style=" height: 30px; margin-top: 16px;"> <?php echo $_SESSION['user']['TenKH']; ?></p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
                     document.querySelector('#reviews').appendChild(reviewDiv);
                     form.comment.value = '';
                 } else {

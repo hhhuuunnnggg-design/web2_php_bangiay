@@ -44,23 +44,45 @@ class AuthController
             $email = $_POST['email'] ?? '';
             $sdt = $_POST['sdt'] ?? '';
             $diaChi = $_POST['diaChi'] ?? '';
-            $matKhau = $_POST['matKhau'] ?? '';
+            $matKhauCu = $_POST['matKhauCu'] ?? '';
+            $matKhauMoi = $_POST['matKhauMoi'] ?? '';
+            $matKhauXacNhan = $_POST['matKhauXacNhan'] ?? '';
 
-            if ($this->userModel->updateUser($maKH, $tenKH, $email, $sdt, $diaChi, $matKhau)) {
-                // Cập nhật lại session nếu cần
-                $_SESSION['user']['TenKH'] = $tenKH;
-                $success = "Cập nhật thông tin thành công!";
+            // Lấy thông tin người dùng hiện tại
+            $userInfo = $this->userModel->getUserInfo($maKH);
+
+            // Kiểm tra mật khẩu cũ
+            if ($matKhauCu !== $userInfo['MatKhau']) {
+                $error = "Mật khẩu cũ không đúng!";
+            } elseif ($matKhauMoi !== $matKhauXacNhan) {
+                $error = "Mật khẩu mới và xác nhận mật khẩu không khớp!";
+            } elseif (strlen($matKhauMoi) < 6) {
+                $error = "Mật khẩu mới phải có ít nhất 6 ký tự!";
+            } elseif ($matKhauCu === $matKhauMoi) {
+                $error = "Mật khẩu mới không được trùng với mật khẩu cũ!";
             } else {
-                $error = "Cập nhật thất bại, vui lòng thử lại!";
+                // Cập nhật thông tin người dùng với mật khẩu dạng plaintext
+                if ($this->userModel->updateUser($maKH, $tenKH, $email, $sdt, $diaChi, $matKhauMoi)) {
+                    // Cập nhật session
+                    $_SESSION['user']['TenKH'] = $tenKH;
+                    $_SESSION['user']['Email'] = $email;
+                    $_SESSION['user']['SDT'] = $sdt;
+                    $_SESSION['user']['DiaChi'] = $diaChi;
+                    $_SESSION['user']['MatKhau'] = $matKhauMoi; // Cập nhật mật khẩu mới vào session
+                    $success = "Cập nhật thông tin thành công!";
+                } else {
+                    $error = "Cập nhật thất bại, vui lòng thử lại!";
+                }
             }
 
+            // Lấy lại thông tin user để hiển thị
             $userInfo = $this->userModel->getUserInfo($maKH);
             $title = "Thông tin cá nhân";
             include __DIR__ . '/../../views/client/page/profile.php';
         }
     }
 
-    // Các hàm khác giữ nguyên: login(), doLogin(), register(), doRegister(), logout()
+    // Đăng nhập
     public function login()
     {
         if (isset($_SESSION['user'])) {
@@ -80,12 +102,11 @@ class AuthController
             $user = $this->userModel->login($email, $matKhau);
             if ($user) {
                 session_start();
-                // Xóa giỏ hàng cũ của người dùng trước đó (nếu có)
                 if (isset($_SESSION['user'])) {
                     $this->cartModel->clearCart($_SESSION['user']['MaKH']);
                 }
                 $_SESSION['user'] = $user;
-                $_SESSION['cart_count'] = $this->cartModel->getCartCount($user['MaKH']); // Khởi tạo cart_count
+                $_SESSION['cart_count'] = $this->cartModel->getCartCount($user['MaKH']);
                 header("Location: /shoeimportsystem/index.php?controller=home&action=index");
                 exit;
             } else {
@@ -96,6 +117,7 @@ class AuthController
         }
     }
 
+    // Đăng ký
     public function register()
     {
         if (isset($_SESSION['user'])) {
@@ -119,6 +141,10 @@ class AuthController
                 $error = "Email đã được sử dụng!";
                 $title = "Đăng ký";
                 include __DIR__ . '/../../views/client/page/register.php';
+            } elseif (strlen($matKhau) < 6) {
+                $error = "Mật khẩu phải có ít nhất 6 ký tự!";
+                $title = "Đăng ký";
+                include __DIR__ . '/../../views/client/page/register.php';
             } else {
                 if ($this->userModel->register($tenKH, $email, $sdt, $diaChi, $matKhau)) {
                     header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
@@ -132,11 +158,12 @@ class AuthController
         }
     }
 
+    // Đăng xuất
     public function logout()
     {
         session_start();
         unset($_SESSION['user']);
-        unset($_SESSION['cart_count']); // Xóa cart_count khỏi session
+        unset($_SESSION['cart_count']);
         header("Location: /shoeimportsystem/index.php?controller=home&action=index");
         exit;
     }

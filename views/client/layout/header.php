@@ -82,9 +82,9 @@ $brands = $supplierModel->getAllBrands();
                             <div class="dropdown nav-item">
                                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>
                                 <div class="dropdown-menu bg-secondary m-0 rounded-0">
-                                    <?php foreach ($brands as $brand): ?>
-                                        <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brand['MaNCC']; ?>" class="dropdown-item">
-                                            <?php echo htmlspecialchars($brand['TenNCC']); ?>
+                                    <?php foreach ($brands as $brandItem): ?> <!-- Đổi $brand thành $brandItem -->
+                                        <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brandItem['MaNCC']; ?>" class="dropdown-item">
+                                            <?php echo htmlspecialchars($brandItem['TenNCC']); ?>
                                         </a>
                                     <?php endforeach; ?>
                                 </div>

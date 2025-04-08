@@ -1,23 +1,29 @@
 <head>
     <style>
         body {
-            background-color: white;
-            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            color: #333;
         }
 
         .container {
             width: 90%;
             margin: 20px auto;
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .menu {
             background-color: #343a40;
             color: #ffffff;
             padding: 20px;
+            border-radius: 8px 0 0 8px;
         }
 
         .menu ul {
@@ -32,15 +38,25 @@
         .menu a {
             color: #ffffff;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #007bff;
         }
 
         .content {
-            padding: 20px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 0 8px 8px 0;
         }
 
         h1 {
-            color: black;
+            color: #343a40;
             margin-bottom: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
         }
 
         .admin-info {
@@ -49,15 +65,22 @@
             grid-column: 2;
         }
 
-        /* CSS cho trang "Thêm nhân viên mới" */
-        form {
-            width: 500px;
+        /* CSS cho form thêm sản phẩm */
+        .product-form {
+            width: 100%;
+            max-width: 600px;
             margin: 20px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
         }
 
         input[type="text"],
@@ -66,38 +89,119 @@
         textarea,
         select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
             box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
         }
 
         button {
             background-color: #007bff;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
 
         .menu-link {
             display: block;
             width: 100%;
-            padding: 10px 20px;
+            padding: 12px 20px;
             text-align: left;
             background-color: #007bff;
-            /* Màu nền xanh dương */
             color: #ffffff;
-            /* Màu chữ trắng */
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 4px;
             border: none;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
 
         .menu-link:hover {
             background-color: #0056b3;
-            /* Màu nền xanh dương đậm hơn khi hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb li {
+            display: inline-block;
+        }
+
+        /* Style for checkboxes */
+        div label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        div label:hover {
+            background-color: #e9ecef;
+        }
+
+        div input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        /* Message styling */
+        #message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        #message p {
+            margin: 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        #message p[style*="color:green"] {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        #message p[style*="color:red"] {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
         }
     </style>
 

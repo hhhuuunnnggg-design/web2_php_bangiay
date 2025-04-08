@@ -1,10 +1,10 @@
 <h1>Quản lý khuyến mãi</h1>
 <div style="display: flex;justify-content: space-between;">
-    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm">
+    <form method="GET" action="/shoeimportsystem/public/index.php" id="searchForm" style="display: flex;">
         <input type="text" name="search" value="<?php echo htmlspecialchars($search ?? ''); ?>" placeholder="Tìm kiếm khuyến mãi">
         <input type="hidden" name="controller" value="promotion">
         <input type="hidden" name="action" value="index">
-        <button type="submit">Tìm</button>
+        <button type="submit" style="margin-left: 18px;border-radius: 18px;height: 53px;">Tìm</button>
     </form>
     <?php if ($auth->checkPermission(9, 'add')): ?>
         <a style href="/shoeimportsystem/public/index.php?controller=promotion&action=add">

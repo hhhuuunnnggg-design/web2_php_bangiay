@@ -113,7 +113,7 @@ class SupplierController
             exit;
         }
 
-        fgetcsv($handle); // Bỏ qua dòng tiêu đề
+        fgetcsv($handle); // Bỏ qua dòng tiêu đề 
         $success = true;
         $importedSuppliers = [];
         while (($data = fgetcsv($handle, 1000, ',')) !== false) {

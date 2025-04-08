@@ -13,7 +13,7 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <button type="submit">Gán Shipper</button>
+    <button type="submit">Gán Shipper...</button>
 </form>
 
 <script>

@@ -59,7 +59,7 @@ class OrderHistoryController
     {
         $currentUser = $this->auth->getCurrentUser();
         $maKH = $currentUser['MaKH'];
-        $orders = $this->orderModel->getOrdersByCustomer($maKH, 'Đang giao'); // Giả sử 'Đang giao' là trạng thái vận chuyển
+        $orders = $this->orderModel->getOrdersByCustomer($maKH, 'đang vận chuyển'); // Giả sử 'Đang giao' là trạng thái vận chuyển
         include __DIR__ . '/../../views/client/page/order_history.php';
     }
 }

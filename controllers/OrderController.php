@@ -132,8 +132,10 @@ class OrderController
                 exit;
             }
 
+            // Gán shipper và cập nhật TinhTrang thành "đang vận chuyển"
             if ($this->orderModel->assignShipper($maHD, $maNVGH)) {
-                echo json_encode(['success' => true, 'message' => 'Gán Shipper thành công']);
+                $this->orderModel->updateOrderStatus($maHD, 'đang vận chuyển', null);
+                echo json_encode(['success' => true, 'message' => 'Gán Shipper và cập nhật trạng thái thành công']);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Lỗi khi gán Shipper']);
             }

@@ -28,17 +28,6 @@ class BrandController
 
         include __DIR__ . '/../../views/client/layout/brand.php';
     }
-    // public function index()
-    // {
-    //     $brand_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-    //     $supplier = new Supplier();
-    //     $brand = $supplier->getBrandById($brand_id);
-    //     echo "Brand ID: $brand_id<br>";
-    //     echo "Brand tên thương hiệu: " . htmlspecialchars($brand['TenNCC'], ENT_QUOTES, 'UTF-8') . "<br>";
-
-    //     var_dump($brand);
-    //     die;
-    // }
 
     public function getBrands()
     {

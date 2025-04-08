@@ -40,7 +40,7 @@
 
 
     <div><?php else: ?>
-        <p class="text-center">Bạn chưa có đơn hàng nào.</p>
+        <p class="text-center">Bạn chưa có đơn hàng nào...</p>
         <div class="text-center"><img src="./views/client/page/shopping-cart-24556_640.png" alt="" style="width: auto; height: 170px;"></div>
     <?php endif; ?>
 

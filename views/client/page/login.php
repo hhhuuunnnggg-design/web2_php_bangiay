@@ -1,8 +1,4 @@
-<!--Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<!-- C:\xampp\htdocs\shoeimportsystem\views\client\page\login.php on line 91 -->
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -93,7 +89,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <?php endif; ?>
                     <form action="/shoeimportsystem/index.php?controller=auth&action=doLogin" method="post">
                         <?php
-                        session_start();
+
                         if (!isset($_SESSION['csrf_token'])) {
                             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                         }

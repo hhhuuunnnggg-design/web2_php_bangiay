@@ -158,12 +158,7 @@ class CartController
 
             if ($tenNN && $diaChiNN && $sdtNN) {
                 $result = $this->cartModel->processCheckout($maKH, $tenNN, $diaChiNN, $sdtNN);
-                if ($result) {
-                    $_SESSION['cart_count'] = 0;
-                    echo json_encode(['success' => true, 'message' => 'Thanh toán thành công!']);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'San pham qua dat, kho khong con,hehe!']);
-                }
+                echo json_encode($result);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Thông tin người nhận không hợp lệ!']);
             }

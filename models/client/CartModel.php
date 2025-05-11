@@ -186,6 +186,26 @@ class CartModel
             // Lấy chi tiết giỏ hàng
             $cartItems = $this->getCartItems($maKH);
             foreach ($cartItems as $item) {
+                // Kiểm tra số lượng sản phẩm trước khi thêm vào hóa đơn
+                $sql = "SELECT SoLuong FROM sanpham WHERE MaSP = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$item['MaSP']]);
+                $productQuantity = $stmt->fetchColumn();
+
+                if ($productQuantity < $item['SoLuong']) {
+                    throw new Exception("Sản phẩm " . $item['TenSanPham'] . " chỉ còn " . $productQuantity . " sản phẩm trong kho!");
+                }
+
+                // Kiểm tra số lượng trong chi tiết sản phẩm
+                $sql = "SELECT SoLuong FROM chitietsanpham WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([$item['MaSP'], $item['Size'], $item['MaMau']]);
+                $detailQuantity = $stmt->fetchColumn();
+
+                if ($detailQuantity < $item['SoLuong']) {
+                    throw new Exception("Sản phẩm " . $item['TenSanPham'] . " (Size: " . $item['Size'] . ", Màu: " . $item['MaMau'] . ") chỉ còn " . $detailQuantity . " sản phẩm trong kho!");
+                }
+
                 // Thêm chi tiết hóa đơn
                 $sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia, ThanhTien, Size, MaMau, img) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -201,23 +221,16 @@ class CartModel
                     $item['Img']
                 ]);
 
-                // Cập nhật số lượng trong bảng sanpham với kiểm tra số lượng
-                $sql = "UPDATE sanpham SET SoLuong = SoLuong - ? 
-                    WHERE MaSP = ? AND SoLuong >= ?";
+                // Cập nhật số lượng trong bảng sanpham
+                $sql = "UPDATE sanpham SET SoLuong = SoLuong - ? WHERE MaSP = ?";
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['SoLuong']]);
-                if ($stmt->rowCount() == 0) {
-                    throw new Exception("Số lượng sản phẩm không đủ trong bảng sanpham cho MaSP: " . $item['MaSP']);
-                }
+                $stmt->execute([$item['SoLuong'], $item['MaSP']]);
 
-                // Cập nhật số lượng trong bảng chitietsanpham với kiểm tra số lượng
+                // Cập nhật số lượng trong bảng chitietsanpham
                 $sql = "UPDATE chitietsanpham SET SoLuong = SoLuong - ? 
-                    WHERE MaSP = ? AND MaSize = ? AND MaMau = ? AND SoLuong >= ?";
+                    WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['Size'], $item['MaMau'], $item['SoLuong']]);
-                if ($stmt->rowCount() == 0) {
-                    throw new Exception("Số lượng sản phẩm không đủ trong bảng chitietsanpham cho MaSP: " . $item['MaSP'] . ", Size: " . $item['Size'] . ", MaMau: " . $item['MaMau']);
-                }
+                $stmt->execute([$item['SoLuong'], $item['MaSP'], $item['Size'], $item['MaMau']]);
             }
 
             // Thêm thông tin người nhận
@@ -229,11 +242,11 @@ class CartModel
             $this->clearCart($maKH);
 
             $this->db->commit();
-            return true;
+            return ['success' => true];
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Lỗi khi xử lý thanh toán: " . $e->getMessage());
-            return false;
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

@@ -14,8 +14,12 @@ class CommentController
 
     public function addComment()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if (!isset($_SESSION['user'])) {
+            header('Content-Type: application/json');
             echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
             exit;
         }
@@ -26,21 +30,25 @@ class CommentController
             $maKH = $_SESSION['user']['MaKH'];
 
             if ($productId && $comment && $maKH) {
-                // Gọi hàm addComment với thứ tự đúng: productId, customerId, content
                 $result = $this->commentModel->addComment($productId, $maKH, $comment);
                 if ($result) {
+                    header('Content-Type: application/json');
                     echo json_encode([
                         'success' => true,
                         'MaKH' => $maKH,
+                        'TenKH' => $_SESSION['user']['TenKH'],
                         'ThoiGian' => date('Y-m-d H:i:s')
                     ]);
                 } else {
+                    header('Content-Type: application/json');
                     echo json_encode(['success' => false, 'message' => 'Không thể thêm đánh giá!']);
                 }
             } else {
+                header('Content-Type: application/json');
                 echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ!']);
             }
         } else {
+            header('Content-Type: application/json');
             echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
         }
         exit;

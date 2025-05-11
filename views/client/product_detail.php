@@ -86,7 +86,7 @@ include __DIR__ . '/layout/header.php';
         <div class="hidden tab-content" id="reviews">
             <form id="review-form" method="post">
                 <textarea name="comment" placeholder="Viết đánh giá..."></textarea><br>
-                <button type="button" id="submit-review" class="review-button">Đánh giá</button>
+                <button type="button" id="submit-review" class="review-button">Đánh giá..</button>
             </form>
             <?php if (!empty($reviews)): ?>
                 <?php foreach ($reviews as $review): ?>
@@ -333,7 +333,9 @@ include __DIR__ . '/layout/header.php';
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Server trả về lỗi: ' + response.status);
+                    return response.json().then(data => {
+                        throw new Error(data.message || 'Server trả về lỗi: ' + response.status);
+                    });
                 }
                 return response.json();
             })
@@ -355,11 +357,10 @@ include __DIR__ . '/layout/header.php';
                     }, 2000);
                     const reviewDiv = document.createElement('div');
                     reviewDiv.classList.add('review');
-                    reviewDiv.innerHTML = `<p><img src="/shoeimportsystem/views/client/acount.png" alt="" style=" height: 30px; margin-top: 16px;"> <?php echo $_SESSION['user']['TenKH']; ?></p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
+                    reviewDiv.innerHTML = `<p><img src="/shoeimportsystem/views/client/acount.png" alt="" style=" height: 30px; margin-top: 16px;"> ${data.TenKH}</p><p><strong>Thời gian:</strong> ${data.ThoiGian}</p><p>${comment}</p>`;
                     document.querySelector('#reviews').appendChild(reviewDiv);
                     form.comment.value = '';
                 } else {
-
                     document.getElementById('liveAlertPlaceholder').innerHTML = `
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             ${data.message || 'Có lỗi xảy ra khi thêm đánh giá.'}
@@ -377,13 +378,19 @@ include __DIR__ . '/layout/header.php';
             })
             .catch(error => {
                 console.error('Lỗi chi tiết:', error);
-
                 document.getElementById('liveAlertPlaceholder').innerHTML = `
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            ${error.message || 'ó lỗi xảy ra khi gửi đánh giá:'}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    `;
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${error.message || 'Có lỗi xảy ra khi gửi đánh giá'}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                setTimeout(() => {
+                    const alert = document.querySelector('#liveAlertPlaceholder .alert');
+                    if (alert) {
+                        alert.classList.remove('show');
+                        setTimeout(() => alert.remove(), 150);
+                    }
+                }, 2000);
             });
     });
 

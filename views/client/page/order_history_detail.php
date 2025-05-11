@@ -28,8 +28,8 @@
                     <tr>
                         <td><?php echo htmlspecialchars($detail['TenSP']); ?></td>
                         <td>
-                            <?php if (!empty($detail['img'])): ?>
-                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($detail['img']); ?>" alt="<?php echo htmlspecialchars($detail['TenSP']); ?>" style="max-width: 100px; height: auto;">
+                            <?php if (!empty($detail['Img'])): ?>
+                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($detail['Img']); ?>" alt="<?php echo htmlspecialchars($detail['TenSP']); ?>" style="max-width: 100px; height: auto;">
                             <?php else: ?>
                                 Không có ảnh
                             <?php endif; ?>

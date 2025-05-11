@@ -62,6 +62,11 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    const cartCountElement = document.querySelector('#cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = '0';
+                    }
+
                     alertPlaceholder.innerHTML = `
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
@@ -69,7 +74,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 `;
-                    document.querySelector('#cart-count').textContent = 0;
                     setTimeout(() => {
                         const alert = alertPlaceholder.querySelector('.alert');
                         if (alert) {
@@ -81,7 +85,7 @@
                         } else {
                             window.location.href = '/shoeimportsystem/index.php?controller=home&action=index';
                         }
-                    }, 500); // Chuyển hướng sau 2 giây
+                    }, 500);
                 } else {
                     alertPlaceholder.innerHTML = `
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">

@@ -158,6 +158,9 @@ class CartController
 
             if ($tenNN && $diaChiNN && $sdtNN) {
                 $result = $this->cartModel->processCheckout($maKH, $tenNN, $diaChiNN, $sdtNN);
+                if ($result['success']) {
+                    $_SESSION['cart_count'] = 0; // Cập nhật số lượng giỏ hàng về 0
+                }
                 echo json_encode($result);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Thông tin người nhận không hợp lệ!']);

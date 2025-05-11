@@ -41,8 +41,8 @@
                     <td><?php echo $stt++; ?></td>
                     <td><?php echo htmlspecialchars($detail['TenSP']); ?></td>
                     <td>
-                        <?php if (!empty($detail['img'])): ?>
-                            <img src="<?php echo htmlspecialchars($detail['img']); ?>" alt="Hình ảnh sản phẩm" style="max-width: 100px; height: auto;">
+                        <?php if (!empty($detail['Img'])): ?>
+                            <img src="<?php echo htmlspecialchars($detail['Img']); ?>" alt="Hình ảnh sản phẩm" style="max-width: 100px; height: auto;">
                         <?php else: ?>
                             Không có hình ảnh
                         <?php endif; ?>

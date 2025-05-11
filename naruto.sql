@@ -984,7 +984,7 @@ CREATE TABLE `sanpham` (
   `SoLuong` int(11) DEFAULT 0,
   `MoTa` text DEFAULT NULL,
   `DonGia` decimal(10,0) NOT NULL,
-  `AnhNen` varchar(50) DEFAULT NULL
+  `AnhNen` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --

@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layout/header.php'; ?>
+Số điện thoại<?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="infor mt-5">
     <h2>Thông tin cá nhân</h2>
     <?php if (isset($success)): ?>
@@ -18,8 +18,9 @@
         </div>
         <div class="mb-3">
             <label>Số điện thoại</label>
-            <input type="text" name="sdt" class="form-control" value="<?php echo htmlspecialchars($userInfo['SDT']); ?>" required pattern="[0-9]{10}" title="Số điện thoại phải là 10 chữ số">
+            <input type="text" name="sdt" class="form-control" value="<?php echo htmlspecialchars($userInfo['SDT']); ?>" required pattern="[0-9]{9}" title="Số điện thoại phải là 9 chữ số bỏ số 0 ở đầu (nếu có)">
         </div>
+
         <div class="mb-3">
             <label>Địa chỉ</label>
             <input type="text" name="diaChi" class="form-control" value="<?php echo htmlspecialchars($userInfo['DiaChi']); ?>" required>

@@ -98,13 +98,13 @@
                         <input placeholder="Email" name="email" class="user" type="email" required="" />
                         <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span><br /><br />
                         <input placeholder="Mật khẩu" name="matKhau" class="pass" type="password" required="" />
-                        <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span><br />
+                        <span style="margin-top: 15px;" class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span><br />
                         <div class="sub-w3l">
 
                             <div class="right-w3l">
-                                <input type="submit" value="Đăng nhập" />
+                                <input type="submit" value="Đăng nhập" style="border-radius: 5px; width: 120px;" />
                             </div>
-                            <h6>Chưa có tài khoản? <a href="/shoeimportsystem/index.php?controller=auth&action=register">Đăng ký</a></h6>
+                            <h6>Chưa có tài khoản? <a href="/shoeimportsystem/index.php?controller=auth&action=register" style="margin-right: 80px;">Đăng ký</a></h6>
                         </div>
                     </form>
                 </div>
@@ -113,7 +113,7 @@
 
             <!--footer-->
             <div class="footer">
-                <p>© 2025 Hệ thống nhập giày. All rights reserved | Thiết kế bởi Bạn</p>
+                <p>© 2025 Hệ thống nhập giày. All rights reserved | Thiết kế bởi Nguyễn Đình Hùng</p>
             </div>
             <!--//footer-->
         </div>

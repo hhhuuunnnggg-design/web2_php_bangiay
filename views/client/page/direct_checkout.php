@@ -19,7 +19,12 @@
                 </div>
                 <div class="mb-3">
                     <label for="sdtNN" class="form-label">Số điện thoại</label>
-                    <input type="text" class="form-control" id="sdtNN" name="sdtNN" value="<?php echo htmlspecialchars($userInfo['SDT'] ?? ''); ?>" required>
+                    <input type="text" class="form-control" id="sdtNN" name="sdtNN"
+                        value="<?php echo htmlspecialchars($userInfo['SDT'] ?? ''); ?>"
+                        pattern="[0-9]{10}"
+                        title="Số điện thoại phải là 10 chữ số"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                        required>
                 </div>
                 <button type="button" class="btn btn-primary" onclick="confirmCheckout()">Xác nhận thanh toán</button>
             </form>
@@ -54,8 +59,29 @@
 <script>
     function confirmCheckout() {
         const form = document.getElementById('checkout-form');
-        const formData = new FormData(form);
+        const phoneNumber = document.getElementById('sdtNN').value;
         const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+        // Kiểm tra số điện thoại
+        if (phoneNumber.length !== 10 || !/^\d{10}$/.test(phoneNumber)) {
+            alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Error:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    Vui lòng nhập đúng 10 chữ số cho số điện thoại!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            setTimeout(() => {
+                const alert = alertPlaceholder.querySelector('.alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 2000);
+            return;
+        }
+
+        const formData = new FormData(form);
 
         fetch('/shoeimportsystem/index.php?controller=checkout&action=processDirectCheckout', {
                 method: 'POST',

@@ -206,7 +206,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
 
                         <div class="input-group">
-                            <input style="color: black;" placeholder="Số điện thoại" name="sdt" class="phone" type="text" required="" />
+                            <input style="color: black;" placeholder="Số điện thoại" name="sdt" class="phone" type="text"
+                                pattern="[0-9]{10}"
+                                title="Vui lòng nhập đúng 10 chữ số"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+
+                                required="" />
                             <span class="icon3"><i class="fa fa-phone" aria-hidden="true"></i></span>
                         </div>
 

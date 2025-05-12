@@ -56,11 +56,11 @@ include __DIR__ . '/layout/header.php';
 
             <!-- Số lượng -->
             <div class="mb-3">
-                <label><strong>Số lượng:</strong></label>
+                <label><strong>Số lượng123:</strong></label>
                 <div class="input-group w-25">
-                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()" style="width: 0px;">-</button>
+                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()" style="width: 20px;">-</button>
                     <input type="number" class="form-control text-center" id="quantity" value="1" min="1">
-                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()" style="width: 0px;">+</button>
+                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()" style="width: 20px;">+</button>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@ include __DIR__ . '/layout/header.php';
         <div class="hidden tab-content" id="reviews">
             <form id="review-form" method="post">
                 <textarea name="comment" placeholder="Viết đánh giá..."></textarea><br>
-                <button type="button" id="submit-review" class="review-button">Đánh giá..</button>
+                <button type="button" id="submit-review" class="review-button">Đánh giá.</button>
             </form>
             <?php if (!empty($reviews)): ?>
                 <?php foreach ($reviews as $review): ?>

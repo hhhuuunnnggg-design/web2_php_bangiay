@@ -170,4 +170,45 @@ class CartController
         }
         exit;
     }
+
+    public function updateQuantity()
+    {
+        session_start();
+        header('Content-Type: application/json');
+        ob_end_clean();
+
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập!']);
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maKH = $_SESSION['user']['MaKH'];
+            $maGH = $_POST['maGH'] ?? null;
+            $maSP = $_POST['maSP'] ?? null;
+            $size = $_POST['size'] ?? null;
+            $maMau = $_POST['maMau'] ?? null;
+            $soLuong = $_POST['soLuong'] ?? null;
+
+            if ($maGH && $maSP && $size && $maMau && $soLuong) {
+                $result = $this->cartModel->updateQuantity($maKH, $maGH, $maSP, $size, $maMau, $soLuong);
+                if ($result) {
+                    $cartTotal = $this->cartModel->getCartTotal($maKH);
+                    $itemTotal = $this->cartModel->getItemTotal($maKH, $maGH, $maSP, $size, $maMau);
+                    echo json_encode([
+                        'success' => true,
+                        'newCartTotal' => $cartTotal,
+                        'newTotalItem' => $itemTotal
+                    ]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Không thể cập nhật số lượng!']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ!']);
+        }
+        exit;
+    }
 }

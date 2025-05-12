@@ -249,4 +249,42 @@ class CartModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function updateQuantity($maKH, $maGH, $maSP, $size, $maMau, $soLuong)
+    {
+        try {
+            // Kiểm tra số lượng sản phẩm trong kho
+            $sql = "SELECT SoLuong FROM chitietsanpham WHERE MaSP = ? AND MaSize = ? AND MaMau = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$maSP, $size, $maMau]);
+            $availableQuantity = $stmt->fetchColumn();
+
+            if ($availableQuantity < $soLuong) {
+                return false;
+            }
+
+            // Cập nhật số lượng và tổng tiền trong chi tiết giỏ hàng
+            $sql = "UPDATE chitietgiohang 
+                   SET SoLuong = ?, TongTien = GiaTien * ? 
+                   WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$soLuong, $soLuong, $maGH, $maSP, $size, $maMau]);
+
+            // Cập nhật tổng tiền giỏ hàng
+            $this->updateCartTotals($maKH);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Lỗi khi cập nhật số lượng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getItemTotal($maKH, $maGH, $maSP, $size, $maMau)
+    {
+        $sql = "SELECT TongTien FROM chitietgiohang 
+                WHERE MaGH = ? AND MaSP = ? AND Size = ? AND MaMau = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$maGH, $maSP, $size, $maMau]);
+        return $stmt->fetchColumn() ?: 0;
+    }
 }

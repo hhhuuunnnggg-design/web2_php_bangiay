@@ -14,7 +14,7 @@
                         <th>Màu sắc</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
-                        <th>Tổng tiền</th>
+                        <th>Tiền tạm tính</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -29,7 +29,14 @@
                             <td><?php echo htmlspecialchars($item['Size']); ?></td>
                             <td><?php echo htmlspecialchars($item['MaMau']); ?></td>
                             <td><?php echo number_format($item['GiaTien'], 0, ',', '.') . ' VNĐ'; ?></td>
-                            <td><?php echo htmlspecialchars($item['SoLuong']); ?></td>
+                            <td>
+                                <div class="input-group input-group-sm">
+                                    <button class="btn btn-outline-secondary" onclick="updateQuantity(<?php echo $item['MaGH']; ?>, <?php echo $item['MaSP']; ?>, <?php echo $item['Size']; ?>, '<?php echo $item['MaMau']; ?>', -1)">-</button>
+                                    <input type="text" class="form-control text-center" value="<?php echo htmlspecialchars($item['SoLuong']); ?>" readonly style="width: 40px;" id="qty-<?php echo $item['MaGH']; ?>-<?php echo $item['MaSP']; ?>-<?php echo $item['Size']; ?>-<?php echo $item['MaMau']; ?>">
+                                    <button class="btn btn-outline-secondary" onclick="updateQuantity(<?php echo $item['MaGH']; ?>, <?php echo $item['MaSP']; ?>, <?php echo $item['Size']; ?>, '<?php echo $item['MaMau']; ?>', 1)">+</button>
+                                </div>
+                            </td>
+
                             <td><?php echo number_format($item['TongTien'], 0, ',', '.') . ' VNĐ'; ?></td>
                             <td>
                                 <button class="btn btn-danger btn-sm" onclick="removeFromCart(<?php echo $item['MaGH']; ?>, <?php echo $item['MaSP']; ?>, <?php echo $item['Size']; ?>, '<?php echo $item['MaMau']; ?>')">Xóa</button>
@@ -56,7 +63,6 @@
 
 <script>
     function removeFromCart(maGH, maSP, size, maMau) {
-
         fetch('/shoeimportsystem/index.php?controller=cart&action=removeFromCart', {
                 method: 'POST',
                 headers: {
@@ -141,7 +147,41 @@
                     }
                 }, 2000);
             });
+    }
 
+    function updateQuantity(maGH, maSP, size, maMau, change) {
+        const inputId = `qty-${maGH}-${maSP}-${size}-${maMau}`;
+        const input = document.getElementById(inputId);
+        let currentQty = parseInt(input.value);
+        let newQty = currentQty + change;
+
+        if (newQty < 1) return;
+
+        fetch('/shoeimportsystem/index.php?controller=cart&action=updateQuantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `maGH=${maGH}&maSP=${maSP}&size=${size}&maMau=${encodeURIComponent(maMau)}&soLuong=${newQty}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    input.value = newQty;
+                    // Cập nhật lại tổng tiền của dòng
+                    const row = document.querySelector(`tr[data-ma-gh="${maGH}"][data-ma-sp="${maSP}"][data-size="${size}"][data-ma-mau="${maMau}"]`);
+                    const totalCell = row.querySelector('td:nth-child(7)');
+                    totalCell.textContent = new Intl.NumberFormat('vi-VN').format(data.newTotalItem) + ' VNĐ';
+
+                    // Cập nhật tổng tiền toàn bộ giỏ hàng
+                    document.querySelector('.text-right h4').textContent = `Tổng tiền: ${new Intl.NumberFormat('vi-VN').format(data.newCartTotal)} VNĐ`;
+                } else {
+                    alert('Không thể cập nhật số lượng');
+                }
+            })
+            .catch(err => {
+                console.error('Lỗi cập nhật số lượng:', err);
+            });
     }
 </script>
 

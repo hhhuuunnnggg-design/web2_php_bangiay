@@ -221,6 +221,7 @@ include __DIR__ . '/layout/header.php';
         let size = document.querySelector('input[name="size"]:checked')?.value;
         let color = document.querySelector('input[name="color"]:checked')?.value;
         let quantity = document.getElementById('quantity').value;
+
         if (!size || !color) {
             document.getElementById('liveAlertPlaceholder').innerHTML = `
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -255,7 +256,8 @@ include __DIR__ . '/layout/header.php';
             }, 2000);
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
         <?php else: ?>
-            window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=index&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
+            // Chuyển hướng trực tiếp đến trang thanh toán với thông tin sản phẩm
+            window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=direct&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
         <?php endif; ?>
     }
     // Thêm JavaScript để xử lý các tab như trong ví dụ trước
@@ -433,50 +435,8 @@ include __DIR__ . '/layout/header.php';
             }, 2000);
             window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
         <?php else: ?>
-            fetch('/shoeimportsystem/index.php?controller=cart&action=addToCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.querySelector('#cart-count').textContent = data.cartCount;
-                        window.location.href = '/shoeimportsystem/index.php?controller=cart&action=checkout';
-                    } else {
-                        document.getElementById('liveAlertPlaceholder').innerHTML = `
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                ${data.message || 'Không thể thêm vào giỏ hàng để mua ngay!'}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        `;
-                        setTimeout(() => {
-                            const alert = document.querySelector('#liveAlertPlaceholder .alert');
-                            if (alert) {
-                                alert.classList.remove('show');
-                                setTimeout(() => alert.remove(), 150);
-                            }
-                        }, 2000);
-                    }
-                })
-                .catch(error => {
-                    console.error('Lỗi:', error);
-                    document.getElementById('liveAlertPlaceholder').innerHTML = `
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            Có lỗi xảy ra khi mua ngay!
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        const alert = document.querySelector('#liveAlertPlaceholder .alert');
-                        if (alert) {
-                            alert.classList.remove('show');
-                            setTimeout(() => alert.remove(), 150);
-                        }
-                    }, 2000);
-                });
+            // Chuyển hướng trực tiếp đến trang thanh toán với thông tin sản phẩm
+            window.location.href = `/shoeimportsystem/index.php?controller=checkout&action=direct&product=${productId}&size=${size}&color=${color}&quantity=${quantity}`;
         <?php endif; ?>
     }
     // 

@@ -58,6 +58,10 @@ switch ($controller) {
         require_once __DIR__ . '/controllers/client/OrderHistoryController.php';
         $controllerInstance = new OrderHistoryController($db);
         break;
+    case 'checkout': // Thêm case cho CheckoutController
+        require_once __DIR__ . '/controllers/client/CheckoutController.php';
+        $controllerInstance = new CheckoutController($db);
+        break;
     default:
         header('Content-Type: application/json');
         header("HTTP/1.0 404 Not Found");

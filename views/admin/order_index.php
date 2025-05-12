@@ -54,7 +54,7 @@
                     </td>
                     <td><?php echo number_format($row['TongTien'], 0, ',', '.') . ' VNĐ'; ?></td>
                     <td>
-                        <a href="/shoeimportsystem/public/index.php?controller=order&action=detail&id=<?php echo urlencode($row['MaHD']); ?>">
+                        <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=order&action=detail&id=<?php echo urlencode($row['MaHD']); ?>">
                             <button type="button" class="btn btn-info">Xem chi tiết</button>
                         </a>
                         <?php if ($auth->checkPermission(13, 'edit')): ?>

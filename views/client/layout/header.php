@@ -78,12 +78,12 @@ $brands = $supplierModel->getAllBrands();
                         <span class="text-primary fa fa-bars"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link">Trang chủ</a>
+                        <div class="navbar-nav mx-auto " style="display: flex; flex-wrap: nowrap;">
+                            <a href="/shoeimportsystem/index.php?controller=home&action=index" class="nav-item nav-link" style="white-space: nowrap;">Trang chủ</a>
                             <a href="/shoeimportsystem/index.php?controller=shop&action=index" class="nav-item nav-link">Shop</a>
-                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link">Thông tin shop</a>
+                            <a href="/shoeimportsystem/index.php?controller=shopdetail&action=index" class="nav-item nav-link" style="white-space: nowrap;">Thông tin shop</a>
                             <div class="dropdown nav-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Thương hiệu</a>
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown" style="white-space: nowrap;">Thương hiệu</a>
                                 <div class="dropdown-menu bg-secondary m-0 rounded-0">
                                     <?php foreach ($brands as $brandItem): ?> <!-- Đổi $brand thành $brandItem -->
                                         <a href="/shoeimportsystem/index.php?controller=brand&action=index&id=<?php echo $brandItem['MaNCC']; ?>" class="dropdown-item">
@@ -92,7 +92,7 @@ $brands = $supplierModel->getAllBrands();
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active">Liên hệ</a>
+                            <a href="/shoeimportsystem/index.php?controller=contact&action=index" class="nav-item nav-link active" style="white-space: nowrap;">Liên hệ</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn btn-md-square btn-search bg-white border border-secondary rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="text-primary fa-search fas"></i></button>

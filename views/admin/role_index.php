@@ -9,12 +9,12 @@
 
     <div>
         <?php if ($auth->checkPermission(6, 'add')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=role&action=add">
+            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=role&action=add">
                 <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
             </a>
         <?php endif; ?>
         <?php if ($auth->checkPermission(6, 'export')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=role&action=export">
+            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=role&action=export">
                 <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
             </a>
         <?php endif; ?>
@@ -51,7 +51,7 @@
                     <td><?php echo $row['MoTa']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(6, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=role&action=edit&id=<?php echo $row['id']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=role&action=edit&id=<?php echo $row['id']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>

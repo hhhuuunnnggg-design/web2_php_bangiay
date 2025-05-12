@@ -40,7 +40,7 @@
                     <td>
 
                         <?php if ($auth->checkPermission(8, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=function&action=edit&id=<?php echo $row['chucnang']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=function&action=edit&id=<?php echo $row['chucnang']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>

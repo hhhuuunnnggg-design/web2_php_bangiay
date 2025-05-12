@@ -8,7 +8,7 @@
     </form>
 
     <?php if ($auth->checkPermission(7, 'add')): ?>
-        <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
+        <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=role_detail&action=add">
             <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
         </a>
     <?php endif; ?>
@@ -42,7 +42,7 @@
                     <td>
 
                         <?php if ($auth->checkPermission(7, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=role_detail&action=edit&manhomquyen=<?php echo $row['manhomquyen']; ?>&chucnang=<?php echo $row['chucnang']; ?>&hanhdong=<?php echo urlencode($row['hanhdong']); ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>

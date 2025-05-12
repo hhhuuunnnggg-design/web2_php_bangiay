@@ -9,13 +9,14 @@
 
     <div>
         <?php if ($auth->checkPermission(1, 'add')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=category&action=add">
+            <a href="/shoeimportsystem/public/index.php?controller=category&action=add" style="text-decoration: none;">
                 <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
             </a>
         <?php endif; ?>
+
         <?php if ($auth->checkPermission(1, 'export')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=category&action=export">
-                <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
+            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=category&action=export">
+                <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px; ">Export</button>
             </a>
         <?php endif; ?>
         <?php if ($auth->checkPermission(1, 'import')): ?>
@@ -49,7 +50,7 @@
                     <td><?php echo $row['TenDM']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(1, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=category&action=edit&id=<?php echo $row['MaDM']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>

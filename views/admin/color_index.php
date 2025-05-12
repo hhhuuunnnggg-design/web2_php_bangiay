@@ -49,7 +49,7 @@
                     <td><?php echo $row['MaMau']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(2, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=color&action=edit&id=<?php echo urlencode($row['MaMau']); ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=color&action=edit&id=<?php echo urlencode($row['MaMau']); ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>
@@ -147,6 +147,11 @@
         text-decoration: none;
     }
 
+
+
+
+
+
     .pagination a:hover {
         text-decoration: underline;
     }
@@ -194,6 +199,10 @@
         pointer-events: none;
         background-color: #f8f9fa;
         border-color: #dee2e6;
+    }
+
+    a {
+        text-decoration: none !important;
     }
 </style>
 

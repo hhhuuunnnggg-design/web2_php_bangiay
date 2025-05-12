@@ -42,12 +42,12 @@
                     <td><?php echo $row['TenKM']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(9, 'add')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=add">
-                                <button type="button" class="btn btn-primary">Thêm</button>
-                            </a>
+                            <!-- <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=add">
+                                <button type="button" class="btn btn-primary">Thêm1</button>
+                            </a> -->
                         <?php endif; ?>
                         <?php if ($auth->checkPermission(9, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=product_promotion&action=edit&maSP=<?php echo $row['MaSP']; ?>&maKM=<?php echo $row['MaKM']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=product_promotion&action=edit&maSP=<?php echo $row['MaSP']; ?>&maKM=<?php echo $row['MaKM']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>

@@ -74,7 +74,7 @@
                     </td>
                     <td>
                         <?php if ($auth->checkPermission(10, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['MaSP']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=product&action=edit&id=<?php echo $row['MaSP']; ?>">
                                 <button type="button" class="btn btn-warning" style="background-color: #ffc107; color: #212529; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: all 0.3s; margin-right: 5px;">Sửa</button>
                             </a>
                         <?php endif; ?>

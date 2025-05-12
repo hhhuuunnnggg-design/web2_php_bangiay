@@ -9,13 +9,13 @@
 
     <div>
         <?php if ($auth->checkPermission(3, 'add')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=size&action=add">
+            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=size&action=add">
                 <button type="button" class="btn btn-primary" style="margin-top: 40px; width: 100px; height: 40px;">Thêm</button>
             </a>
         <?php endif; ?>
 
         <?php if ($auth->checkPermission(3, 'export')): ?>
-            <a href="/shoeimportsystem/public/index.php?controller=size&action=export">
+            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=size&action=export">
                 <button type="button" class="btn btn-info" style="margin-top: 40px; width: 100px; height: 40px;">Export</button>
             </a>
         <?php endif; ?>
@@ -52,7 +52,7 @@
                     <td><?php echo $row['MaSize']; ?></td>
                     <td>
                         <?php if ($auth->checkPermission(3, 'edit')): ?>
-                            <a href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=<?php echo $row['MaSize']; ?>">
+                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=size&action=edit&id=<?php echo $row['MaSize']; ?>">
                                 <button type="button" class="btn btn-warning">Sửa</button>
                             </a>
                         <?php endif; ?>
@@ -138,6 +138,7 @@
 </div>
 
 
+
 <style>
     .pagination {
         margin-top: 20px;
@@ -145,14 +146,15 @@
 
     .pagination a {
         margin: 0 5px;
-        text-decoration: none;
+        text-decoration: none !important;
     }
+
+
 
     .pagination a:hover {
         text-decoration: underline;
     }
-</style>
-<style>
+
     .pagination-container {
         margin-top: 20px;
     }

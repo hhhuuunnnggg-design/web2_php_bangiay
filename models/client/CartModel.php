@@ -193,7 +193,7 @@ class CartModel
                 $productQuantity = $stmt->fetchColumn();
 
                 if ($productQuantity < $item['SoLuong']) {
-                    throw new Exception("Sản phẩm " . $item['TenSanPham'] . " chỉ còn " . $productQuantity . " sản phẩm trong kho!");
+                    throw new Exception(" " . $item['TenSanPham'] . " chỉ còn " . $productQuantity . " sản phẩm trong kho!!");
                 }
 
                 // Kiểm tra số lượng trong chi tiết sản phẩm

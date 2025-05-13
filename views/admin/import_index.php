@@ -22,7 +22,7 @@
             <th>Ghi chú</th>
             <th>Size</th>
             <th>Màu</th>
-            <th>Hành động</th>
+
         </tr>
     </thead>
     <tbody>
@@ -45,18 +45,7 @@
                     <td><?php echo $row['Note'] ?? ''; ?></td>
                     <td><?php echo $row['Size']; ?></td>
                     <td><?php echo $row['Mau']; ?></td>
-                    <td>
-                        <?php if ($auth->checkPermission(11, 'edit')): ?> <!-- Đổi thành 11 -->
-                            <a style="text-decoration: none;" href="/shoeimportsystem/public/index.php?controller=import&action=edit&id=<?php echo $row['MaPN']; ?>">
-                                <button type="button" class="btn btn-warning">Sửa</button>
-                            </a>
-                        <?php endif; ?>
-                        <?php if ($auth->checkPermission(11, 'delete')): ?> <!-- Đổi thành 11 -->
-                            <a class="delete-btn" data-id="<?php echo $row['MaPN']; ?>">
-                                <button type="button" class="btn btn-danger">Xóa</button>
-                            </a>
-                        <?php endif; ?>
-                    </td>
+
                 </tr>
             <?php
             endforeach;

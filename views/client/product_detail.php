@@ -56,7 +56,7 @@ include __DIR__ . '/layout/header.php';
 
             <!-- Số lượng -->
             <div class="mb-3">
-                <label><strong>Số lượng123:</strong></label>
+                <label><strong>Số lượng:</strong></label>
                 <div class="input-group w-25">
                     <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()" style="width: 20px;">-</button>
                     <input type="number" class="form-control text-center" id="quantity" value="1" min="1">

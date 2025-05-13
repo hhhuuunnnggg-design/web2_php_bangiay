@@ -29,6 +29,13 @@
     document.getElementById('statsForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+        const startDate = new Date(formData.get('start_date'));
+        const endDate = new Date(formData.get('end_date'));
+
+        if (startDate > endDate) {
+            document.getElementById('message').innerHTML = '<p style="color:red;">Lỗi: Ngày bắt đầu phải bé hơn ngày kết thúc!</p>';
+            return;
+        }
 
         fetch('/shoeimportsystem/public/index.php?controller=statistics&action=topCustomers', {
                 method: 'POST',

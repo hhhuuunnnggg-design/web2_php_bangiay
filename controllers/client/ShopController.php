@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../models/SupplierModel.php';
 
 class ShopController
 {
+    //  in dữ liệu ra trước, chưa có lọc hay truy vấn
     public function index()
     {
         $productModel = new ProductModel();
@@ -68,6 +69,7 @@ class ShopController
         include __DIR__ . '/../../views/client/shop.php';
     }
 
+    //  in dữ liệu khi đã lọc
     public function filter()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

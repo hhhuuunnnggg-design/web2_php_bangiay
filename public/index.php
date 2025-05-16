@@ -114,6 +114,15 @@ switch ($action) {
     case 'detail':
         $controller->detail();
         break;
+    case 'lock':
+        if ($controller instanceof CustomerController) {
+            $controller->lock();
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Action không hợp lệ cho controller này']);
+            exit;
+        }
+        break;
     case 'assignShipper':
         if ($controller instanceof OrderController) {
             $controller->assignShipper();
@@ -121,7 +130,6 @@ switch ($action) {
             die("Action không hợp lệ cho controller này");
         }
         break;
-
     case 'topCustomers':
         if ($controller instanceof StatisticsController) {
             $controller->topCustomers();
@@ -137,5 +145,7 @@ switch ($action) {
         }
         break;
     default:
-        die("Action không tồn tại");
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Action không tồn tại']);
+        exit;
 }

@@ -65,4 +65,8 @@ class CustomerModel
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+    public function __destruct()
+    {
+        $this->db->closeConnection();
+    }
 }

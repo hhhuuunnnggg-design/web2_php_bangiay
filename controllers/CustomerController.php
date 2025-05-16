@@ -1,17 +1,27 @@
 <?php
 require_once __DIR__ . '/../models/CustomerModel.php';
+require_once __DIR__ . '/../core/Auth.php';
 
 class CustomerController
 {
     private $model;
+    private $auth;
 
     public function __construct()
     {
         $this->model = new CustomerModel();
+        $this->auth = new Auth();
+        if (!$this->auth->getCurrentUser()) {
+            header("Location: /shoeimportsystem/public/index.php?controller=auth&action=login");
+            exit;
+        }
     }
 
     public function index()
     {
+        if (!$this->auth->checkPermission(14, 'view')) {
+            die("Bạn không có quyền xem quản lý khách hàng.");
+        }
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
@@ -21,11 +31,16 @@ class CustomerController
         $total = $this->model->getTotalCustomers($search);
         $totalPages = ceil($total / $limit);
 
-        require_once __DIR__ . '/../views/admin/customer/customer_index.php';
+        $title = "Quản lý khách hàng";
+        $content_file = __DIR__ . '/../views/admin/customer_index.php';
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function add()
     {
+        if (!$this->auth->checkPermission(14, 'add')) {
+            die("Bạn không có quyền thêm khách hàng.");
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'MaKH' => $_POST['MaKH'],
@@ -41,11 +56,17 @@ class CustomerController
             echo json_encode(['success' => $result, 'message' => $result ? 'Thêm khách hàng thành công' : 'Lỗi khi thêm khách hàng']);
             exit;
         }
-        require_once __DIR__ . '/../views/admin/customer/customer_add.php';
+
+        $title = "Thêm khách hàng";
+        $content_file = __DIR__ . '/../views/admin/customer/customer_add.php';
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function edit()
     {
+        if (!$this->auth->checkPermission(14, 'edit')) {
+            die("Bạn không có quyền sửa khách hàng.");
+        }
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -66,11 +87,18 @@ class CustomerController
         if (!$customer) {
             die("Khách hàng không tồn tại");
         }
-        require_once __DIR__ . '/../views/admin/customer/customer_edit.php';
+
+        $title = "Sửa khách hàng";
+        $content_file = __DIR__ . '/../views/admin/customer/customer_edit.php';
+        include __DIR__ . '/../views/admin/layout/layout.php';
     }
 
     public function lock()
     {
+        if (!$this->auth->checkPermission(14, 'edit')) {
+            echo json_encode(['success' => false, 'message' => 'Bạn không có quyền khóa tài khoản khách hàng']);
+            exit;
+        }
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         $result = $this->model->lockCustomer($id);
         header('Content-Type: application/json');

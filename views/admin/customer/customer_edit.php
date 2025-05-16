@@ -90,6 +90,7 @@
         }
     </style>
 </head>
+
 <h1>Sửa thông tin khách hàng</h1>
 <ul class="breadcrumb">
     <li>
@@ -98,29 +99,45 @@
         </a>
     </li>
 </ul>
+
 <form id="editCustomerForm">
-    <label>Mã khách hàng:</label><input type="text" value="<?php echo $customer['MaKH']; ?>" disabled><br>
+    <label>Mã khách hàng:</label>
+    <input type="text" value="<?php echo $customer['MaKH']; ?>" disabled><br>
+
     <input type="hidden" name="id" value="<?php echo $customer['MaKH']; ?>">
-    <label>Tên khách hàng:</label><input type="text" name="TenKH" value="<?php echo $customer['TenKH']; ?>" required><br>
-    <label>Email:</label><input type="email" name="Email" value="<?php echo $customer['Email']; ?>" required><br>
-    <label>Số điện thoại:</label><input type="number" name="SDT" value="<?php echo $customer['SDT']; ?>" required><br>
-    <label>Địa chỉ:</label><textarea name="DiaChi" required><?php echo $customer['DiaChi']; ?></textarea><br>
-    <label>Mật khẩu mới (để trống nếu không đổi):</label><input type="text" name="MatKhau"><br>
+
+    <label>Tên khách hàng:</label>
+    <input type="text" name="TenKH" value="<?php echo $customer['TenKH']; ?>" required><br>
+
+    <label>Email:</label>
+    <input type="email" name="Email" value="<?php echo $customer['Email']; ?>" required><br>
+
+    <label>Số điện thoại:</label>
+    <input type="number" name="SDT" value="<?php echo $customer['SDT']; ?>" required><br>
+
+    <label>Địa chỉ:</label>
+    <textarea name="DiaChi" required><?php echo $customer['DiaChi']; ?></textarea><br>
+
+    <label>Mật khẩu mới (để trống nếu không đổi):</label>
+    <input type="text" name="MatKhau"><br>
+
     <button type="submit">Cập nhật</button>
 </form>
+
 <div id="message"></div>
 
 <script>
     document.getElementById('editCustomerForm').addEventListener('submit', function(e) {
         e.preventDefault();
+
         let formData = new FormData(this);
         let id = formData.get('id');
 
         fetch(`/shoeimportsystem/public/index.php?controller=customer&action=edit&id=${encodeURIComponent(id)}`, {
-            method: 'POST',
-            body: formData
-        })
-        Ub.then(response => response.json())
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     document.getElementById('message').innerHTML = '<p style="color:green;">Cập nhật thành công!</p>';

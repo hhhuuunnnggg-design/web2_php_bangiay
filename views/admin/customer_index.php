@@ -72,20 +72,25 @@
 
         .pagination {
             margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
         }
 
         .pagination a {
             padding: 5px 10px;
-            margin: 0 5px;
+            margin: 0 5px 5px 0;
             text-decoration: none;
             color: #007bff;
             border: 1px solid #ccc;
             border-radius: 3px;
+            user-select: none;
         }
 
         .pagination a.active {
             background-color: #007bff;
             color: white;
+            pointer-events: none;
         }
 
         .add-button {
@@ -99,14 +104,18 @@
         }
     </style>
 </head>
+
 <h1>Quản lý khách hàng</h1>
+
 <a class="add-button" href="/shoeimportsystem/public/index.php?controller=customer&action=add">Thêm khách hàng mới</a>
+
 <form class="search-form" method="GET" action="/shoeimportsystem/public/index.php">
     <input type="hidden" name="controller" value="customer">
     <input type="hidden" name="action" value="index">
     <input type="text" name="search" placeholder="Tìm kiếm theo tên khách hàng" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
     <button type="submit">Tìm kiếm</button>
 </form>
+
 <table>
     <tr>
         <th>Mã KH</th>
@@ -119,21 +128,22 @@
     </tr>
     <?php foreach ($customers as $customer): ?>
         <tr>
-            <td><?php echo $customer['MaKH']; ?></td>
-            <td><?php echo $customer['TenKH']; ?></td>
-            <td><?php echo $customer['Email']; ?></td>
-            <td><?php echo $customer['SDT']; ?></td>
-            <td><?php echo $customer['DiaChi']; ?></td>
+            <td><?php echo htmlspecialchars($customer['MaKH']); ?></td>
+            <td><?php echo htmlspecialchars($customer['TenKH']); ?></td>
+            <td><?php echo htmlspecialchars($customer['Email']); ?></td>
+            <td><?php echo htmlspecialchars($customer['SDT']); ?></td>
+            <td><?php echo htmlspecialchars($customer['DiaChi']); ?></td>
             <td><?php echo $customer['TrangThai'] == 0 ? 'Hoạt động' : 'Bị khóa'; ?></td>
             <td class="action-buttons">
-                <a class="edit" href="/shoeimportsystem/public/index.php?controller=customer&action=edit&id=<?php echo $customer['MaKH']; ?>">Sửa</a>
+                <a class="edit" href="/shoeimportsystem/public/index.php?controller=customer&action=edit&id=<?php echo urlencode($customer['MaKH']); ?>">Sửa</a>
                 <?php if ($customer['TrangThai'] == 0): ?>
-                    <button class="lock" onclick="lockCustomer(<?php echo $customer['MaKH']; ?>)">Khóa</button>
+                    <button type="button" class="lock" onclick="lockCustomer('<?php echo htmlspecialchars(addslashes($customer['MaKH'])); ?>', this)">Khóa</button>
                 <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
+
 <div class="pagination">
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
         <a href="/shoeimportsystem/public/index.php?controller=customer&action=index&page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>" class="<?php echo $i == $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
@@ -141,24 +151,30 @@
 </div>
 
 <script>
-    function lockCustomer(id) {
-        if (confirm('Bạn có chắc muốn khóa tài khoản này?')) {
-            fetch(`/shoeimportsystem/public/index.php?controller=customer&action=lock&id=${id}`, {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Khóa tài khoản thành công!');
-                        location.reload();
-                    } else {
-                        alert('Lỗi: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra!');
-                });
-        }
+    function lockCustomer(id, btn) {
+        if (!confirm('Bạn có chắc muốn khóa tài khoản này?')) return;
+
+        btn.disabled = true;
+        fetch(`/shoeimportsystem/public/index.php?controller=customer&action=lock&id=${encodeURIComponent(id)}`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Khóa tài khoản thành công!');
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + (data.message || 'Không thể khóa tài khoản'));
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi thực hiện thao tác. Vui lòng thử lại sau.');
+                btn.disabled = false;
+            });
     }
 </script>

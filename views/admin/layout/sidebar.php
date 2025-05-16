@@ -105,6 +105,13 @@ $user = $auth->getCurrentUser();
         </a>
     <?php endif; ?>
 
+    <?php if ($auth->checkPermission(14, 'view')): ?>
+        <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=customer&action=index">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+            Quản lý khách hàng
+        </a>
+    <?php endif; ?>
+
     <?php if ($user): ?>
         <a class="nav-link" href="/shoeimportsystem/public/index.php?controller=auth&action=logout">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-sign-out-alt"></i></div>

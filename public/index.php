@@ -70,6 +70,18 @@ switch ($controller) {
         require_once __DIR__ . '/../controllers/StatisticsController.php';
         $controller = new StatisticsController();
         break;
+
+    case 'customer':
+        require_once __DIR__ . '/../controllers/CustomerController.php';
+        $controller = new CustomerController();
+        break;
+    case 'lock':
+        if ($controller instanceof CustomerController) {
+            $controller->lock();
+        } else {
+            die("Action không hợp lệ cho controller này");
+        }
+        break;
     default:
         die("Controller không tồn tại");
 }

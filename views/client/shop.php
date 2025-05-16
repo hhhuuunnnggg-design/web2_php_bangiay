@@ -169,6 +169,9 @@
 
             // Function to load products
             function loadProducts(filters) {
+                // Show loading indicator
+                $('#productContainer').html('<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Đang tải sản phẩm...</p></div>');
+
                 $.ajax({
                     url: '/shoeimportsystem/index.php?controller=shop&action=filter',
                     type: 'POST',
@@ -181,7 +184,7 @@
                         }
                     },
                     error: function() {
-                        alert('Có lỗi xảy ra khi tải sản phẩm');
+                        $('#productContainer').html('<div class="alert alert-danger">Có lỗi xảy ra khi tải sản phẩm</div>');
                     }
                 });
             }
@@ -205,11 +208,6 @@
                 }
 
                 loadProducts(filters);
-            });
-
-            // Handle checkbox and radio changes
-            $('.filter-checkbox, .filter-radio').on('change', function() {
-                $('#filterForm').submit();
             });
 
             // Handle pagination clicks
@@ -275,5 +273,29 @@
         color: #ccc;
         pointer-events: none;
         background-color: #f8f9fa;
+    }
+
+    /* Thêm style cho loading indicator */
+    .fa-spinner {
+        color: #007bff;
+        margin: 20px 0;
+    }
+
+    .text-center {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin: 20px 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
     }
 </style>

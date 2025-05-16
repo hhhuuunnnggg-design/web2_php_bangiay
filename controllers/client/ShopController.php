@@ -12,8 +12,8 @@ class ShopController
         $supplierModel = new SupplierModel();
 
         // Lấy brands và categories để hiển thị filter
-        $brands = $supplierModel->getAllSuppliers();
-        $categories = $categoryModel->getAllCategories();
+        $brands = $supplierModel->getAllSuppliers(); // nhà cung cấp
+        $categories = $categoryModel->getAllCategories(); // danh mục
 
         // Lấy filter từ GET
         $selectedBrands = $_GET['brand'] ?? [];
@@ -21,7 +21,7 @@ class ShopController
         $priceFilter = $_GET['price'] ?? null;
 
         // Xử lý phân trang
-        $itemsPerPage = 6; // 9 sản phẩm mỗi trang
+        $itemsPerPage = 6;
         $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($currentPage - 1) * $itemsPerPage;
 
@@ -43,10 +43,16 @@ class ShopController
             !empty($selectedBrands) ? $selectedBrands : null,
             $minPrice,
             $maxPrice,
-            PHP_INT_MAX, // Lấy tất cả để đếm
+            PHP_INT_MAX,
             0
         ));
         $totalPages = ceil($totalProducts / $itemsPerPage);
+
+        // Đảm bảo currentPage không vượt quá totalPages
+        if ($currentPage > $totalPages) {
+            $currentPage = 1;
+            $offset = 0;
+        }
 
         // Lọc sản phẩm với phân trang
         $products = $productModel->filterProducts(
@@ -54,7 +60,7 @@ class ShopController
             !empty($selectedBrands) ? $selectedBrands : null,
             $minPrice,
             $maxPrice,
-            $itemsPerPage, // Giới hạn 9 sản phẩm
+            $itemsPerPage,
             $offset
         );
 
@@ -99,6 +105,12 @@ class ShopController
                 0
             ));
             $totalPages = ceil($totalProducts / $itemsPerPage);
+
+            // Đảm bảo page không vượt quá totalPages
+            if ($page > $totalPages) {
+                $page = 1;
+                $offset = 0;
+            }
 
             // Lọc sản phẩm với phân trang
             $products = $productModel->filterProducts(
@@ -146,16 +158,48 @@ class ShopController
                 <nav aria-label="Page navigation" class="mt-4">
                     <div style="display: flex;">
                         <ul class="pagination justify-content-center">
+                            <!-- Previous Button -->
                             <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
                                 <a class="page-link" href="#" data-page="<?= $page - 1 ?>" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+
+                            <?php
+                            // Hiển thị tối đa 5 trang
+                            $startPage = max(1, $page - 2);
+                            $endPage = min($totalPages, $startPage + 4);
+                            if ($endPage - $startPage < 4) {
+                                $startPage = max(1, $endPage - 4);
+                            }
+
+                            // Hiển thị nút trang đầu nếu cần
+                            if ($startPage > 1) {
+                                echo '<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>';
+                                if ($startPage > 2) {
+                                    echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                }
+                            }
+
+                            // Hiển thị các trang
+                            for ($i = $startPage; $i <= $endPage; $i++) {
+                            ?>
                                 <li class="page-item <?= $i === $page ? 'active' : '' ?>">
                                     <a class="page-link" href="#" data-page="<?= $i ?>"><?= $i ?></a>
                                 </li>
-                            <?php endfor; ?>
+                            <?php
+                            }
+
+                            // Hiển thị nút trang cuối nếu cần
+                            if ($endPage < $totalPages) {
+                                if ($endPage < $totalPages - 1) {
+                                    echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                }
+                                echo '<li class="page-item"><a class="page-link" href="#" data-page="' . $totalPages . '">' . $totalPages . '</a></li>';
+                            }
+                            ?>
+
+                            <!-- Next Button -->
                             <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                                 <a class="page-link" href="#" data-page="<?= $page + 1 ?>" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -173,7 +217,9 @@ class ShopController
             echo json_encode([
                 'success' => true,
                 'products' => $productsHtml,
-                'pagination' => $paginationHtml
+                'pagination' => $paginationHtml,
+                'currentPage' => $page,
+                'totalPages' => $totalPages
             ]);
             exit;
         }

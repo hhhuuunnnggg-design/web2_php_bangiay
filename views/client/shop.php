@@ -181,6 +181,11 @@
                             $('#productContainer').html(response.products);
                             $('#paginationContainer').html(response.pagination);
                             updateURL(filters);
+
+                            // Scroll to top of product section
+                            $('html, body').animate({
+                                scrollTop: $('.product-section').offset().top - 100
+                            }, 500);
                         }
                     },
                     error: function() {
@@ -207,13 +212,19 @@
                     }
                 }
 
+                // Reset to page 1 when applying new filters
+                filters.page = 1;
                 loadProducts(filters);
             });
 
             // Handle pagination clicks
             $(document).on('click', '.pagination .page-link', function(e) {
                 e.preventDefault();
-                const page = $(this).attr('href').split('page=')[1];
+                const page = $(this).data('page');
+                if (!page || $(this).parent().hasClass('disabled')) {
+                    return;
+                }
+
                 const formData = new FormData($('#filterForm')[0]);
                 formData.append('page', page);
 

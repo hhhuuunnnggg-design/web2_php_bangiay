@@ -12,7 +12,7 @@ class OrderModel
         $this->conn = $this->db->getConnection();
     }
 
-    public function getAllOrders($search = '', $limit = 5, $offset = 0, $maNV = null, $quyen = null)
+    public function getAllOrders($search = '', $limit = 5, $offset = 0, $maNV = null, $quyen = null, $status = null, $start_date = null, $end_date = null)
     {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT h.*, kh.TenKH, nv.TenNV AS TenNVQuanLy, nv_gh.TenNV AS TenShipper 
@@ -22,12 +22,31 @@ class OrderModel
             LEFT JOIN nhanvien nv_gh ON h.MaNVGH = nv_gh.MaNV 
             WHERE (h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%')";
 
+        // Add status filter
+        if ($status) {
+            $status = $this->conn->real_escape_string($status);
+            $sql .= " AND h.TinhTrang = '$status'";
+        }
+
+        // Add date range filter
+        if ($start_date && $end_date) {
+            $start_date = $this->conn->real_escape_string($start_date);
+            $end_date = $this->conn->real_escape_string($end_date);
+            $sql .= " AND DATE(h.NgayDat) BETWEEN '$start_date' AND '$end_date'";
+        } elseif ($start_date) {
+            $start_date = $this->conn->real_escape_string($start_date);
+            $sql .= " AND DATE(h.NgayDat) >= '$start_date'";
+        } elseif ($end_date) {
+            $end_date = $this->conn->real_escape_string($end_date);
+            $sql .= " AND DATE(h.NgayDat) <= '$end_date'";
+        }
+
         // Nếu là Shipper (Quyen = 2), chỉ hiển thị hóa đơn được gán cho họ
         if ($quyen == 2 && $maNV !== null) {
             $sql .= " AND h.MaNVGH = ?";
         }
 
-        $sql .= " LIMIT ? OFFSET ?";
+        $sql .= " ORDER BY h.NgayDat DESC LIMIT ? OFFSET ?";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -41,13 +60,32 @@ class OrderModel
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTotalOrders($search = '', $maNV = null, $quyen = null)
+    public function getTotalOrders($search = '', $maNV = null, $quyen = null, $status = null, $start_date = null, $end_date = null)
     {
         $search = $this->conn->real_escape_string($search);
         $sql = "SELECT COUNT(*) as total 
             FROM hoadon h 
             LEFT JOIN khachhang kh ON h.MaKH = kh.MaKH 
             WHERE (h.MaHD LIKE '%$search%' OR kh.TenKH LIKE '%$search%')";
+
+        // Add status filter
+        if ($status) {
+            $status = $this->conn->real_escape_string($status);
+            $sql .= " AND h.TinhTrang = '$status'";
+        }
+
+        // Add date range filter
+        if ($start_date && $end_date) {
+            $start_date = $this->conn->real_escape_string($start_date);
+            $end_date = $this->conn->real_escape_string($end_date);
+            $sql .= " AND DATE(h.NgayDat) BETWEEN '$start_date' AND '$end_date'";
+        } elseif ($start_date) {
+            $start_date = $this->conn->real_escape_string($start_date);
+            $sql .= " AND DATE(h.NgayDat) >= '$start_date'";
+        } elseif ($end_date) {
+            $end_date = $this->conn->real_escape_string($end_date);
+            $sql .= " AND DATE(h.NgayDat) <= '$end_date'";
+        }
 
         if ($quyen == 2 && $maNV !== null) {
             $sql .= " AND h.MaNVGH = ?";

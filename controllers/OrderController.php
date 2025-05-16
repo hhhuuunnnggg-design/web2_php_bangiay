@@ -28,13 +28,16 @@ class OrderController
         $quyen = $currentUser['Quyen'] ?? null;
 
         $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : null;
+        $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
+        $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
         $offset = ($page - 1) * $limit;
 
         // Truyền MaNV và Quyen vào model để lọc hóa đơn
-        $orders = $this->orderModel->getAllOrders($search, $limit, $offset, $maNV, $quyen);
-        $totalOrders = $this->orderModel->getTotalOrders($search, $maNV, $quyen);
+        $orders = $this->orderModel->getAllOrders($search, $limit, $offset, $maNV, $quyen, $status, $start_date, $end_date);
+        $totalOrders = $this->orderModel->getTotalOrders($search, $maNV, $quyen, $status, $start_date, $end_date);
         $totalPages = ceil($totalOrders / $limit);
 
         $title = "Quản lý hóa đơn";

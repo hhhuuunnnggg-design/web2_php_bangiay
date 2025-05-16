@@ -194,7 +194,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <?php if (isset($error)): ?>
                         <div class="error-message"><?php echo $error; ?></div>
                     <?php endif; ?>
-                    <form action="/shoeimportsystem/index.php?controller=auth&action=doRegister" method="post">
+                    <form id="registerForm" action="/shoeimportsystem/index.php?controller=auth&action=doRegister" method="post">
                         <div class="input-group">
                             <input style="color: black;" placeholder="Họ tên" name="tenKH" class="name" type="text" required="" />
                             <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -210,7 +210,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 pattern="[0-9]{10}"
                                 title="Vui lòng nhập đúng 10 chữ số"
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
-
                                 required="" />
                             <span class="icon3"><i class="fa fa-phone" aria-hidden="true"></i></span>
                         </div>
@@ -232,6 +231,69 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <h6>Đã có tài khoản? <a href="/shoeimportsystem/index.php?controller=auth&action=login">Đăng nhập</a></h6>
                         </div>
                     </form>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#registerForm').on('submit', function(e) {
+                                e.preventDefault();
+
+                                // Validate form
+                                var formData = new FormData(this);
+                                var isValid = true;
+                                var errorMessage = '';
+
+                                // Validate email format
+                                var email = formData.get('email');
+                                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                                    isValid = false;
+                                    errorMessage = 'Email không hợp lệ!';
+                                }
+
+                                // Validate password length
+                                var password = formData.get('matKhau');
+                                if (password.length < 6) {
+                                    isValid = false;
+                                    errorMessage = 'Mật khẩu phải có ít nhất 6 ký tự!';
+                                }
+
+                                // Validate phone number
+                                var phone = formData.get('sdt');
+                                if (!phone.match(/^[0-9]{10}$/)) {
+                                    isValid = false;
+                                    errorMessage = 'Số điện thoại phải có đúng 10 chữ số!';
+                                }
+
+                                if (!isValid) {
+                                    $('.error-message').remove();
+                                    $('.wthree-pro').after('<div class="error-message">' + errorMessage + '</div>');
+                                    return;
+                                }
+
+                                // Submit form using AJAX
+                                $.ajax({
+                                    url: $(this).attr('action'),
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        if (response.success) {
+                                            // Redirect to login page on success
+                                            window.location.href = '/shoeimportsystem/index.php?controller=auth&action=login';
+                                        } else {
+                                            // Show error message
+                                            $('.error-message').remove();
+                                            $('.wthree-pro').after('<div class="error-message">' + response.message + '</div>');
+                                        }
+                                    },
+                                    error: function() {
+                                        $('.error-message').remove();
+                                        $('.wthree-pro').after('<div class="error-message">Có lỗi xảy ra, vui lòng thử lại!</div>');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
 
                 </div>
             </div>

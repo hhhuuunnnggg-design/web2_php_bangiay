@@ -146,22 +146,47 @@ class AuthController
             $diaChi = $_POST['diaChi'] ?? '';
             $matKhau = $_POST['matKhau'] ?? '';
 
+            // Check if it's an AJAX request
+            $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
             if ($this->userModel->emailExists($email)) {
-                $error = "Email đã được sử dụng!";
-                $title = "Đăng ký";
-                include __DIR__ . '/../../views/client/page/register.php';
+                $response = [
+                    'success' => false,
+                    'message' => 'Email đã được sử dụng!'
+                ];
             } elseif (strlen($matKhau) < 6) {
-                $error = "Mật khẩu phải có ít nhất 6 ký tự!";
-                $title = "Đăng ký";
-                include __DIR__ . '/../../views/client/page/register.php';
+                $response = [
+                    'success' => false,
+                    'message' => 'Mật khẩu phải có ít nhất 6 ký tự!'
+                ];
             } else {
                 if ($this->userModel->register($tenKH, $email, $sdt, $diaChi, $matKhau)) {
-                    header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
-                    exit;
+                    $response = [
+                        'success' => true,
+                        'message' => 'Đăng ký thành công!'
+                    ];
                 } else {
-                    $error = "Đăng ký thất bại, vui lòng thử lại!";
+                    $response = [
+                        'success' => false,
+                        'message' => 'Đăng ký thất bại, vui lòng thử lại!'
+                    ];
+                }
+            }
+
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit;
+            } else {
+                // Handle non-AJAX request (fallback)
+                if (!$response['success']) {
+                    $error = $response['message'];
                     $title = "Đăng ký";
                     include __DIR__ . '/../../views/client/page/register.php';
+                } else {
+                    header("Location: /shoeimportsystem/index.php?controller=auth&action=login");
+                    exit;
                 }
             }
         }

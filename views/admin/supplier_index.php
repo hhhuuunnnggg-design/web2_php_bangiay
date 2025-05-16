@@ -73,16 +73,19 @@
 <div class="pagination-container">
     <nav aria-label="Page navigation">
         <ul class="pagination pagination-sm justify-content-end">
+            <!-- nếu trang hiện tại lớn hơn 1 thì sẽ hiện chữ (trang trước) -->
             <?php if ($page > 1): ?>
                 <li class="page-item">
                     <a class="page-link" href="/shoeimportsystem/public/index.php?controller=supplier&action=index&search=<?php echo urlencode($search); ?>&page=<?php echo $page - 1; ?>">Trang trước</a>
                 </li>
             <?php endif; ?>
+            <!-- nếu lớn hơn 3 thì Hiển thị nút trang số 1 để người dùng dễ nhảy về trang đầu -->
 
             <?php if ($page > 3): ?>
                 <li class="page-item">
                     <a class="page-link" href="/shoeimportsystem/public/index.php?controller=supplier&action=index&search=<?php echo urlencode($search); ?>&page=1">1</a>
                 </li>
+                <!-- Nếu trang hiện tại lớn hơn 4, hiển thị dấu "..." để báo rằng có nhiều trang nằm giữa trang đầu và vùng các trang đang hiển thị. -->
                 <?php if ($page > 4): ?>
                     <li class="page-item disabled">
                         <span class="page-link">...</span>

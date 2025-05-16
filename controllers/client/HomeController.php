@@ -85,4 +85,55 @@ class HomeController
         $title = "Chi tiết sản phẩm - " . $product['TenSP'];
         include __DIR__ . '/../../views/client/product_detail.php';
     }
+
+    public function search()
+    {
+        $searchTerm = isset($_GET['term']) ? trim($_GET['term']) : '';
+        $products = $this->productModel->searchProductsByName($searchTerm);
+
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            // AJAX request - return only the product grid
+            if (!empty($products)) {
+                foreach ($products as $product) {
+?>
+                    <div class="card h-100 shadow-sm" style="width: 207px;">
+                        <?php if (!empty($product['AnhNen'])): ?>
+                            <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                <img src="/shoeimportsystem/public/<?php echo htmlspecialchars($product['AnhNen']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['TenSP']); ?>" style="height: 250px; object-fit: cover;">
+                            </a>
+                        <?php else: ?>
+                            <a href="/shoeimportsystem/index.php?controller=home&action=detail&id=<?php echo $product['MaSP']; ?>">
+                                <img src="/shoeimportsystem/public/images/default-product.jpg" class="card-img-top" alt="No image" style="height: 250px; object-fit: cover;">
+                            </a>
+                        <?php endif; ?>
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($product['TenSP']); ?></h5>
+                            <p class="card-text">
+                                <?php if ($product['GiaKhuyenMai'] < $product['DonGia']): ?>
+                                    <span class="text-danger">Giảm <?php echo number_format($product['GiamGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                    <span style="text-decoration: line-through; color: gray;"><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span><br>
+                                    <span class="text-success font-weight-bold"><?php echo number_format($product['GiaKhuyenMai'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                <?php else: ?>
+                                    <span><?php echo number_format($product['DonGia'], 0, ',', '.') . ' VNĐ'; ?></span>
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+<?php
+                }
+            } else {
+                echo '<p class="text-center">Không tìm thấy sản phẩm nào cho từ khóa \'' . htmlspecialchars($searchTerm) . '\'.</p>';
+            }
+            exit;
+        } else {
+            // Regular request - show full page
+            $productsByCategory = [
+                'search' => [
+                    'products' => $products
+                ]
+            ];
+            $title = "Kết quả tìm kiếm - " . $searchTerm;
+            include __DIR__ . '/../../views/client/page/search_results.php';
+        }
+    }
 }

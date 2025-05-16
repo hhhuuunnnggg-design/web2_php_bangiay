@@ -36,6 +36,67 @@ $brands = $supplierModel->getAllBrands();
     <!-- Template Stylesheet -->
     <link href="/shoeimportsystem/views/client/layout/css/style.css" rel="stylesheet">
     <link href="/shoeimportsystem/views/client/layout/js/main.js" rel="stylesheet">
+
+    <style>
+        #searchResults {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #searchResults .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(207px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        #searchResults .card {
+            transition: transform 0.2s;
+        }
+
+        #searchResults .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
 </head>
 
 <body>
@@ -143,15 +204,83 @@ $brands = $supplierModel->getAllBrands();
                     <div class="modal-body">
                         <form id="searchForm" method="GET" action="/shoeimportsystem/index.php">
                             <input type="hidden" name="controller" value="home">
-                            <input type="hidden" name="action" value="index">
+                            <input type="hidden" name="action" value="search">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Nhập tên sản phẩm..." required>
+                                <input type="text" class="form-control" name="term" id="searchInput" placeholder="Nhập tên sản phẩm..." required>
                                 <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                             </div>
                         </form>
+                        <div id="searchResults" class="mt-3" style="display: none;">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Đang tìm kiếm...</p>
+                            </div>
+                            <div class="product-grid"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </head>
     <?php include __DIR__ . '/../page/main.php'; ?>
+
+    <!-- Add this before closing body tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const productGrid = searchResults.querySelector('.product-grid');
+            const loading = searchResults.querySelector('.loading');
+            let searchTimeout;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const searchTerm = this.value.trim();
+
+                if (searchTerm.length > 0) {
+                    searchResults.style.display = 'block';
+                    loading.classList.add('active');
+                    productGrid.innerHTML = '';
+
+                    searchTimeout = setTimeout(() => {
+                        fetch(`/shoeimportsystem/index.php?controller=home&action=search&term=${encodeURIComponent(searchTerm)}`, {
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(response => response.text())
+                            .then(html => {
+                                loading.classList.remove('active');
+                                productGrid.innerHTML = html;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                loading.classList.remove('active');
+                                productGrid.innerHTML = '<p class="text-center text-danger">Có lỗi xảy ra khi tìm kiếm. Vui lòng thử lại.</p>';
+                            });
+                    }, 300); // Debounce for 300ms
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    window.location.href = `/shoeimportsystem/index.php?controller=home&action=search&term=${encodeURIComponent(searchTerm)}`;
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

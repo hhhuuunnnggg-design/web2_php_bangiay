@@ -25,11 +25,11 @@ class SupplierController
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
-        $offset = ($page - 1) * $limit;
+        $offset = ($page - 1) * $limit;  // vị trí lấy sản phẩm
 
         $suppliers = $this->supplierModel->getAllSuppliers($search, $limit, $offset);
         $totalSuppliers = $this->supplierModel->getTotalSuppliers($search);
-        $totalPages = ceil($totalSuppliers / $limit);
+        $totalPages = ceil($totalSuppliers / $limit); //tông số trang mà bạn đang có
 
         $title = "Quản lý nhà cung cấp";
         $content_file = __DIR__ . '/../views/admin/supplier_index.php';

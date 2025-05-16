@@ -183,17 +183,15 @@ $brands = $supplierModel->getAllBrands();
                     <?php endforeach; ?>
                 </div>
             <?php else: ?>
-                <p class="text-center">Không tìm thấy sản phẩm nào cho từ khóa '<?php echo htmlspecialchars($_GET['search']); ?>'.</p>
+                <p class="text-center">Không tìm thấy sản phẩm nào cho từ khóa '<?php echo htmlspecialchars($_GET['term'] ?? $_GET['search'] ?? ''); ?>'.</p>
             <?php endif; ?>
         </div>
     </main>
-
 
     <style>
         @media (min-width: 768px) {
             .col-md-4 {
                 flex: 0 0 33.333333%;
-                /* Đảm bảo 3 cột trên md */
                 max-width: 33.333333%;
             }
         }
@@ -201,7 +199,6 @@ $brands = $supplierModel->getAllBrands();
         @media (max-width: 767.98px) {
             .col-sm-6 {
                 flex: 0 0 50%;
-                /* 2 cột trên sm */
                 max-width: 50%;
             }
         }
@@ -209,7 +206,6 @@ $brands = $supplierModel->getAllBrands();
         @media (max-width: 575.98px) {
             .col-12 {
                 flex: 0 0 100%;
-                /* 1 cột trên xs */
                 max-width: 100%;
             }
         }
@@ -218,15 +214,41 @@ $brands = $supplierModel->getAllBrands();
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(207px, 1fr));
             gap: 30px;
-            /* Khoảng cách giữa các card */
             justify-items: center;
-            /* Căn giữa card trong ô lưới */
             max-width: 1200px;
-            /* Giới hạn chiều rộng tối đa */
             margin: 0 auto;
-            /* Căn giữa container lưới */
+        }
+
+        /* Add loading indicator styles */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
-
 
     <?php include __DIR__ . '/../layout/footer.php'; ?>

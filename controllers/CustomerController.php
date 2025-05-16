@@ -105,4 +105,17 @@ class CustomerController
         echo json_encode(['success' => $result, 'message' => $result ? 'Khóa tài khoản thành công' : 'Lỗi khi khóa tài khoản']);
         exit;
     }
+
+    public function unlock()
+    {
+        if (!$this->auth->checkPermission(14, 'edit')) {
+            echo json_encode(['success' => false, 'message' => 'Bạn không có quyền mở khóa tài khoản khách hàng']);
+            exit;
+        }
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $result = $this->model->unlockCustomer($id);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $result, 'message' => $result ? 'Mở khóa tài khoản thành công' : 'Lỗi khi mở khóa tài khoản']);
+        exit;
+    }
 }

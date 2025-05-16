@@ -66,6 +66,10 @@
             background-color: #dc3545;
         }
 
+        .unlock {
+            background-color: #17a2b8;
+        }
+
         .search-form {
             margin-bottom: 20px;
         }
@@ -138,6 +142,8 @@
                 <a class="edit" href="/shoeimportsystem/public/index.php?controller=customer&action=edit&id=<?php echo urlencode($customer['MaKH']); ?>">Sửa</a>
                 <?php if ($customer['TrangThai'] == 0): ?>
                     <button type="button" class="lock" onclick="lockCustomer('<?php echo htmlspecialchars(addslashes($customer['MaKH'])); ?>', this)">Khóa</button>
+                <?php else: ?>
+                    <button type="button" class="unlock" onclick="unlockCustomer('<?php echo htmlspecialchars(addslashes($customer['MaKH'])); ?>', this)">Mở khóa</button>
                 <?php endif; ?>
             </td>
         </tr>
@@ -168,6 +174,33 @@
                     location.reload();
                 } else {
                     alert('Lỗi: ' + (data.message || 'Không thể khóa tài khoản'));
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi thực hiện thao tác. Vui lòng thử lại sau.');
+                btn.disabled = false;
+            });
+    }
+
+    function unlockCustomer(id, btn) {
+        if (!confirm('Bạn có chắc muốn mở khóa tài khoản này?')) return;
+
+        btn.disabled = true;
+        fetch(`/shoeimportsystem/public/index.php?controller=customer&action=unlock&id=${encodeURIComponent(id)}`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Mở khóa tài khoản thành công!');
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + (data.message || 'Không thể mở khóa tài khoản'));
                     btn.disabled = false;
                 }
             })

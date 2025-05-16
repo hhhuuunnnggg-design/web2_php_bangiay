@@ -65,6 +65,15 @@ class CustomerModel
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function unlockCustomer($id)
+    {
+        $sql = "UPDATE khachhang SET TrangThai = 0 WHERE MaKH = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
     public function __destruct()
     {
         $this->db->closeConnection();

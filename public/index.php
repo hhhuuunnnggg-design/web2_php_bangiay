@@ -82,6 +82,15 @@ switch ($controller) {
             die("Action không hợp lệ cho controller này");
         }
         break;
+    case 'unlock':
+        if ($controller instanceof CustomerController) {
+            $controller->unlock();
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Action không hợp lệ cho controller này']);
+            exit;
+        }
+        break;
     default:
         die("Controller không tồn tại");
 }
@@ -123,6 +132,15 @@ switch ($action) {
             exit;
         }
         break;
+    case 'unlock':
+        if ($controller instanceof CustomerController) {
+            $controller->unlock();
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Action không hợp lệ cho controller này']);
+            exit;
+        }
+        break;
     case 'assignShipper':
         if ($controller instanceof OrderController) {
             $controller->assignShipper();
@@ -146,6 +164,6 @@ switch ($action) {
         break;
     default:
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Action không tồn tại']);
+        echo json_encode(['success' => false, 'message' => 'Action không tồn tại123']);
         exit;
 }

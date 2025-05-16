@@ -101,6 +101,14 @@ class AuthController
 
             $user = $this->userModel->login($email, $matKhau);
             if ($user) {
+                if ($user['TrangThai'] != 0) {
+                    // Tài khoản bị khóa
+                    $error = "Tài khoản của bạn đã bị khóa.";
+                    $title = "Đăng nhập";
+                    include __DIR__ . '/../../views/client/page/login.php';
+                    return; // dừng hàm ở đây
+                }
+
                 session_start();
                 if (isset($_SESSION['user'])) {
                     $this->cartModel->clearCart($_SESSION['user']['MaKH']);
@@ -116,6 +124,7 @@ class AuthController
             }
         }
     }
+
 
     // Đăng ký
     public function register()

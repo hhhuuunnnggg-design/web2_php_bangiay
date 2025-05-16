@@ -51,22 +51,22 @@
 
                 <h4>Thương hiệu</h4>
                 <?php foreach ($brands as $brand): ?>
-                    <input type="checkbox" name="brand[]" value="<?= $brand['MaNCC'] ?>"
+                    <input type="checkbox" name="brand[]" value="<?= $brand['MaNCC'] ?>" class="filter-checkbox"
                         <?= in_array($brand['MaNCC'], $_GET['brand'] ?? []) ? 'checked' : '' ?>>
                     <?= htmlspecialchars($brand['TenNCC']) ?><br>
                 <?php endforeach; ?>
 
                 <h4>Danh mục</h4>
                 <?php foreach ($categories as $category): ?>
-                    <input type="checkbox" name="category[]" value="<?= $category['MaDM'] ?>"
+                    <input type="checkbox" name="category[]" value="<?= $category['MaDM'] ?>" class="filter-checkbox"
                         <?= in_array($category['MaDM'], $_GET['category'] ?? []) ? 'checked' : '' ?>>
                     <?= htmlspecialchars($category['TenDM']) ?><br>
                 <?php endforeach; ?>
 
                 <h4>Mức giá</h4>
-                <input type="radio" name="price" value="1" <?= ($_GET['price'] ?? '') == 1 ? 'checked' : '' ?>> Dưới 1 triệu<br>
-                <input type="radio" name="price" value="2" <?= ($_GET['price'] ?? '') == 2 ? 'checked' : '' ?>> 1 triệu - 2 triệu<br>
-                <input type="radio" name="price" value="3" <?= ($_GET['price'] ?? '') == 3 ? 'checked' : '' ?>> Trên 2 triệu<br>
+                <input type="radio" name="price" value="1" class="filter-radio" <?= ($_GET['price'] ?? '') == 1 ? 'checked' : '' ?>> Dưới 1 triệu<br>
+                <input type="radio" name="price" value="2" class="filter-radio" <?= ($_GET['price'] ?? '') == 2 ? 'checked' : '' ?>> 1 triệu - 2 triệu<br>
+                <input type="radio" name="price" value="3" class="filter-radio" <?= ($_GET['price'] ?? '') == 3 ? 'checked' : '' ?>> Trên 2 triệu<br>
 
                 <button type="submit" class="btn btn-outline-primary">Lọc sản phẩm</button>
             </form>
@@ -74,7 +74,7 @@
 
         <!-- Product Section -->
         <div class="product-section">
-            <div class="products">
+            <div class="products" id="productContainer">
                 <?php if (empty($products)): ?>
                     <p>Không có sản phẩm nào phù hợp với bộ lọc.</p>
                 <?php else: ?>
@@ -101,38 +101,141 @@
             </div>
 
             <!-- Pagination -->
-            <?php if ($totalPages > 1): ?>
-                <nav aria-label="Page navigation" class="mt-4">
-                    <div style="display: flex;">
-                        <ul class="pagination justify-content-center">
-                            <!-- Previous Button -->
-                            <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= $currentPage > 1 ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage - 1])) : '#' ?>" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-
-                            <!-- Page Numbers -->
-                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
-                                    <a class="page-link" href="/shoeimportsystem/index.php?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+            <div id="paginationContainer">
+                <?php if ($totalPages > 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <div style="display: flex;">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Button -->
+                                <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= $currentPage > 1 ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage - 1])) : '#' ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
                                 </li>
-                            <?php endfor; ?>
 
-                            <!-- Next Button -->
-                            <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= $currentPage < $totalPages ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage + 1])) : '#' ?>" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            <?php endif; ?>
+                                <!-- Page Numbers -->
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                    <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                                        <a class="page-link" href="/shoeimportsystem/index.php?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                                    </li>
+                                <?php endfor; ?>
+
+                                <!-- Next Button -->
+                                <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= $currentPage < $totalPages ? '/shoeimportsystem/index.php?' . http_build_query(array_merge($_GET, ['page' => $currentPage + 1])) : '#' ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
     <?php include __DIR__ . '/layout/footer.php'; ?>
+
+    <script>
+        $(document).ready(function() {
+            // Function to update URL with current filters
+            function updateURL(filters) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('controller', 'shop');
+                url.searchParams.set('action', 'index');
+
+                // Clear existing params
+                for (let key of url.searchParams.keys()) {
+                    if (key !== 'controller' && key !== 'action') {
+                        url.searchParams.delete(key);
+                    }
+                }
+
+                // Add new params
+                Object.keys(filters).forEach(key => {
+                    if (filters[key]) {
+                        if (Array.isArray(filters[key])) {
+                            filters[key].forEach(value => {
+                                url.searchParams.append(key + '[]', value);
+                            });
+                        } else {
+                            url.searchParams.set(key, filters[key]);
+                        }
+                    }
+                });
+
+                window.history.pushState({}, '', url);
+            }
+
+            // Function to load products
+            function loadProducts(filters) {
+                $.ajax({
+                    url: '/shoeimportsystem/index.php?controller=shop&action=filter',
+                    type: 'POST',
+                    data: filters,
+                    success: function(response) {
+                        if (response.success) {
+                            $('#productContainer').html(response.products);
+                            $('#paginationContainer').html(response.pagination);
+                            updateURL(filters);
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra khi tải sản phẩm');
+                    }
+                });
+            }
+
+            // Handle form submit
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const filters = {};
+
+                for (let [key, value] of formData.entries()) {
+                    if (key.endsWith('[]')) {
+                        const baseKey = key.slice(0, -2);
+                        if (!filters[baseKey]) {
+                            filters[baseKey] = [];
+                        }
+                        filters[baseKey].push(value);
+                    } else {
+                        filters[key] = value;
+                    }
+                }
+
+                loadProducts(filters);
+            });
+
+            // Handle checkbox and radio changes
+            $('.filter-checkbox, .filter-radio').on('change', function() {
+                $('#filterForm').submit();
+            });
+
+            // Handle pagination clicks
+            $(document).on('click', '.pagination .page-link', function(e) {
+                e.preventDefault();
+                const page = $(this).attr('href').split('page=')[1];
+                const formData = new FormData($('#filterForm')[0]);
+                formData.append('page', page);
+
+                const filters = {};
+                for (let [key, value] of formData.entries()) {
+                    if (key.endsWith('[]')) {
+                        const baseKey = key.slice(0, -2);
+                        if (!filters[baseKey]) {
+                            filters[baseKey] = [];
+                        }
+                        filters[baseKey].push(value);
+                    } else {
+                        filters[key] = value;
+                    }
+                }
+
+                loadProducts(filters);
+            });
+        });
+    </script>
 </body>
 
 </html>
